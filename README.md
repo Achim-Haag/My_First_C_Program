@@ -5,7 +5,7 @@
 - 🌱 I’m currently learning ... C, Java
 - 💞️ I’m looking to collaborate on ... whatever may come
 - 📫 How to reach me ... git@achimhaag.de
-- 😄 Pronouns: ... Weinstadt
+- 😄 Pronouns: ... He/His
 - ⚡ Fun fact: ... it's my first Git repository - although I did IBM OPUS many decades ago
 
 # What I was
