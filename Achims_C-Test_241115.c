@@ -2,6 +2,7 @@
     14.11.24/AH
     My first C program, derived from c't 25/2024 (8.11.24), page 66
     I will type this page's contents step by step, amended by my own modifications
+    Hmm, try to compare VSC "Develop" with "Code"
 */
 
 // Declaration of external library functions used in this program
