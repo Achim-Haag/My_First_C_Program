@@ -1,22 +1,14 @@
-# Who I am
+# My First C Program
 
-- 👋 Hi, I’m Achim Haag
-- 👀 I’m interested in programming
-- 🌱 I’m currently learning ... C, Java
-- 💞️ I’m looking to collaborate on ... whatever may come
-- 📫 How to reach me ... git@achimhaag.de
-- 😄 Pronouns: ... He/His
-- ⚡ Fun fact: ... it's my first Git repository - although I did IBM OPUS many decades ago
+## What this project was made for
+Intention of this project was learning programming in the C language.
 
-# What I was
+## Where this program comes from
+The program is a sample from c't, a german computer journal,
+but I will expand it depending on my needs.
 
-- Started as a programmer with PL/I, Assembler (/370, 8080, 8086)
-- Became a systems programmer (VM/VSE, MVS, Power-AIX)
-- Became a systems architect
-- Became part-time retired
-- Now back to the roots and just for fun
-
-<!---
-Achim-Haag/Achim-Haag is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+## What to expect
+- nice little quiz
+- experience in C programming
+- some insights to Windows memory management
+- overall experience in Visualstudio Code and Github
