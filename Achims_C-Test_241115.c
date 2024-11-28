@@ -14,6 +14,10 @@
     Another point is writing control statements without curly braces.
     I tend to share the opinion: always use braces as indention isn't recognized by the compiler
     (e.g. adding statements without braces - although indented - lead to misbehaviour and misunderstanding)
+
+    28.11.24/AH
+    I will add compiler option /FA to .vscode\tasks.json - it gives a listing for an old fart like me.
+    /FA knows optional arguments: c = machine code, s = source code, u = Listing in UTF-8 instead of ANSI
 */
 
 /*
