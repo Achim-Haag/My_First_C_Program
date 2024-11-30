@@ -11,3 +11,12 @@ The program is a sample published in c't, a german computer journal, but I will 
 - experience in C programming
 - some insights to Windows memory management
 - overall experience in Visualstudio Code and Github
+
+## What I have done till now
+- typed in source code, formated in "my way"
+- made modifications (character hints for input outside of wordlist, "#" for fast exit)
+
+## What will come
+- Details for pointers
+- Output regarding Windows memory management
+- ... tbd ...
