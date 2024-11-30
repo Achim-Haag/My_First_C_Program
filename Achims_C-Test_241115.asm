@@ -123,7 +123,7 @@ $SG75406 DB	'Another round ? [j/n] ', 00H
 	ORG $+1
 $SG75409 DB	0aH, 'OK, now go ahead...', 0aH, 00H
 	ORG $+2
-$SG75437 DB	'13:40:53', 00H
+$SG75437 DB	'13:43:18', 00H
 	ORG $+3
 $SG75438 DB	'Nov 30 2024', 00H
 $SG75439 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
