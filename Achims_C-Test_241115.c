@@ -23,6 +23,7 @@
     30.11.24/AH
     Someone ("Hornschorsch") reworked the whole story, now I have to change my copy
     Although I understand the modifications: number of words in word list not dependend on constant
+    Added "#" for easy exit
 */
 
 /*
@@ -227,7 +228,7 @@ void update_state(game_state *state)
   Subfunction get_input
     Asking user for his guess and processing his input
 */
-void get_input(game_state* state)
+bool get_input(game_state* state)
 {
 
 #ifdef MYDEBUG
@@ -237,12 +238,17 @@ void get_input(game_state* state)
   // loop until user input ok
   bool bad_word;
   do {      // while (bad_word)
-    printf("\n%d. trial: ", state->n_tries);
+    printf("\n%d. trial (#=exit) : ", state->n_tries);
     // read input from console (WORD_LENGTH characters)
     bad_word = false;
     for (int charin = 0; charin < WORD_LENGTH; charin++) {
       state->guess[charin] = getchar();         // read character from console
-      if (state->guess[charin] == '/n') {
+  
+      if (state->guess[charin] == '#') {         // Asterisk means exit program
+        while (getchar() != '\n') {};           // Clear keyboard buffer
+        return false;
+      }
+      if (state->guess[charin] == '/n') {       // Enter means end-of-input
         state->guess[charin] = '\0';
         bad_word = true;
         break;    // exit for-loop
@@ -291,61 +297,8 @@ void get_input(game_state* state)
 #ifdef MYDEBUG
   printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
 #endif
+  return true;
 }
-
-// I pasted the c't original source of get_input to check for an input error I thought, I made
-// (by renaming this and my functions name, I could easily change between them).
-// But as the behaviour is the same, I found the culprit in the last "if" block
-// as it sets bad_word to "!word_is_allowed", so if the guessed word isn't in the list,
-// the do-while will never be exited and no character hint will be shown.
-/***************** c't Github Original Start ************************************/
-void get_input_from_github(game_state* state)
-{
-    // solange eine Eingabe anfordern, bis sie gültig ist
-    bool bad_word;
-    do
-    {
-        printf("\n%d. Versuch: ", state->n_tries);
-        // Eingabe lesen
-        bad_word = false;
-        for (int i = 0; i < WORD_LENGTH; i++) {
-            state->guess[i] = getchar();
-            if (state->guess[i] == '\n') {
-                state->guess[i] = '\0';
-                bad_word = true;
-                break;
-            }
-        }
-        // überflüssige Zeichen verwerfen
-        if (!bad_word)
-            while (getchar() != '\n')
-                ;
-        // nach dem 5. Zeichen abschneiden
-        state->guess[WORD_LENGTH] = '\0';
-#ifdef DEBUG
-        printf("Eingabe: '%s'\n", state->guess);
-#endif
-        if (bad_word) {
-            printf("Bitte %d Buchstaben eingeben.\n", WORD_LENGTH);
-	} else {
-
-/*    
-	    bad_word = !word_is_allowed(state->guess);
-	    if (bad_word)
-*/      
-      if (!word_is_allowed(state->guess))
-		    printf("Das Wort ist nicht in der Liste erlaubter Wörter.\n");
-	}
-
-printf("Bottom of while-loop, bad_word is %d\n", bad_word);
-
-    }
-    while (bad_word);
-printf("Exit while-loop, bad_word is %d\n", bad_word);
-}
-
-
-/****************** c't Github Original Ende   ************************************/
 
 /*
   Subfunction print_result
@@ -584,32 +537,42 @@ int main(int argc, char* argv[])
     so this function is able to modify this structure - i.e. the structure's variables
 */   
 
-    // ask user for keyboard input
+    // ask user for keyboard input, exit loop if user wants to
 #ifdef MYDEBUG
       printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
 #endif
-      get_input(&state);
+      if (get_input(&state)) {
 
     // process user's input
 #ifdef MYDEBUG
-      printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
+        printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
 #endif
-      update_state(&state);
+        update_state(&state);
 
-    // show results
-      print_result(&state);
+      // show results
+        print_result(&state);
 
-    // Compare input word with word to guess, if equal, user wins
-      if (strncmp(state.guess, state.word, WORD_LENGTH) == 0) {
-        printf ("\nYee-haw, you've won after %d. trials!\n", state.n_tries);
-        doRestart = true;
-        keepRunning = another_round();
-      }
-      else {
-        if (state.n_tries == MAX_TRIES) {
-          printf("You don't guess the word, it was %s.\n", state.word);
+      // Compare input word with word to guess, if equal, user wins
+        if (strncmp(state.guess, state.word, WORD_LENGTH) == 0) {
+          printf ("\nYee-haw, you've won after %d. trials!\n", state.n_tries);
+          doRestart = true;
           keepRunning = another_round();
         }
+        else {
+          if (state.n_tries == MAX_TRIES) {
+            printf("You don't guess the word, it was %s.\n", state.word);
+            keepRunning = another_round();
+          }
+        }
+        
+      }
+      else {
+        keepRunning = false;
+        break; // for-loop
+#ifdef MYDEBUG
+        printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
+#endif
+
       }
 
     } // end "for num_words" loop
@@ -618,5 +581,9 @@ int main(int argc, char* argv[])
 #endif
   } // end "while (keepRunning)" loop
   printf("\nWaiting for you debugging me,\nplease press Enter after debugging has ended\n");
+  int endkey;
+  do {
+    endkey = getchar();
+  } while (endkey != '\n');    // Wait for Enter
   return EXIT_SUCCESS;
 }
