@@ -10,3 +10,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+# AH own excludes (no internal MVSC files)
+*.pdb
+*.ilk
+*.obj

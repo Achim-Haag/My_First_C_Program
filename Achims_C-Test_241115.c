@@ -16,8 +16,13 @@
     (e.g. adding statements without braces - although indented - lead to misbehaviour and misunderstanding)
 
     28.11.24/AH
+    Completed source, tested ANSI coloring in MVSC / Windows environment
     I will add compiler option /FA to .vscode\tasks.json - it gives a listing for an old fart like me.
     /FA knows optional arguments: c = machine code, s = source code, u = Listing in UTF-8 instead of ANSI
+
+    30.11.24/AH
+    Someone ("Hornschorsch") reworked the whole story, now I have to change my copy
+    Although I understand the modifications: number of words in word list not dependend on constant
 */
 
 /*
@@ -27,13 +32,39 @@
 #define MYDEBUG
 
 /*
+  Program logic:
+    * main:
+      count words in word list and select word to guess
+      loop MAX_TRIES times
+        * get_input:
+          until user entered 5 characters and word is in wordlist
+            read user's input characters
+            * word_is_allowed:
+              check if word is in wordlist
+        * update_state:
+          mark correct and misplaced characters
+          save the result in structure
+            * is_character_unmarked
+              check word for guessed character
+        * print_result:
+          show result and wrong characters to user
+        compare word with word from wordlist
+          show final result
+          * another_round
+            ask user for another round
+*/
+
+/*
     Declares the Windows Header file if Microsoft Visual-C (MSVC) is used for compile
+    Needed for activation of ANSI coloring in cmd.exe virtual terminal
 */
 #if _MSC_VER          // see https://learn.microsoft.com/en-us/cpp/overview/compiler-versions?view=msvc-170
 #include <Windows.h>
 #include <wchar.h>
 #endif
+
 // Declaration of external library functions used in this program
+// Libraries surrounded by "<>" are searched in the compiler's default path
 #include <ctype.h>      // tolower()
 #include <stdbool.h>    // bool, true and false 
 #include <stdio.h>      // stdin, getchar(), fgets()
@@ -100,86 +131,29 @@ typedef struct
 bool word_is_allowed(const char* word)
 {
 #ifdef MYDEBUG
-  printf("#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 #endif
 
-  // Sequential search in wordlist
+  // Sequential search the guessed word in wordlist
   bool wordfound = false;    // Assume we will not find any character of user's input
-  for (int counter = 0; ((words[counter] != "#####") && (counter < NUM_WORDS) ); ++counter) {
+  for (int counter = 0; (words[counter] != NULL); ++counter) {
 #ifdef MYDEBUG
-    printf("#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
+    printf("\t#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
 #endif
     if (strncmp(word, words[counter], WORD_LENGTH) == 0) {
       wordfound = true;   // Wow, we have found a character in our word that user guessed !
 #ifdef MYDEBUG
-      printf("#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
+      printf("\t#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
 #endif
       break;  // exit for-loop immediately
     }
   }
 
-  // we haven't found the word to be in our wordlist
+  // Return the search result (true/false) to caller
 #ifdef MYDEBUG
-  printf("#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
+  printf("\t#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
 #endif
   return wordfound;
-}
-
-/*
-  Subfunction get_input
-    Asking user for his guess and processing his input
-*/
-void get_input(game_state* state)
-{
-
-#ifdef MYDEBUG
-  printf("#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
-
-  // loop until user input ok
-  bool bad_word;
-  do {      // while (bad_word)
-    printf("\n%d. trial: ", state->n_tries);
-    // read input from console (WORD_LENGTH characters)
-    bad_word = false;
-    for (int i = 0; i < WORD_LENGTH; i++) {
-      state->guess[i] = getchar();         // read character from console
-      if (state->guess[i] == '/n') {
-        state->guess[i] = '\0';
-        bad_word = true;
-        break;    // exit for-loop
-      } 
-    }
-    // read (and drop) remaining characters (after the WORD_LENGTH one) using a while-loop
-    if (!bad_word) {
-      while (getchar() != '\n') {}
-    } ;
-
-    // set end of string to char after WORD_LENGTH
-    state->guess[WORD_LENGTH] = '\0';
-
-#ifdef MYDEBUG
-    printf("#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
-#endif
-
-    // process incorrect user input
-    if (bad_word) {
-      printf("Please enter exactly (!) %d characters !\n", WORD_LENGTH);
-    }
-    else {
-      bad_word = !word_is_allowed(state->guess);    // call subfunction in this source
-#ifdef MYDEBUG
-      printf("#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
-#endif
-      if (bad_word) {
-        printf("Word not found in my wordlist\n");
-      }
-      else {
-        printf("Word found in my wordlist\n");
-      }
-
-    }
-  } while (bad_word) ;   // end "do"
 }
 
 /*
@@ -193,7 +167,7 @@ void get_input(game_state* state)
 bool is_character_unmarked(game_state* state, char c)
 {
 #ifdef MYDEBUG
-  printf("#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 #endif
 
   bool charfound = false;    // Assume we will not find any character of user's input
@@ -215,9 +189,9 @@ bool is_character_unmarked(game_state* state, char c)
 void update_state(game_state *state)
 {
 #ifdef MYDEBUG
-  printf("#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 #endif
-
+ 
   // mark every character as "unmarked" before we process the input
   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
     state->result[counter] = UNMARKED;
@@ -241,11 +215,137 @@ void update_state(game_state *state)
     if (state->result[counter] == CORRECT) {
       continue;    // next for-loop
     }
-                            // call subfunction in this source and process its result
-    state->result[counter] = is_character_unmarked(state, state->guess[counter]) ? PRESENT : NOT_PRESENT;
+                            // call subfunction in this source and set result
+                            // (PRESENT/NOT_PRESENT) depending on bool return of subfunction
+    state->result[counter] = is_character_unmarked(state, state->guess[counter])
+      ? PRESENT
+      : NOT_PRESENT;
   }
-
 }
+
+/*
+  Subfunction get_input
+    Asking user for his guess and processing his input
+*/
+void get_input(game_state* state)
+{
+
+#ifdef MYDEBUG
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+#endif
+
+  // loop until user input ok
+  bool bad_word;
+  do {      // while (bad_word)
+    printf("\n%d. trial: ", state->n_tries);
+    // read input from console (WORD_LENGTH characters)
+    bad_word = false;
+    for (int charin = 0; charin < WORD_LENGTH; charin++) {
+      state->guess[charin] = getchar();         // read character from console
+      if (state->guess[charin] == '/n') {
+        state->guess[charin] = '\0';
+        bad_word = true;
+        break;    // exit for-loop
+      } 
+    }
+    // read (and drop) remaining characters (after the WORD_LENGTH one) using a while-loop
+    if (!bad_word) {
+      while (getchar() != '\n') {};
+    }
+
+    // set end of string to char after WORD_LENGTH
+    state->guess[WORD_LENGTH] = '\0';
+
+#ifdef MYDEBUG
+    printf("\t#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
+#endif
+
+    // process incorrect user input
+    if (bad_word) {
+      printf("Please enter exactly (!) %d characters !\n", WORD_LENGTH);
+    }
+    else {
+/*    
+  Uncommented the following two statements as one gets only character hints guessing a word from the wordlist
+  So if one doesn't know the wordlist, guessing is nearly impossible
+	    bad_word = !word_is_allowed(state->guess);
+	    if (bad_word)
+*/      
+
+#ifdef MYDEBUG
+      printf("\t#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
+#endif
+      if (!word_is_allowed(state->guess)) {
+        printf("Word not found in my wordlist\n");
+      }
+      else {
+        printf("Word found in my wordlist\n");
+      }
+
+    }
+#ifdef MYDEBUG
+    printf("\t#DBG %s@%d # badword is  %s\n", __func__, __LINE__, bad_word ? "true" : "false");
+#endif
+  } while (bad_word) ;   // end "do ... while" loop
+
+#ifdef MYDEBUG
+  printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
+#endif
+}
+
+// I pasted the c't original source of get_input to check for an input error I thought, I made
+// (by renaming this and my functions name, I could easily change between them).
+// But as the behaviour is the same, I found the culprit in the last "if" block
+// as it sets bad_word to "!word_is_allowed", so if the guessed word isn't in the list,
+// the do-while will never be exited and no character hint will be shown.
+/***************** c't Github Original Start ************************************/
+void get_input_from_github(game_state* state)
+{
+    // solange eine Eingabe anfordern, bis sie gültig ist
+    bool bad_word;
+    do
+    {
+        printf("\n%d. Versuch: ", state->n_tries);
+        // Eingabe lesen
+        bad_word = false;
+        for (int i = 0; i < WORD_LENGTH; i++) {
+            state->guess[i] = getchar();
+            if (state->guess[i] == '\n') {
+                state->guess[i] = '\0';
+                bad_word = true;
+                break;
+            }
+        }
+        // überflüssige Zeichen verwerfen
+        if (!bad_word)
+            while (getchar() != '\n')
+                ;
+        // nach dem 5. Zeichen abschneiden
+        state->guess[WORD_LENGTH] = '\0';
+#ifdef DEBUG
+        printf("Eingabe: '%s'\n", state->guess);
+#endif
+        if (bad_word) {
+            printf("Bitte %d Buchstaben eingeben.\n", WORD_LENGTH);
+	} else {
+
+/*    
+	    bad_word = !word_is_allowed(state->guess);
+	    if (bad_word)
+*/      
+      if (!word_is_allowed(state->guess))
+		    printf("Das Wort ist nicht in der Liste erlaubter Wörter.\n");
+	}
+
+printf("Bottom of while-loop, bad_word is %d\n", bad_word);
+
+    }
+    while (bad_word);
+printf("Exit while-loop, bad_word is %d\n", bad_word);
+}
+
+
+/****************** c't Github Original Ende   ************************************/
 
 /*
   Subfunction print_result
@@ -253,6 +353,10 @@ void update_state(game_state *state)
 */
 void print_result(const game_state* state)
 {
+
+#ifdef MYDEBUG
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+#endif
   // Show result in a nice way (ANSI escape sequences for coloring)
   // Explanation see http://jafrog.com/2013/11/23/colors-in-terminal.html
   // or https://ss64.com/nt/syntax-ansi.html
@@ -279,12 +383,30 @@ void print_result(const game_state* state)
         // Characters not in word marked with red background
         printf("\033[37;41;1m");
         break; // break ends this switch-part
-
     }
     printf("%c", state->guess[counter]);
   }
   // Reset font and background colors to their defaults
   printf("\033[0m\n");
+}
+
+bool another_round(void)
+{
+#ifdef MYDEBUG
+  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+#endif
+
+  printf("Another round ? [j/n] ");
+  char answer = (char)tolower(getchar()) ; // read pressed key from keyboard
+  // drop superfluous characters
+  if (answer != '\n') {
+    while (getchar() != '\n') ;
+  }
+  bool yes = ((answer == 'j') || (answer == '\n')) ;
+  if (yes) {
+    printf("\nOK, now go ahead...\n");
+  }
+  return yes;
 }
 
 /*
@@ -308,32 +430,33 @@ int main(int argc, char* argv[])
   Chapter "Samples" - "Example of SGR terminal sequences"
 */
 
-/************************* TEST BEGIN **************************/
-    // Set output mode to handle virtual terminal sequences
-    DWORD LastError = 0;          // Keep GetLastError in own variable to not interfere with printf
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (hOut == INVALID_HANDLE_VALUE)
-    {
-        LastError = GetLastError();
-        printf("Cannot get handle for standard device (STD_OUTPUT_HANDLE), GetStdHandle RC=%d", LastError);
-        return LastError;
-    }
+#if _MSC_VER          // Necessary only in Windows environment as bash should know ANSI by default
 
-    DWORD dwMode = 0;
-    if (!GetConsoleMode(hOut, &dwMode))
-    {
-        LastError = GetLastError();
-        printf ("Cannot get console mode, GetConsoleMode RC=%d", LastError);
-        return LastError;
-    }
+/*
+  Enable Windows 10 cmd.exe ANSI processing
+*/
+  // Set output mode to handle virtual terminal sequences
+  DWORD LastError = 0;          // Keep GetLastError in own variable to not interfere with printf
+  HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+  if (hOut == INVALID_HANDLE_VALUE)   {
+    LastError = GetLastError();
+    printf("Cannot get handle for standard device (STD_OUTPUT_HANDLE), GetStdHandle RC=%d", LastError);
+    return LastError;
+  }
 
-    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    if (!SetConsoleMode(hOut, dwMode))
-    {
-        LastError = GetLastError();
-        printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
-        return LastError;
-    }
+  DWORD dwMode = 0;
+  if (!GetConsoleMode(hOut, &dwMode)) {
+    LastError = GetLastError();
+    printf ("Cannot get console mode, GetConsoleMode RC=%d", LastError);
+    return LastError;
+  }
+
+  dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+  if (!SetConsoleMode(hOut, dwMode)) {
+    LastError = GetLastError();
+    printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
+    return LastError;
+  }
 
 /*    In sample, but unused here
 
@@ -350,6 +473,8 @@ int main(int argc, char* argv[])
     return 0;
 */
 
+#endif    // End Windows ANSI enabling section 
+
 
 /************************* TEST END *************************** */
 
@@ -363,8 +488,8 @@ int main(int argc, char* argv[])
     leading to nonpredictable random number series.
 */
   unsigned int seed = (argc > 1)
-                        ? (unsigned int)atoi(argv[1])
-                        : (unsigned int)time(NULL) ;
+                      ? (unsigned int)atoi(argv[1])
+                      : (unsigned int)time(NULL) ;
 
   printf("Initial random generator seed: %d\n", seed);
 
@@ -383,11 +508,11 @@ int main(int argc, char* argv[])
     we cannot see at this moment, how this decision is made, but we know, 
     it must made by setting keepRunning to it's logical value "false".
 */
-   bool keepRunning = true;
-   while (keepRunning) {
+  bool keepRunning = true;
+  while (keepRunning) {
 
 #ifdef MYDEBUG
-    printf("#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
+    printf("\t#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
 #endif
 
 
@@ -401,16 +526,19 @@ int main(int argc, char* argv[])
     Btw: scope means here: "main"
 */
 #ifdef MYDEBUG
-    printf("#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
+    printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
 #endif
-
     game_state state;
 
 /*
     Count all words in the wordlist (until we reach a null pointer element)
 */
     int num_words;
-    for (num_words = 0; words[num_words] != NULL; num_words++) {};
+    for (num_words = 0; words[num_words] != NULL; num_words++) {};  // One-line loop
+
+#ifdef MYDEBUG
+    printf("\t#DBG %s@%d # Table word count is %d\n", __func__, __LINE__, num_words);
+#endif
 
 /*
     Now we fill one variable - the pointer to the word - with the address of a randomly selected
@@ -421,7 +549,7 @@ int main(int argc, char* argv[])
     (maybe NUM_WORDS should be defined near "words" if this is possible ?)
     Debugging: the other variables in structure "state" are undefined at the first entry into the loop
 */
-    state.word = words[rand() % NUM_WORDS];
+    state.word = words[rand() % num_words];
 
 /*
     only for testing: show me the selected word
@@ -433,7 +561,7 @@ int main(int argc, char* argv[])
     Changed to my own precompiler variable MYDEBUG for simplicity
 */
 #ifdef MYDEBUG
-    printf("#DBG %s@%d # Hint: %s\n", __func__, __LINE__, state.word);
+    printf("\t#DBG %s@%d # Hint: %s\n", __func__, __LINE__, state.word);
 #endif
 
 /*
@@ -447,7 +575,7 @@ int main(int argc, char* argv[])
          state.n_tries <= MAX_TRIES && !doRestart;
          ++state.n_tries)    {
 #ifdef MYDEBUG
-      printf("#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
+      printf("\t#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
 #endif
     
 /*
@@ -458,39 +586,37 @@ int main(int argc, char* argv[])
 
     // ask user for keyboard input
 #ifdef MYDEBUG
-      printf("#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
+      printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
 #endif
-    get_input(&state);
+      get_input(&state);
 
     // process user's input
 #ifdef MYDEBUG
-      printf("#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
+      printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
 #endif
       update_state(&state);
 
-
     // show results
-    print_result(&state);
+      print_result(&state);
 
-    // 28.11.24 17:56 here I am, have to define get_input
-    //      Difference between c't print and github.com ?
+    // Compare input word with word to guess, if equal, user wins
+      if (strncmp(state.guess, state.word, WORD_LENGTH) == 0) {
+        printf ("\nYee-haw, you've won after %d. trials!\n", state.n_tries);
+        doRestart = true;
+        keepRunning = another_round();
+      }
+      else {
+        if (state.n_tries == MAX_TRIES) {
+          printf("You don't guess the word, it was %s.\n", state.word);
+          keepRunning = another_round();
+        }
+      }
 
-
-
-
-    } 
-
-   
+    } // end "for num_words" loop
 #ifdef MYDEBUG
-      printf("#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
+      printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
 #endif
-
-
-
-  } // end "while (keepRunning)""
-
-
-
+  } // end "while (keepRunning)" loop
   printf("\nWaiting for you debugging me,\nplease press Enter after debugging has ended\n");
   return EXIT_SUCCESS;
 }

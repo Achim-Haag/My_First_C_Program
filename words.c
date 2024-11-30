@@ -6,9 +6,10 @@
     
 */
 #pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****")   
+// printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
 
 // stddef.h defines NULL - otherwise use "nullptr" (in newer C versions intrinsic)
-// #include "stddef.h"
+#include <stddef.h>
 
 
 // include the structure definitions from file "words.h"
@@ -16,11 +17,15 @@
 
 #include "words.h"
 
-const char words[NUM_WORDS] [WORD_LENGTH + 1] = {
-    "abort", "acorn", "acryl", "heinz", "erwin", "susie",
+const char *words[] = {
+    "abort", "acorn", "acryl",
+    "hanns", "heinz", "herby",
+    "erwin", "erich", "emile", "erpel", "eumel",
+    "sandy", "sammy", "sadie", "sofie", "susie", "suzie",
     // Reason to change the delimiter from NULL to "####"
     // 1. NULL in MSVC is part of include stddef.h
     // 2. Compare wasn't working, instead: the for-loop leads to a return to the operating system
     //      (maybe the stack overwriten ?)
-    "#####"     // marker "Last entry". Maybe a better choice: explicitly set last element via code to "#####"
+//    "#####"     // marker "Last entry". Maybe a better choice: explicitly set last element via code to "#####"
+    NULL
 };
