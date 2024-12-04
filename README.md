@@ -14,11 +14,14 @@ The program is a sample published in c't, a german computer journal, but I will 
 
 ## What I have done till now
 - typed in source code, formated in "my way"
-- made modifications (character hints for input outside of wordlist, "#" for fast exit)
+- made modifications
+    - character hints not dependend on guessing word of wordlist
+    - "#" for fast exit
+    - getopt.c integration for parsing commandline parameters
 
 ## What will come
 - Details for pointers
-- Output regarding Windows memory management
+- Output regarding Windows memory management (?)
 - ... tbd ...
 
 ## What you don't need to compile
