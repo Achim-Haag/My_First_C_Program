@@ -11,6 +11,7 @@ INCLUDELIB OLDNAMES
 
 PUBLIC	___local_stdio_printf_options
 PUBLIC	__vfprintf_l
+PUBLIC	_fprintf
 PUBLIC	_printf
 PUBLIC	_word_is_allowed
 PUBLIC	_is_character_unmarked
@@ -19,807 +20,1112 @@ PUBLIC	_get_input
 PUBLIC	_print_result
 PUBLIC	_another_round
 PUBLIC	_main
+EXTRN	_isprint:PROC
 EXTRN	_tolower:PROC
 EXTRN	_strncmp:PROC
 EXTRN	__imp__GetStdHandle@4:PROC
 EXTRN	__imp__GetLastError@0:PROC
 EXTRN	__imp__GetConsoleMode@8:PROC
 EXTRN	__imp__SetConsoleMode@8:PROC
+EXTRN	_abort:PROC
 EXTRN	_srand:PROC
 EXTRN	_rand:PROC
 EXTRN	_atoi:PROC
 EXTRN	___acrt_iob_func:PROC
+EXTRN	_getopt:PROC
 EXTRN	_getchar:PROC
 EXTRN	___stdio_common_vfprintf:PROC
 EXTRN	__time64:PROC
 EXTRN	@__security_check_cookie@4:PROC
+EXTRN	_optind:DWORD
+EXTRN	_optopt:DWORD
+EXTRN	_opterr:DWORD
+EXTRN	_optarg:DWORD
 EXTRN	_words:BYTE
 EXTRN	___security_cookie:DWORD
 _DATA	SEGMENT
 COMM	?_OptionsStorage@?1??__local_stdio_printf_options@@9@9:QWORD							; `__local_stdio_printf_options'::`2'::_OptionsStorage
 _DATA	ENDS
 _DATA	SEGMENT
-$SG75275 DB	'word_is_allowed', 00H
-$SG75276 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75277 DB	'word_is_allowed', 00H
-$SG75278 DB	09H, '#DBG %s@%d # strncmp [%s] with [%s]', 0aH, 00H
+$SG75306 DB	'word_is_allowed', 00H
+$SG75307 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75308 DB	'word_is_allowed', 00H
+$SG75309 DB	09H, '#DBG %s@%d # strncmp [%s] with [%s]', 0aH, 00H
 	ORG $+2
-$SG75280 DB	'word_is_allowed', 00H
-$SG75281 DB	09H, '#DBG %s@%d # found word %s', 0aH, 00H
+$SG75311 DB	'word_is_allowed', 00H
+$SG75312 DB	09H, '#DBG %s@%d # found word %s', 0aH, 00H
 	ORG $+3
-$SG75282 DB	'true', 00H
+$SG75313 DB	'true', 00H
 	ORG $+3
-$SG75283 DB	'false', 00H
+$SG75314 DB	'false', 00H
 	ORG $+2
-$SG75284 DB	'word_is_allowed', 00H
-$SG75285 DB	09H, '#DBG %s@%d # Returning with ''%s''', 0aH, 00H
+$SG75315 DB	'word_is_allowed', 00H
+$SG75316 DB	09H, '#DBG %s@%d # Returning with ''%s''', 0aH, 00H
 	ORG $+1
-$SG75295 DB	'is_character_unmarked', 00H
+$SG75326 DB	'is_character_unmarked', 00H
 	ORG $+2
-$SG75296 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75313 DB	'update_state', 00H
+$SG75327 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75344 DB	'update_state', 00H
 	ORG $+3
-$SG75314 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75332 DB	'get_input', 00H
+$SG75345 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75363 DB	'get_input', 00H
 	ORG $+2
-$SG75333 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75334 DB	0aH, '%d. trial (#=exit) : ', 00H
+$SG75364 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75365 DB	0aH, '%d. trial (#=exit) : ', 00H
 	ORG $+1
-$SG75338 DB	'get_input', 00H
+$SG75369 DB	'get_input', 00H
 	ORG $+2
-$SG75339 DB	09H, '#DBG %s@%d # Input: [%s]', 0aH, 00H
+$SG75370 DB	09H, '#DBG %s@%d # Input: [%s]', 0aH, 00H
 	ORG $+1
-$SG75342 DB	'Please enter exactly (!) %d characters !', 0aH, 00H
+$SG75373 DB	'Please enter exactly (!) %d characters !', 0aH, 00H
 	ORG $+2
-$SG75343 DB	'get_input', 00H
+$SG75374 DB	'get_input', 00H
 	ORG $+2
-$SG75344 DB	09H, '#DBG %s@%d # Back from word_is_allowed', 0aH, 00H
+$SG75375 DB	09H, '#DBG %s@%d # Back from word_is_allowed', 0aH, 00H
 	ORG $+3
-$SG75347 DB	'Word not found in my wordlist', 0aH, 00H
+$SG75378 DB	'Word not found in my wordlist', 0aH, 00H
 	ORG $+1
-$SG75348 DB	'Word found in my wordlist', 0aH, 00H
+$SG75379 DB	'Word found in my wordlist', 0aH, 00H
 	ORG $+1
-$SG75349 DB	'true', 00H
+$SG75380 DB	'true', 00H
 	ORG $+3
-$SG75350 DB	'false', 00H
+$SG75381 DB	'false', 00H
 	ORG $+2
-$SG75351 DB	'get_input', 00H
+$SG75382 DB	'get_input', 00H
 	ORG $+2
-$SG75352 DB	09H, '#DBG %s@%d # badword is  %s', 0aH, 00H
+$SG75383 DB	09H, '#DBG %s@%d # badword is  %s', 0aH, 00H
 	ORG $+2
-$SG75353 DB	'get_input', 00H
+$SG75384 DB	'get_input', 00H
 	ORG $+2
-$SG75354 DB	09H, '#DBG %s@%d # Leaving function', 0aH, 00H
-$SG75364 DB	'print_result', 00H
+$SG75385 DB	09H, '#DBG %s@%d # Leaving function', 0aH, 00H
+$SG75395 DB	'print_result', 00H
 	ORG $+3
-$SG75365 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75366 DB	'! ', 00H
+$SG75396 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75397 DB	'! ', 00H
 	ORG $+1
-$SG75368 DB	01bH, '[37;42;1m', 00H
+$SG75399 DB	01bH, '[37;42;1m', 00H
 	ORG $+1
-$SG75370 DB	01bH, '[37;43;1m', 00H
+$SG75401 DB	01bH, '[37;43;1m', 00H
 	ORG $+1
-$SG75373 DB	01bH, '[37;41;1m', 00H
+$SG75404 DB	01bH, '[37;41;1m', 00H
 	ORG $+1
-$SG75374 DB	'%c', 00H
+$SG75405 DB	'%c', 00H
 	ORG $+1
-$SG75375 DB	01bH, '[0m', 0aH, 00H
+$SG75406 DB	01bH, '[0m', 0aH, 00H
 	ORG $+2
-$SG75384 DB	'another_round', 00H
+$SG75415 DB	'another_round', 00H
 	ORG $+2
-$SG75385 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
-$SG75386 DB	'Another round ? [j/n] ', 00H
+$SG75416 DB	09H, '#DBG %s@%d # Entering subfunction', 0aH, 00H
+$SG75417 DB	'Another round ? [j/n] ', 00H
 	ORG $+1
-$SG75389 DB	0aH, 'OK, now go ahead...', 0aH, 00H
+$SG75420 DB	0aH, 'OK, now go ahead...', 0aH, 00H
 	ORG $+2
-$SG75421 DB	'14:59:49', 00H
+$SG75464 DB	'19:04:27', 00H
 	ORG $+3
-$SG75422 DB	'Nov 30 2024', 00H
-$SG75423 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
+$SG75465 DB	'Dec  4 2024', 00H
+$SG75466 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
 	DB	'**', 0aH, 0aH, 00H
+	ORG $+3
+$SG75467 DB	0aH, 'Part %d : process command line parameters by getopt'
+	DB	'.c', 0aH, 00H
+$SG75468 DB	'hxv:', 00H
 	ORG $+7
-$SG75425 DB	'Cannot get handle for standard device (STD_OUTPUT_HANDLE'
+$SG75470 DB	'Sample C programm derived from c''t wordle', 0aH, 'typed'
+	DB	' in and modified by Achim Haag,', 0aH, 'see https://github.co'
+	DB	'm/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json', 0aH
+	DB	'derived from c''t 25/2024 (8.11.24), page 66 (https://github.'
+	DB	'com/607011/wordle-c)', 0aH, 00H
+	ORG $+1
+$SG75472 DB	'Verbosity set to %s', 0aH, 00H
+	ORG $+3
+$SG75476 DB	'Option -%c requires an argument.', 0aH, 00H
+	ORG $+2
+$SG75479 DB	'Unknown option `-%c''.', 0aH, 00H
+	ORG $+1
+$SG75480 DB	'Unknown option character `\x%x''...bye', 0aH, 00H
+	ORG $+1
+$SG75482 DB	'Parameter %c not handled...bye', 0aH, 00H
+$SG75483 DB	'verbosity = %d (from string [%s])', 0aH, 00H
+	ORG $+1
+$SG75484 DB	'Unprocessed commmandline parameters (%d parameters):', 0aH
+	DB	00H
+	ORG $+2
+$SG75485 DB	'Non-option argument [%s]', 0aH, 00H
+	ORG $+2
+$SG75486 DB	0aH, 'Part %d : enable ANSI colors in windows terminal', 0aH
+	DB	00H
+	ORG $+5
+$SG75488 DB	'Cannot get handle for standard device (STD_OUTPUT_HANDLE'
 	DB	'), GetStdHandle RC=%d', 00H
 	ORG $+2
-$SG75427 DB	'Cannot get console mode, GetConsoleMode RC=%d', 00H
+$SG75490 DB	'Cannot get console mode, GetConsoleMode RC=%d', 00H
 	ORG $+2
-$SG75429 DB	'Cannot set console mode to virt. terminal proc., SetCons'
+$SG75492 DB	'Cannot set console mode to virt. terminal proc., SetCons'
 	DB	'oleMode RC=%d', 00H
 	ORG $+2
-$SG75430 DB	'Initial random generator seed: %d', 0aH, 00H
+$SG75493 DB	0aH, 'Part %d : you did it ! Now the quiz', 0aH, 00H
+	ORG $+2
+$SG75494 DB	'Initial random generator seed: %d', 0aH, 00H
 	ORG $+5
-$SG75431 DB	0aH, 'NERD WORD', 0aH, 0aH, 'Guess the word with %d chara'
+$SG75495 DB	0aH, 'NERD WORD', 0aH, 0aH, 'Guess the word with %d chara'
 	DB	'cters in no more than %d trials.', 0aH, '(Abort = Ctrl+C)', 0aH
 	DB	00H
 	ORG $+1
-$SG75432 DB	'true', 00H
+$SG75496 DB	'true', 00H
 	ORG $+3
-$SG75433 DB	'false', 00H
+$SG75497 DB	'false', 00H
 	ORG $+2
-$SG75434 DB	'main', 00H
+$SG75498 DB	'main', 00H
 	ORG $+3
-$SG75435 DB	09H, '#DBG %s@%d # Entering while-loop, keepRunning is %s'
+$SG75499 DB	09H, '#DBG %s@%d # Entering while-loop, keepRunning is %s'
 	DB	0aH, 00H
 	ORG $+2
-$SG75436 DB	'main', 00H
+$SG75500 DB	'main', 00H
 	ORG $+3
-$SG75437 DB	09H, '#DBG %s@%d # Calling game_state', 0aH, 00H
+$SG75501 DB	09H, '#DBG %s@%d # Calling game_state', 0aH, 00H
 	ORG $+2
-$SG75438 DB	'main', 00H
+$SG75502 DB	'main', 00H
 	ORG $+3
-$SG75439 DB	09H, '#DBG %s@%d # Table word count is %d', 0aH, 00H
+$SG75503 DB	09H, '#DBG %s@%d # Table word count is %d', 0aH, 00H
 	ORG $+2
-$SG75440 DB	'main', 00H
+$SG75504 DB	'main', 00H
 	ORG $+3
-$SG75441 DB	09H, '#DBG %s@%d # Hint: %s', 0aH, 00H
-$SG75442 DB	'main', 00H
+$SG75505 DB	09H, '#DBG %s@%d # Hint: %s', 0aH, 00H
+$SG75506 DB	'main', 00H
 	ORG $+3
-$SG75443 DB	09H, '#DBG %s@%d # Entering for-loop, state.n_tries is %d'
+$SG75507 DB	09H, '#DBG %s@%d # Entering for-loop, state.n_tries is %d'
 	DB	0aH, 00H
 	ORG $+2
-$SG75444 DB	'main', 00H
+$SG75508 DB	'main', 00H
 	ORG $+3
-$SG75445 DB	09H, '#DBG %s@%d # Calling get_input', 0aH, 00H
+$SG75509 DB	09H, '#DBG %s@%d # Calling get_input', 0aH, 00H
 	ORG $+3
-$SG75448 DB	'main', 00H
+$SG75512 DB	'main', 00H
 	ORG $+3
-$SG75449 DB	09H, '#DBG %s@%d # Calling update_state', 0aH, 00H
-$SG75452 DB	0aH, 'Yee-haw, you''ve won after %d. trials!', 0aH, 00H
-$SG75454 DB	'You don''t guess the word, it was %s.', 0aH, 00H
+$SG75513 DB	09H, '#DBG %s@%d # Calling update_state', 0aH, 00H
+$SG75516 DB	0aH, 'Yee-haw, you''ve won after %d. trials!', 0aH, 00H
+$SG75518 DB	'You don''t guess the word, it was %s.', 0aH, 00H
 	ORG $+2
-$SG75455 DB	'main', 00H
+$SG75519 DB	'main', 00H
 	ORG $+3
-$SG75456 DB	09H, '#DBG %s@%d # keepRunning after get_input', 0aH, 00H
+$SG75520 DB	09H, '#DBG %s@%d # keepRunning after get_input', 0aH, 00H
 	ORG $+1
-$SG75457 DB	'true', 00H
+$SG75521 DB	'true', 00H
 	ORG $+3
-$SG75458 DB	'false', 00H
+$SG75522 DB	'false', 00H
 	ORG $+2
-$SG75459 DB	'main', 00H
+$SG75523 DB	'main', 00H
 	ORG $+3
-$SG75460 DB	09H, '#DBG %s@%d # Bottom of while-loop, keepRunning is %'
+$SG75524 DB	09H, '#DBG %s@%d # Bottom of while-loop, keepRunning is %'
 	DB	's', 0aH, 00H
 	ORG $+5
-$SG75461 DB	0aH, 'Waiting for you debugging me,', 0aH, 'please press '
+$SG75525 DB	0aH, 'Waiting for you debugging me,', 0aH, 'please press '
 	DB	'Enter after debugging has ended', 0aH, 00H
 _DATA	ENDS
 voltbl	SEGMENT
 _volmd	DD	0ffffffffH
 	DDSymXIndex: 	FLAT:_main
 	DD	0dH
-	DD	0380H
+	DD	0555H
 voltbl	ENDS
 ; Function compile flags: /Odtp
 ; File C:\Users\Achmed\Git_Repos_AH1\My_First_C_Program\Achims_C-Test_241115.c
 _TEXT	SEGMENT
-_endkey$ = -88						; size = 4
-tv204 = -84						; size = 4
-tv143 = -80						; size = 4
-_seed$ = -76						; size = 4
-tv131 = -72						; size = 4
-_hOut$ = -68						; size = 4
-_dwMode$ = -64						; size = 4
-_num_words$1 = -60					; size = 4
+_endkey$ = -108						; size = 4
+tv288 = -104						; size = 4
+tv195 = -100						; size = 4
+_seed$ = -96						; size = 4
+tv183 = -92						; size = 4
+_verbolvl$ = -88					; size = 4
+_hOut$ = -84						; size = 4
+tv77 = -80						; size = 4
+_dwMode$ = -76						; size = 4
+_index$1 = -72						; size = 4
+_verbosity$ = -68					; size = 4
+_cmdline_arg$ = -64					; size = 4
+_num_words$2 = -60					; size = 4
 _LastError$ = -56					; size = 4
-_doRestart$2 = -50					; size = 1
+_doRestart$3 = -50					; size = 1
 _keepRunning$ = -49					; size = 1
-_state$3 = -48						; size = 44
+_state$4 = -48						; size = 44
 __$ArrayPad$ = -4					; size = 4
 _argc$ = 8						; size = 4
 _argv$ = 12						; size = 4
 _main	PROC
 
-; 369  : {
+; 379  : {
 
 	push	ebp
 	mov	ebp, esp
-	sub	esp, 88					; 00000058H
+	sub	esp, 108				; 0000006cH
 	mov	eax, DWORD PTR ___security_cookie
 	xor	eax, ebp
 	mov	DWORD PTR __$ArrayPad$[ebp], eax
 
-; 370  : 
-; 371  : 
-; 372  : /*
-; 373  :   To be sure, I run the least compiled .exe:
-; 374  :   #pragma message: print filename (source) and  compile/build date/time while compiling/building and
-; 375  :   printf : print filename (.exe) and  compile/build date/time when running
-; 376  : */
-; 377  : #pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****")   
-; 378  :   printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
+; 380  : 
+; 381  : 
+; 382  : /*
+; 383  :   To be sure, I run the least compiled .exe:
+; 384  :   #pragma message: print filename (source) and  compile/build date/time while compiling/building and
+; 385  :   printf : print filename (.exe) and  compile/build date/time when running
+; 386  : */
+; 387  : #pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
+; 388  :   printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
 
-	push	OFFSET $SG75421
-	push	OFFSET $SG75422
+	push	OFFSET $SG75464
+	push	OFFSET $SG75465
 	mov	eax, 4
 	imul	ecx, eax, 0
 	mov	edx, DWORD PTR _argv$[ebp]
 	mov	eax, DWORD PTR [edx+ecx]
 	push	eax
-	push	OFFSET $SG75423
+	push	OFFSET $SG75466
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 379  : 
-; 380  : /*
-; 381  :   To enable ANSI text formatting in Windows cmd.exe, I had to add some extra code in my environment (W10 22H2)
-; 382  :   Stolen from https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#example-of-select-anniversary-update-features
-; 383  :   Chapter "Samples" - "Example of SGR terminal sequences"
-; 384  : */
-; 385  : 
-; 386  : #if _MSC_VER          // Necessary only in Windows environment as bash should know ANSI by default
-; 387  : 
-; 388  : /*
-; 389  :   Enable Windows 10 cmd.exe ANSI processing
-; 390  : */
-; 391  :   // Set output mode to handle virtual terminal sequences
-; 392  :   DWORD LastError = 0;          // Keep GetLastError in own variable to not interfere with printf
+; 389  : 
+; 390  : /*
+; 391  :   Process commandline parameters with Windows-specific getopt.c
+; 392  :   getopt is a well-known function in the Unix environment and shells to parse argument lists,
+; 393  :   see https://en.wikipedia.org/wiki/Getopt 
+; 394  :   or https://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html (the sample I used here)
+; 395  :   The "main" function has to be defined with arguments "(int argc, char** argv)" (char** is a pointer to a pointer list)
+; 396  : */
+; 397  :   printf("\nPart %d : process command line parameters by getopt.c\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
+
+	push	1
+	push	OFFSET $SG75467
+	call	_printf
+	add	esp, 8
+
+; 398  :   char *verbosity = NULL;   // Parameter "-v <number>", number = 1 : lowest verbosity
+
+	mov	DWORD PTR _verbosity$[ebp], 0
+
+; 399  :   int verbolvl = 0;         // Default: no verbosity
+
+	mov	DWORD PTR _verbolvl$[ebp], 0
+
+; 400  :   int cmdline_arg = 0;
+
+	mov	DWORD PTR _cmdline_arg$[ebp], 0
+
+; 401  :   opterr = 0;               // Defined by getopt.h, returned from getopt
+
+	mov	DWORD PTR _opterr, 0
+$LN2@main:
+
+; 402  : 
+; 403  : /* Now parse the given-to-main commandline parameters */
+; 404  : /* Implemented: "-h" = help, "-v <number>" = verbosity with level (1=lowest)"*/
+; 405  : /* The colon after an option requests a value behind an option character */
+; 406  :   while ((cmdline_arg = getopt (argc, argv, "hxv:")) != -1) {
+
+	push	OFFSET $SG75468
+	mov	ecx, DWORD PTR _argv$[ebp]
+	push	ecx
+	mov	edx, DWORD PTR _argc$[ebp]
+	push	edx
+	call	_getopt
+	add	esp, 12					; 0000000cH
+	mov	DWORD PTR _cmdline_arg$[ebp], eax
+	cmp	DWORD PTR _cmdline_arg$[ebp], -1
+	je	$LN3@main
+
+; 407  :     switch (cmdline_arg) {
+
+	mov	eax, DWORD PTR _cmdline_arg$[ebp]
+	mov	DWORD PTR tv77[ebp], eax
+	cmp	DWORD PTR tv77[ebp], 63			; 0000003fH
+	je	SHORT $LN22@main
+	cmp	DWORD PTR tv77[ebp], 104		; 00000068H
+	je	SHORT $LN20@main
+	cmp	DWORD PTR tv77[ebp], 118		; 00000076H
+	je	SHORT $LN21@main
+	jmp	$LN27@main
+$LN20@main:
+
+; 408  :     case 'h':                     // Option -h -> Help
+; 409  :         printf("Sample C programm derived from c't wordle\n"
+
+	push	OFFSET $SG75470
+	call	_printf
+	add	esp, 4
+
+; 410  :                 "typed in and modified by Achim Haag,\n"
+; 411  :                 "see https://github.com/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json\n"
+; 412  :                 "derived from c't 25/2024 (8.11.24), page 66 (https://github.com/607011/wordle-c)\n");
+; 413  :         return 1; // !!! Attention !!! Early return to OS
+
+	mov	eax, 1
+	jmp	$LN1@main
+
+; 414  :         break;    // Never reached because of return
+
+	jmp	$LN4@main
+$LN21@main:
+
+; 415  :     case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
+; 416  :         verbosity = optarg;   // Defined by getopt.h, returned from getopt
+
+	mov	ecx, DWORD PTR _optarg
+	mov	DWORD PTR _verbosity$[ebp], ecx
+
+; 417  :         printf("Verbosity set to %s\n", verbosity);
+
+	mov	edx, DWORD PTR _verbosity$[ebp]
+	push	edx
+	push	OFFSET $SG75472
+	call	_printf
+	add	esp, 8
+
+; 418  :         break;
+
+	jmp	$LN4@main
+$LN22@main:
+
+; 419  :     case '?':                     // Any other commandline parameter error
+; 420  :       if (optopt == 'v')          // optopt: Parameter in error, here -v without following number
+
+	cmp	DWORD PTR _optopt, 118			; 00000076H
+	jne	SHORT $LN23@main
+
+; 421  :         fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+
+	mov	eax, DWORD PTR _optopt
+	push	eax
+	push	OFFSET $SG75476
+	push	2
+	call	___acrt_iob_func
+	add	esp, 4
+	push	eax
+	call	_fprintf
+	add	esp, 12					; 0000000cH
+	jmp	SHORT $LN26@main
+$LN23@main:
+
+; 422  :       else if (isprint (optopt))  // here we found a parameter not specified in the third getopt argument (string, see above)
+
+	mov	ecx, DWORD PTR _optopt
+	push	ecx
+	call	_isprint
+	add	esp, 4
+	test	eax, eax
+	je	SHORT $LN25@main
+
+; 423  :         fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+
+	mov	edx, DWORD PTR _optopt
+	push	edx
+	push	OFFSET $SG75479
+	push	2
+	call	___acrt_iob_func
+	add	esp, 4
+	push	eax
+	call	_fprintf
+	add	esp, 12					; 0000000cH
+	jmp	SHORT $LN26@main
+$LN25@main:
+
+; 424  :       else                        // Any other getopt error - exit program
+; 425  :         fprintf (stderr, "Unknown option character `\\x%x'...bye\n", optopt);
+
+	mov	eax, DWORD PTR _optopt
+	push	eax
+	push	OFFSET $SG75480
+	push	2
+	call	___acrt_iob_func
+	add	esp, 4
+	push	eax
+	call	_fprintf
+	add	esp, 12					; 0000000cH
+$LN26@main:
+
+; 426  :       return 1; // !!! Attention !!! Early return to OS
+
+	mov	eax, 1
+	jmp	$LN1@main
+
+; 427  :       break;    // Never reached because of return
+
+	jmp	SHORT $LN4@main
+$LN27@main:
+
+; 428  :     default:                      // Parameter allowed but not handled - this should not occur
+; 429  :       printf("Parameter %c not handled...bye\n", cmdline_arg);
+
+	mov	ecx, DWORD PTR _cmdline_arg$[ebp]
+	push	ecx
+	push	OFFSET $SG75482
+	call	_printf
+	add	esp, 8
+
+; 430  :       abort (); // !!! Attention !!! Early return to OS
+
+	call	_abort
+	npad	1
+$LN4@main:
+
+; 431  :       break;    // Never reached because of abort
+; 432  :     }
+; 433  :   }
+
+	jmp	$LN2@main
+$LN3@main:
+
+; 434  : 
+; 435  : // Convert verbosity string to integer
+; 436  :   verbolvl=atoi(verbosity);
+
+	mov	edx, DWORD PTR _verbosity$[ebp]
+	push	edx
+	call	_atoi
+	add	esp, 4
+	mov	DWORD PTR _verbolvl$[ebp], eax
+
+; 437  :   printf ("verbosity = %d (from string [%s])\n", verbolvl, verbosity);
+
+	mov	eax, DWORD PTR _verbosity$[ebp]
+	push	eax
+	mov	ecx, DWORD PTR _verbolvl$[ebp]
+	push	ecx
+	push	OFFSET $SG75483
+	call	_printf
+	add	esp, 12					; 0000000cH
+
+; 438  :   printf ("Unprocessed commmandline parameters (%d parameters):\n", optind);
+
+	mov	edx, DWORD PTR _optind
+	push	edx
+	push	OFFSET $SG75484
+	call	_printf
+	add	esp, 8
+
+; 439  :   for (int index = optind; index < argc; index++)
+
+	mov	eax, DWORD PTR _optind
+	mov	DWORD PTR _index$1[ebp], eax
+	jmp	SHORT $LN8@main
+$LN6@main:
+	mov	ecx, DWORD PTR _index$1[ebp]
+	add	ecx, 1
+	mov	DWORD PTR _index$1[ebp], ecx
+$LN8@main:
+	mov	edx, DWORD PTR _index$1[ebp]
+	cmp	edx, DWORD PTR _argc$[ebp]
+	jge	SHORT $LN7@main
+
+; 440  :     printf ("Non-option argument [%s]\n", argv[index]);
+
+	mov	eax, DWORD PTR _index$1[ebp]
+	mov	ecx, DWORD PTR _argv$[ebp]
+	mov	edx, DWORD PTR [ecx+eax*4]
+	push	edx
+	push	OFFSET $SG75485
+	call	_printf
+	add	esp, 8
+	jmp	SHORT $LN6@main
+$LN7@main:
+
+; 441  : 
+; 442  : /*
+; 443  :   To enable ANSI text formatting in Windows cmd.exe, I had to add some extra code in my environment (W10 22H2)
+; 444  :   Stolen from https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#example-of-select-anniversary-update-features
+; 445  :   Chapter "Samples" - "Example of SGR terminal sequences"
+; 446  : */
+; 447  : 
+; 448  : #if _MSC_VER          // Necessary only in Windows environment as bash should know ANSI by default
+; 449  : 
+; 450  : /*
+; 451  :   Enable Windows 10 cmd.exe ANSI processing
+; 452  : */
+; 453  :   printf("\nPart %d : enable ANSI colors in windows terminal\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
+
+	push	2
+	push	OFFSET $SG75486
+	call	_printf
+	add	esp, 8
+
+; 454  :   // Set output mode to handle virtual terminal sequences
+; 455  :   DWORD LastError = 0;          // Keep GetLastError in own variable to not interfere with printf
 
 	mov	DWORD PTR _LastError$[ebp], 0
 
-; 393  :   HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+; 456  :   HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	push	-11					; fffffff5H
 	call	DWORD PTR __imp__GetStdHandle@4
 	mov	DWORD PTR _hOut$[ebp], eax
 
-; 394  :   if (hOut == INVALID_HANDLE_VALUE)   {
+; 457  :   if (hOut == INVALID_HANDLE_VALUE)   {
 
 	cmp	DWORD PTR _hOut$[ebp], -1
-	jne	SHORT $LN13@main
+	jne	SHORT $LN28@main
 
-; 395  :     LastError = GetLastError();
+; 458  :     LastError = GetLastError();
 
 	call	DWORD PTR __imp__GetLastError@0
 	mov	DWORD PTR _LastError$[ebp], eax
 
-; 396  :     printf("Cannot get handle for standard device (STD_OUTPUT_HANDLE), GetStdHandle RC=%d", LastError);
+; 459  :     printf("Cannot get handle for standard device (STD_OUTPUT_HANDLE), GetStdHandle RC=%d", LastError);
 
-	mov	ecx, DWORD PTR _LastError$[ebp]
-	push	ecx
-	push	OFFSET $SG75425
+	mov	eax, DWORD PTR _LastError$[ebp]
+	push	eax
+	push	OFFSET $SG75488
 	call	_printf
 	add	esp, 8
 
-; 397  :     return LastError;
+; 460  :     return LastError; // !!! Attention !!! Early return to OS
 
 	mov	eax, DWORD PTR _LastError$[ebp]
 	jmp	$LN1@main
-$LN13@main:
+$LN28@main:
 
-; 398  :   }
-; 399  : 
-; 400  :   DWORD dwMode = 0;
+; 461  :   }
+; 462  : 
+; 463  :   DWORD dwMode = 0;
 
 	mov	DWORD PTR _dwMode$[ebp], 0
 
-; 401  :   if (!GetConsoleMode(hOut, &dwMode)) {
+; 464  :   if (!GetConsoleMode(hOut, &dwMode)) {
 
-	lea	edx, DWORD PTR _dwMode$[ebp]
+	lea	ecx, DWORD PTR _dwMode$[ebp]
+	push	ecx
+	mov	edx, DWORD PTR _hOut$[ebp]
+	push	edx
+	call	DWORD PTR __imp__GetConsoleMode@8
+	test	eax, eax
+	jne	SHORT $LN29@main
+
+; 465  :     LastError = GetLastError();
+
+	call	DWORD PTR __imp__GetLastError@0
+	mov	DWORD PTR _LastError$[ebp], eax
+
+; 466  :     printf ("Cannot get console mode, GetConsoleMode RC=%d", LastError);
+
+	mov	eax, DWORD PTR _LastError$[ebp]
+	push	eax
+	push	OFFSET $SG75490
+	call	_printf
+	add	esp, 8
+
+; 467  :     return LastError; // !!! Attention !!! Early return to OS
+
+	mov	eax, DWORD PTR _LastError$[ebp]
+	jmp	$LN1@main
+$LN29@main:
+
+; 468  :   }
+; 469  : 
+; 470  :   dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+
+	mov	ecx, DWORD PTR _dwMode$[ebp]
+	or	ecx, 4
+	mov	DWORD PTR _dwMode$[ebp], ecx
+
+; 471  :   if (!SetConsoleMode(hOut, dwMode)) {
+
+	mov	edx, DWORD PTR _dwMode$[ebp]
 	push	edx
 	mov	eax, DWORD PTR _hOut$[ebp]
 	push	eax
-	call	DWORD PTR __imp__GetConsoleMode@8
+	call	DWORD PTR __imp__SetConsoleMode@8
 	test	eax, eax
-	jne	SHORT $LN14@main
+	jne	SHORT $LN30@main
 
-; 402  :     LastError = GetLastError();
+; 472  :     LastError = GetLastError();
 
 	call	DWORD PTR __imp__GetLastError@0
 	mov	DWORD PTR _LastError$[ebp], eax
 
-; 403  :     printf ("Cannot get console mode, GetConsoleMode RC=%d", LastError);
+; 473  :     printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
 
 	mov	ecx, DWORD PTR _LastError$[ebp]
 	push	ecx
-	push	OFFSET $SG75427
+	push	OFFSET $SG75492
 	call	_printf
 	add	esp, 8
 
-; 404  :     return LastError;
+; 474  :     return LastError; // !!! Attention !!! Early return to OS
 
 	mov	eax, DWORD PTR _LastError$[ebp]
 	jmp	$LN1@main
-$LN14@main:
+$LN30@main:
 
-; 405  :   }
-; 406  : 
-; 407  :   dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+; 475  :   }
+; 476  : 
+; 477  : /*    In sample, but unused here
+; 478  : 
+; 479  :     // Try some Set Graphics Rendition (SGR) terminal escape sequences
+; 480  :     wprintf(L"\x1b[31mThis text has a red foreground using SGR.31.\r\n");
+; 481  :     wprintf(L"\x1b[1mThis text has a bright (bold) red foreground using SGR.1 to affect the previous color setting.\r\n");
+; 482  :     wprintf(L"\x1b[mThis text has returned to default colors using SGR.0 implicitly.\r\n");
+; 483  :     wprintf(L"\x1b[34;46mThis text shows the foreground and background change at the same time.\r\n");
+; 484  :     wprintf(L"\x1b[0mThis text has returned to default colors using SGR.0 explicitly.\r\n");
+; 485  :     wprintf(L"\x1b[31;32;33;34;35;36;101;102;103;104;105;106;107mThis text attempts to apply many colors in the same command. Note the colors are applied from left to right so only the right-most option of foreground cyan (SGR.36) and background bright white (SGR.107) is effective.\r\n");
+; 486  :     wprintf(L"\x1b[39mThis text has restored the foreground color only.\r\n");
+; 487  :     wprintf(L"\x1b[49mThis text has restored the background color only.\r\n");
+; 488  : 
+; 489  :     return 0;
+; 490  : */
+; 491  : 
+; 492  : #endif    // End Windows ANSI enabling section 
+; 493  : 
+; 494  : 
+; 495  : /************************* TEST END *************************** */
+; 496  : 
+; 497  : 
+; 498  :   printf("\nPart %d : you did it ! Now the quiz\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
-	mov	edx, DWORD PTR _dwMode$[ebp]
-	or	edx, 4
-	mov	DWORD PTR _dwMode$[ebp], edx
-
-; 408  :   if (!SetConsoleMode(hOut, dwMode)) {
-
-	mov	eax, DWORD PTR _dwMode$[ebp]
-	push	eax
-	mov	ecx, DWORD PTR _hOut$[ebp]
-	push	ecx
-	call	DWORD PTR __imp__SetConsoleMode@8
-	test	eax, eax
-	jne	SHORT $LN15@main
-
-; 409  :     LastError = GetLastError();
-
-	call	DWORD PTR __imp__GetLastError@0
-	mov	DWORD PTR _LastError$[ebp], eax
-
-; 410  :     printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
-
-	mov	edx, DWORD PTR _LastError$[ebp]
-	push	edx
-	push	OFFSET $SG75429
+	push	3
+	push	OFFSET $SG75493
 	call	_printf
 	add	esp, 8
 
-; 411  :     return LastError;
-
-	mov	eax, DWORD PTR _LastError$[ebp]
-	jmp	$LN1@main
-$LN15@main:
-
-; 412  :   }
-; 413  : 
-; 414  : /*    In sample, but unused here
-; 415  : 
-; 416  :     // Try some Set Graphics Rendition (SGR) terminal escape sequences
-; 417  :     wprintf(L"\x1b[31mThis text has a red foreground using SGR.31.\r\n");
-; 418  :     wprintf(L"\x1b[1mThis text has a bright (bold) red foreground using SGR.1 to affect the previous color setting.\r\n");
-; 419  :     wprintf(L"\x1b[mThis text has returned to default colors using SGR.0 implicitly.\r\n");
-; 420  :     wprintf(L"\x1b[34;46mThis text shows the foreground and background change at the same time.\r\n");
-; 421  :     wprintf(L"\x1b[0mThis text has returned to default colors using SGR.0 explicitly.\r\n");
-; 422  :     wprintf(L"\x1b[31;32;33;34;35;36;101;102;103;104;105;106;107mThis text attempts to apply many colors in the same command. Note the colors are applied from left to right so only the right-most option of foreground cyan (SGR.36) and background bright white (SGR.107) is effective.\r\n");
-; 423  :     wprintf(L"\x1b[39mThis text has restored the foreground color only.\r\n");
-; 424  :     wprintf(L"\x1b[49mThis text has restored the background color only.\r\n");
-; 425  : 
-; 426  :     return 0;
-; 427  : */
-; 428  : 
-; 429  : #endif    // End Windows ANSI enabling section 
-; 430  : 
-; 431  : 
-; 432  : /************************* TEST END *************************** */
-; 433  : 
-; 434  : /*
-; 435  :     The following "ternary operator" replaces an if/then/else clause.
-; 436  :     Question mark is "then", colon is "else".
-; 437  :     If the number of parameters given to this program (including argument 1 = Path+Filename of this program)
-; 438  :     is greater than 1, an argument is given explicitly and determins the "random seed".
-; 439  :     This eases testing as for a specific initial random seed the random generator returns the same series of numbers
-; 440  :     If no explicit parameter is specified, the actual timestamp is used for the initialization of the random generater,
-; 441  :     leading to nonpredictable random number series.
-; 442  : */
-; 443  :   unsigned int seed = (argc > 1)
+; 499  : 
+; 500  : /*
+; 501  :     The following "ternary operator" replaces an if/then/else clause.
+; 502  :     Question mark is "then", colon is "else".
+; 503  :     If the number of parameters given to this program (including argument 1 = Path+Filename of this program)
+; 504  :     is greater than 1, an argument is given explicitly and determins the "random seed".
+; 505  :     This eases testing as for a specific initial random seed the random generator returns the same series of numbers
+; 506  :     If no explicit parameter is specified, the actual timestamp is used for the initialization of the random generater,
+; 507  :     leading to nonpredictable random number series.
+; 508  : */
+; 509  :   unsigned int seed = (argc > 1)
 
 	cmp	DWORD PTR _argc$[ebp], 1
-	jle	SHORT $LN22@main
-	mov	eax, 4
-	shl	eax, 0
-	mov	ecx, DWORD PTR _argv$[ebp]
-	mov	edx, DWORD PTR [ecx+eax]
-	push	edx
+	jle	SHORT $LN37@main
+	mov	edx, 4
+	shl	edx, 0
+	mov	eax, DWORD PTR _argv$[ebp]
+	mov	ecx, DWORD PTR [eax+edx]
+	push	ecx
 	call	_atoi
 	add	esp, 4
-	mov	DWORD PTR tv131[ebp], eax
-	jmp	SHORT $LN23@main
-$LN22@main:
+	mov	DWORD PTR tv183[ebp], eax
+	jmp	SHORT $LN38@main
+$LN37@main:
 	push	0
 	call	_time
 	add	esp, 4
-	mov	DWORD PTR tv131[ebp], eax
-$LN23@main:
-	mov	eax, DWORD PTR tv131[ebp]
-	mov	DWORD PTR _seed$[ebp], eax
+	mov	DWORD PTR tv183[ebp], eax
+$LN38@main:
+	mov	edx, DWORD PTR tv183[ebp]
+	mov	DWORD PTR _seed$[ebp], edx
 
-; 444  :                       ? (unsigned int)atoi(argv[1])
-; 445  :                       : (unsigned int)time(NULL) ;
-; 446  : 
-; 447  :   printf("Initial random generator seed: %d\n", seed);
+; 510  :                       ? (unsigned int)atoi(argv[1])
+; 511  :                       : (unsigned int)time(NULL) ;
+; 512  : 
+; 513  :   printf("Initial random generator seed: %d\n", seed);
 
-	mov	ecx, DWORD PTR _seed$[ebp]
-	push	ecx
-	push	OFFSET $SG75430
+	mov	eax, DWORD PTR _seed$[ebp]
+	push	eax
+	push	OFFSET $SG75494
 	call	_printf
 	add	esp, 8
 
-; 448  : 
-; 449  : /*
-; 450  :     Prepare the random number generation for later use of the "rand" function
-; 451  : */
-; 452  :   srand(seed);
+; 514  : 
+; 515  : /*
+; 516  :     Prepare the random number generation for later use of the "rand" function
+; 517  : */
+; 518  :   srand(seed);
 
-	mov	edx, DWORD PTR _seed$[ebp]
-	push	edx
+	mov	ecx, DWORD PTR _seed$[ebp]
+	push	ecx
 	call	_srand
 	add	esp, 4
 
-; 453  : 
-; 454  :   printf("\nNERD WORD\n\n"
+; 519  : 
+; 520  :   printf("\nNERD WORD\n\n"
 
 	push	6
 	push	5
-	push	OFFSET $SG75431
+	push	OFFSET $SG75495
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 455  :          "Guess the word with %d characters in no more than %d trials.\n"
-; 456  :          "(Abort = Ctrl+C)\n",
-; 457  :          WORD_LENGTH, MAX_TRIES);
-; 458  : 
-; 459  : /*
-; 460  :     We run this program until the user aborts.
-; 461  :     we cannot see at this moment, how this decision is made, but we know, 
-; 462  :     it must made by setting keepRunning to it's logical value "false".
-; 463  : */
-; 464  :   bool keepRunning = true;
+; 521  :          "Guess the word with %d characters in no more than %d trials.\n"
+; 522  :          "(Abort = Ctrl+C)\n",
+; 523  :          WORD_LENGTH, MAX_TRIES);
+; 524  : 
+; 525  : /*
+; 526  :     We run this program until the user aborts.
+; 527  :     we cannot see at this moment, how this decision is made, but we know, 
+; 528  :     it must made by setting keepRunning to it's logical value "false".
+; 529  : */
+; 530  :   bool keepRunning = true;
 
 	mov	BYTE PTR _keepRunning$[ebp], 1
-$LN2@main:
+$LN9@main:
 
-; 465  :   while (keepRunning) {
+; 531  :   while (keepRunning) {
+
+	movzx	edx, BYTE PTR _keepRunning$[ebp]
+	test	edx, edx
+	je	$LN10@main
+
+; 532  : 
+; 533  : #ifdef MYDEBUG
+; 534  :     printf("\t#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
 
 	movzx	eax, BYTE PTR _keepRunning$[ebp]
 	test	eax, eax
-	je	$LN3@main
-
-; 466  : 
-; 467  : #ifdef MYDEBUG
-; 468  :     printf("\t#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
-
-	movzx	ecx, BYTE PTR _keepRunning$[ebp]
-	test	ecx, ecx
-	je	SHORT $LN24@main
-	mov	DWORD PTR tv143[ebp], OFFSET $SG75432
-	jmp	SHORT $LN25@main
-$LN24@main:
-	mov	DWORD PTR tv143[ebp], OFFSET $SG75433
-$LN25@main:
-	mov	edx, DWORD PTR tv143[ebp]
-	push	edx
-	push	468					; 000001d4H
-	push	OFFSET $SG75434
-	push	OFFSET $SG75435
-	call	_printf
-	add	esp, 16					; 00000010H
-
-; 469  : #endif
-; 470  : 
-; 471  : 
-; 472  : /*
-; 473  :     First of all create a "real instance" of type game_state, it's name is "state"
-; 474  :     It's a structure combining multiple elements in storage (here we need our RAM ;-)
-; 475  :     The layout of the structure is defined above as a typeset "game_state"
-; 476  :     so "game_state" is - from a higher point of view - the same as an integer, character, string, whatever
-; 477  :     But...as far as I think, it's no "executable" statement, it just reserves memory in it's scope
-; 478  :     (the compiler generates code to allocate RAM)
-; 479  :     Btw: scope means here: "main"
-; 480  : */
-; 481  : #ifdef MYDEBUG
-; 482  :     printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
-
-	push	482					; 000001e2H
-	push	OFFSET $SG75436
-	push	OFFSET $SG75437
-	call	_printf
-	add	esp, 12					; 0000000cH
-
-; 483  : #endif
-; 484  :     game_state state;
-; 485  : 
-; 486  : /*
-; 487  :     Count all words in the wordlist (until we reach a null pointer element)
-; 488  : */
-; 489  :     int num_words;
-; 490  :     for (num_words = 0; words[num_words] != NULL; num_words++) {};  // One-line loop
-
-	mov	DWORD PTR _num_words$1[ebp], 0
-	jmp	SHORT $LN6@main
-$LN4@main:
-	mov	eax, DWORD PTR _num_words$1[ebp]
-	add	eax, 1
-	mov	DWORD PTR _num_words$1[ebp], eax
-$LN6@main:
-	mov	ecx, DWORD PTR _num_words$1[ebp]
-	cmp	DWORD PTR _words[ecx*4], 0
-	je	SHORT $LN5@main
-	jmp	SHORT $LN4@main
-$LN5@main:
-
-; 491  : 
-; 492  : #ifdef MYDEBUG
-; 493  :     printf("\t#DBG %s@%d # Table word count is %d\n", __func__, __LINE__, num_words);
-
-	mov	edx, DWORD PTR _num_words$1[ebp]
-	push	edx
-	push	493					; 000001edH
-	push	OFFSET $SG75438
-	push	OFFSET $SG75439
-	call	_printf
-	add	esp, 16					; 00000010H
-
-; 494  : #endif
-; 495  : 
-; 496  : /*
-; 497  :     Now we fill one variable - the pointer to the word - with the address of a randomly selected
-; 498  :     word of our wordlist (that comes out of words.c which is linked together with this program)
-; 499  :     Important: as the word in array "words" is addressed by modulo (%) NUM_WORDS,
-; 500  :     NUM_WORDS must not be higher than the real number of words in the array "words",
-; 501  :     else something unpredictable would occur
-; 502  :     (maybe NUM_WORDS should be defined near "words" if this is possible ?)
-; 503  :     Debugging: the other variables in structure "state" are undefined at the first entry into the loop
-; 504  : */
-; 505  :     state.word = words[rand() % num_words];
-
-	call	_rand
-	cdq
-	idiv	DWORD PTR _num_words$1[ebp]
-	mov	eax, DWORD PTR _words[edx*4]
-	mov	DWORD PTR _state$3[ebp], eax
-
-; 506  : 
-; 507  : /*
-; 508  :     only for testing: show me the selected word
-; 509  :     #-marked statements are processed by the compilers preprocessor
-; 510  :     (personally, I call it precompiler in memoriam to PL/I ;-)
-; 511  :     To activate this printf, a compiler option "-D DEBUG" must be given that defines DEBUG (no value needed)
-; 512  :     Not to be confused with _DEBUG (underscore !) that is defined by MSVC by the /MTd or /MDd option,
-; 513  :     see https://learn.microsoft.com/en-us/cpp/c-runtime-library/debug?view=msvc-170
-; 514  :     Changed to my own precompiler variable MYDEBUG for simplicity
-; 515  : */
-; 516  : #ifdef MYDEBUG
-; 517  :     printf("\t#DBG %s@%d # Hint: %s\n", __func__, __LINE__, state.word);
-
-	mov	ecx, DWORD PTR _state$3[ebp]
+	je	SHORT $LN39@main
+	mov	DWORD PTR tv195[ebp], OFFSET $SG75496
+	jmp	SHORT $LN40@main
+$LN39@main:
+	mov	DWORD PTR tv195[ebp], OFFSET $SG75497
+$LN40@main:
+	mov	ecx, DWORD PTR tv195[ebp]
 	push	ecx
-	push	517					; 00000205H
-	push	OFFSET $SG75440
-	push	OFFSET $SG75441
+	push	534					; 00000216H
+	push	OFFSET $SG75498
+	push	OFFSET $SG75499
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 518  : #endif
-; 519  : 
-; 520  : /*
-; 521  :   Now we run another loop that asks our guesses of the characters
-; 522  :   The for loop counts a number variable from a starting point to an ending point
-; 523  :   In the C language, the ending point doesn't has to be dependend on the number variable alone,
-; 524  :   it can be extended by other logical expressions
-; 525  : */
-; 526  :     bool doRestart = false;
-
-	mov	BYTE PTR _doRestart$2[ebp], 0
-
-; 527  :     for (state.n_tries = 1; 
-
-	mov	DWORD PTR _state$3[ebp+40], 1
-	jmp	SHORT $LN9@main
-$LN7@main:
-
-; 529  :          ++state.n_tries)    {
-
-	mov	edx, DWORD PTR _state$3[ebp+40]
-	add	edx, 1
-	mov	DWORD PTR _state$3[ebp+40], edx
-$LN9@main:
-
-; 528  :          state.n_tries <= MAX_TRIES && !doRestart;
-
-	cmp	DWORD PTR _state$3[ebp+40], 6
-	jg	$LN8@main
-	movzx	eax, BYTE PTR _doRestart$2[ebp]
-	test	eax, eax
-	jne	$LN8@main
-
-; 530  : #ifdef MYDEBUG
-; 531  :       printf("\t#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
-
-	mov	ecx, DWORD PTR _state$3[ebp+40]
-	push	ecx
-	push	531					; 00000213H
-	push	OFFSET $SG75442
-	push	OFFSET $SG75443
-	call	_printf
-	add	esp, 16					; 00000010H
-
-; 532  : #endif
-; 533  :     
-; 534  : /*
-; 535  :     we call the above defined function to get user's input.
-; 536  :     The "&" means: give the address of variable (structure) "state" to this function,
-; 537  :     so this function is able to modify this structure - i.e. the structure's variables
-; 538  : */   
-; 539  : 
-; 540  :     // ask user for keyboard input, exit loop if user wants to
-; 541  : #ifdef MYDEBUG
-; 542  :       printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
-
-	push	542					; 0000021eH
-	push	OFFSET $SG75444
-	push	OFFSET $SG75445
-	call	_printf
-	add	esp, 12					; 0000000cH
-
-; 543  : #endif
-; 544  :       if (get_input(&state)) {
-
-	lea	edx, DWORD PTR _state$3[ebp]
-	push	edx
-	call	_get_input
-	add	esp, 4
-	movzx	eax, al
-	test	eax, eax
-	je	$LN16@main
-
-; 545  : 
-; 546  :     // process user's input
+; 535  : #endif
+; 536  : 
+; 537  : 
+; 538  : /*
+; 539  :     First of all create a "real instance" of type game_state, it's name is "state"
+; 540  :     It's a structure combining multiple elements in storage (here we need our RAM ;-)
+; 541  :     The layout of the structure is defined above as a typeset "game_state"
+; 542  :     so "game_state" is - from a higher point of view - the same as an integer, character, string, whatever
+; 543  :     But...as far as I think, it's no "executable" statement, it just reserves memory in it's scope
+; 544  :     (the compiler generates code to allocate RAM)
+; 545  :     Btw: scope means here: "main"
+; 546  : */
 ; 547  : #ifdef MYDEBUG
-; 548  :         printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
+; 548  :     printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
 
 	push	548					; 00000224H
-	push	OFFSET $SG75448
-	push	OFFSET $SG75449
+	push	OFFSET $SG75500
+	push	OFFSET $SG75501
 	call	_printf
 	add	esp, 12					; 0000000cH
 
 ; 549  : #endif
-; 550  :         update_state(&state);
-
-	lea	ecx, DWORD PTR _state$3[ebp]
-	push	ecx
-	call	_update_state
-	add	esp, 4
-
+; 550  :     game_state state;
 ; 551  : 
-; 552  :       // show results
-; 553  :         print_result(&state);
+; 552  : /*
+; 553  :     Count all words in the wordlist (until we reach a null pointer element)
+; 554  : */
+; 555  :     int num_words;
+; 556  :     for (num_words = 0; words[num_words] != NULL; num_words++) {};  // One-line loop
 
-	lea	edx, DWORD PTR _state$3[ebp]
-	push	edx
-	call	_print_result
-	add	esp, 4
+	mov	DWORD PTR _num_words$2[ebp], 0
+	jmp	SHORT $LN13@main
+$LN11@main:
+	mov	edx, DWORD PTR _num_words$2[ebp]
+	add	edx, 1
+	mov	DWORD PTR _num_words$2[ebp], edx
+$LN13@main:
+	mov	eax, DWORD PTR _num_words$2[ebp]
+	cmp	DWORD PTR _words[eax*4], 0
+	je	SHORT $LN12@main
+	jmp	SHORT $LN11@main
+$LN12@main:
 
-; 554  : 
-; 555  :       // Compare input word with word to guess, if equal, user wins
-; 556  :         if (strncmp(state.guess, state.word, WORD_LENGTH) == 0) {
+; 557  : 
+; 558  : #ifdef MYDEBUG
+; 559  :     printf("\t#DBG %s@%d # Table word count is %d\n", __func__, __LINE__, num_words);
 
-	push	5
-	mov	eax, DWORD PTR _state$3[ebp]
-	push	eax
-	lea	ecx, DWORD PTR _state$3[ebp+4]
+	mov	ecx, DWORD PTR _num_words$2[ebp]
 	push	ecx
-	call	_strncmp
-	add	esp, 12					; 0000000cH
-	test	eax, eax
-	jne	SHORT $LN18@main
-
-; 557  :           printf ("\nYee-haw, you've won after %d. trials!\n", state.n_tries);
-
-	mov	edx, DWORD PTR _state$3[ebp+40]
-	push	edx
-	push	OFFSET $SG75452
-	call	_printf
-	add	esp, 8
-
-; 558  :           doRestart = true;
-
-	mov	BYTE PTR _doRestart$2[ebp], 1
-
-; 559  :           keepRunning = another_round();
-
-	call	_another_round
-	mov	BYTE PTR _keepRunning$[ebp], al
-
-; 560  :         }
-
-	jmp	SHORT $LN20@main
-$LN18@main:
-
-; 561  :         else {
-; 562  :           if (state.n_tries == MAX_TRIES) {
-
-	cmp	DWORD PTR _state$3[ebp+40], 6
-	jne	SHORT $LN20@main
-
-; 563  :             printf("You don't guess the word, it was %s.\n", state.word);
-
-	mov	eax, DWORD PTR _state$3[ebp]
-	push	eax
-	push	OFFSET $SG75454
-	call	_printf
-	add	esp, 8
-
-; 564  :             keepRunning = another_round();
-
-	call	_another_round
-	mov	BYTE PTR _keepRunning$[ebp], al
-$LN20@main:
-
-; 565  :           }
-; 566  :         }
-; 567  :         
-; 568  :       }
-
-	jmp	SHORT $LN17@main
-$LN16@main:
-
-; 569  :       else {
-; 570  :         keepRunning = false;
-
-	mov	BYTE PTR _keepRunning$[ebp], 0
-
-; 571  :         break; // for-loop
-
-	jmp	SHORT $LN8@main
-
-; 572  : #ifdef MYDEBUG
-; 573  :         printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
-
-	push	573					; 0000023dH
-	push	OFFSET $SG75455
-	push	OFFSET $SG75456
-	call	_printf
-	add	esp, 12					; 0000000cH
-$LN17@main:
-
-; 574  : #endif
-; 575  : 
-; 576  :       }
-; 577  : 
-; 578  :     } // end "for num_words" loop
-
-	jmp	$LN7@main
-$LN8@main:
-
-; 579  : #ifdef MYDEBUG
-; 580  :       printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
-
-	movzx	ecx, BYTE PTR _keepRunning$[ebp]
-	test	ecx, ecx
-	je	SHORT $LN26@main
-	mov	DWORD PTR tv204[ebp], OFFSET $SG75457
-	jmp	SHORT $LN27@main
-$LN26@main:
-	mov	DWORD PTR tv204[ebp], OFFSET $SG75458
-$LN27@main:
-	mov	edx, DWORD PTR tv204[ebp]
-	push	edx
-	push	580					; 00000244H
-	push	OFFSET $SG75459
-	push	OFFSET $SG75460
+	push	559					; 0000022fH
+	push	OFFSET $SG75502
+	push	OFFSET $SG75503
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 581  : #endif
-; 582  :   } // end "while (keepRunning)" loop
+; 560  : #endif
+; 561  : 
+; 562  : /*
+; 563  :     Now we fill one variable - the pointer to the word - with the address of a randomly selected
+; 564  :     word of our wordlist (that comes out of words.c which is linked together with this program)
+; 565  :     Important: as the word in array "words" is addressed by modulo (%) NUM_WORDS,
+; 566  :     NUM_WORDS must not be higher than the real number of words in the array "words",
+; 567  :     else something unpredictable would occur
+; 568  :     (maybe NUM_WORDS should be defined near "words" if this is possible ?)
+; 569  :     Debugging: the other variables in structure "state" are undefined at the first entry into the loop
+; 570  : */
+; 571  :     state.word = words[rand() % num_words];
 
-	jmp	$LN2@main
-$LN3@main:
+	call	_rand
+	cdq
+	idiv	DWORD PTR _num_words$2[ebp]
+	mov	edx, DWORD PTR _words[edx*4]
+	mov	DWORD PTR _state$4[ebp], edx
 
-; 583  :   printf("\nWaiting for you debugging me,\nplease press Enter after debugging has ended\n");
+; 572  : 
+; 573  : /*
+; 574  :     only for testing: show me the selected word
+; 575  :     #-marked statements are processed by the compilers preprocessor
+; 576  :     (personally, I call it precompiler in memoriam to PL/I ;-)
+; 577  :     To activate this printf, a compiler option "-D DEBUG" must be given that defines DEBUG (no value needed)
+; 578  :     Not to be confused with _DEBUG (underscore !) that is defined by MSVC by the /MTd or /MDd option,
+; 579  :     see https://learn.microsoft.com/en-us/cpp/c-runtime-library/debug?view=msvc-170
+; 580  :     Changed to my own precompiler variable MYDEBUG for simplicity
+; 581  : */
+; 582  : #ifdef MYDEBUG
+; 583  :     printf("\t#DBG %s@%d # Hint: %s\n", __func__, __LINE__, state.word);
 
-	push	OFFSET $SG75461
+	mov	eax, DWORD PTR _state$4[ebp]
+	push	eax
+	push	583					; 00000247H
+	push	OFFSET $SG75504
+	push	OFFSET $SG75505
+	call	_printf
+	add	esp, 16					; 00000010H
+
+; 584  : #endif
+; 585  : 
+; 586  : /*
+; 587  :   Now we run another loop that asks our guesses of the characters
+; 588  :   The for loop counts a number variable from a starting point to an ending point
+; 589  :   In the C language, the ending point doesn't has to be dependend on the number variable alone,
+; 590  :   it can be extended by other logical expressions
+; 591  : */
+; 592  :     bool doRestart = false;
+
+	mov	BYTE PTR _doRestart$3[ebp], 0
+
+; 593  :     for (state.n_tries = 1; 
+
+	mov	DWORD PTR _state$4[ebp+40], 1
+	jmp	SHORT $LN16@main
+$LN14@main:
+
+; 595  :          ++state.n_tries)    {
+
+	mov	ecx, DWORD PTR _state$4[ebp+40]
+	add	ecx, 1
+	mov	DWORD PTR _state$4[ebp+40], ecx
+$LN16@main:
+
+; 594  :          state.n_tries <= MAX_TRIES && !doRestart;
+
+	cmp	DWORD PTR _state$4[ebp+40], 6
+	jg	$LN15@main
+	movzx	edx, BYTE PTR _doRestart$3[ebp]
+	test	edx, edx
+	jne	$LN15@main
+
+; 596  : #ifdef MYDEBUG
+; 597  :       printf("\t#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
+
+	mov	eax, DWORD PTR _state$4[ebp+40]
+	push	eax
+	push	597					; 00000255H
+	push	OFFSET $SG75506
+	push	OFFSET $SG75507
+	call	_printf
+	add	esp, 16					; 00000010H
+
+; 598  : #endif
+; 599  :     
+; 600  : /*
+; 601  :     we call the above defined function to get user's input.
+; 602  :     The "&" means: give the address of variable (structure) "state" to this function,
+; 603  :     so this function is able to modify this structure - i.e. the structure's variables
+; 604  : */   
+; 605  : 
+; 606  :     // ask user for keyboard input, exit loop if user wants to
+; 607  : #ifdef MYDEBUG
+; 608  :       printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
+
+	push	608					; 00000260H
+	push	OFFSET $SG75508
+	push	OFFSET $SG75509
+	call	_printf
+	add	esp, 12					; 0000000cH
+
+; 609  : #endif
+; 610  :       if (get_input(&state)) {
+
+	lea	ecx, DWORD PTR _state$4[ebp]
+	push	ecx
+	call	_get_input
+	add	esp, 4
+	movzx	edx, al
+	test	edx, edx
+	je	$LN31@main
+
+; 611  : 
+; 612  :     // process user's input
+; 613  : #ifdef MYDEBUG
+; 614  :         printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
+
+	push	614					; 00000266H
+	push	OFFSET $SG75512
+	push	OFFSET $SG75513
+	call	_printf
+	add	esp, 12					; 0000000cH
+
+; 615  : #endif
+; 616  :         update_state(&state);
+
+	lea	eax, DWORD PTR _state$4[ebp]
+	push	eax
+	call	_update_state
+	add	esp, 4
+
+; 617  : 
+; 618  :       // show results
+; 619  :         print_result(&state);
+
+	lea	ecx, DWORD PTR _state$4[ebp]
+	push	ecx
+	call	_print_result
+	add	esp, 4
+
+; 620  : 
+; 621  :       // Compare input word with word to guess, if equal, user wins
+; 622  :         if (strncmp(state.guess, state.word, WORD_LENGTH) == 0) {
+
+	push	5
+	mov	edx, DWORD PTR _state$4[ebp]
+	push	edx
+	lea	eax, DWORD PTR _state$4[ebp+4]
+	push	eax
+	call	_strncmp
+	add	esp, 12					; 0000000cH
+	test	eax, eax
+	jne	SHORT $LN33@main
+
+; 623  :           printf ("\nYee-haw, you've won after %d. trials!\n", state.n_tries);
+
+	mov	ecx, DWORD PTR _state$4[ebp+40]
+	push	ecx
+	push	OFFSET $SG75516
+	call	_printf
+	add	esp, 8
+
+; 624  :           doRestart = true;
+
+	mov	BYTE PTR _doRestart$3[ebp], 1
+
+; 625  :           keepRunning = another_round();
+
+	call	_another_round
+	mov	BYTE PTR _keepRunning$[ebp], al
+
+; 626  :         }
+
+	jmp	SHORT $LN35@main
+$LN33@main:
+
+; 627  :         else {
+; 628  :           if (state.n_tries == MAX_TRIES) {
+
+	cmp	DWORD PTR _state$4[ebp+40], 6
+	jne	SHORT $LN35@main
+
+; 629  :             printf("You don't guess the word, it was %s.\n", state.word);
+
+	mov	edx, DWORD PTR _state$4[ebp]
+	push	edx
+	push	OFFSET $SG75518
+	call	_printf
+	add	esp, 8
+
+; 630  :             keepRunning = another_round();
+
+	call	_another_round
+	mov	BYTE PTR _keepRunning$[ebp], al
+$LN35@main:
+
+; 631  :           }
+; 632  :         }
+; 633  :         
+; 634  :       }
+
+	jmp	SHORT $LN32@main
+$LN31@main:
+
+; 635  :       else {
+; 636  :         keepRunning = false;
+
+	mov	BYTE PTR _keepRunning$[ebp], 0
+
+; 637  :         break; // for-loop
+
+	jmp	SHORT $LN15@main
+
+; 638  : #ifdef MYDEBUG
+; 639  :         printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
+
+	push	639					; 0000027fH
+	push	OFFSET $SG75519
+	push	OFFSET $SG75520
+	call	_printf
+	add	esp, 12					; 0000000cH
+$LN32@main:
+
+; 640  : #endif
+; 641  : 
+; 642  :       }
+; 643  : 
+; 644  :     } // end "for num_words" loop
+
+	jmp	$LN14@main
+$LN15@main:
+
+; 645  : #ifdef MYDEBUG
+; 646  :       printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
+
+	movzx	eax, BYTE PTR _keepRunning$[ebp]
+	test	eax, eax
+	je	SHORT $LN41@main
+	mov	DWORD PTR tv288[ebp], OFFSET $SG75521
+	jmp	SHORT $LN42@main
+$LN41@main:
+	mov	DWORD PTR tv288[ebp], OFFSET $SG75522
+$LN42@main:
+	mov	ecx, DWORD PTR tv288[ebp]
+	push	ecx
+	push	646					; 00000286H
+	push	OFFSET $SG75523
+	push	OFFSET $SG75524
+	call	_printf
+	add	esp, 16					; 00000010H
+
+; 647  : #endif
+; 648  :   } // end "while (keepRunning)" loop
+
+	jmp	$LN9@main
+$LN10@main:
+
+; 649  :   printf("\nWaiting for you debugging me,\nplease press Enter after debugging has ended\n");
+
+	push	OFFSET $SG75525
 	call	_printf
 	add	esp, 4
-$LN12@main:
+$LN19@main:
 
-; 584  :   int endkey;
-; 585  :   do {
-; 586  :     endkey = getchar();
+; 650  :   int endkey;
+; 651  :   do {
+; 652  :     endkey = getchar();
 
 	call	_getchar
 	mov	DWORD PTR _endkey$[ebp], eax
 
-; 587  :   } while (endkey != '\n');    // Wait for Enter
+; 653  :   } while (endkey != '\n');    // Clear keybd buffer and wait for Enter
 
 	cmp	DWORD PTR _endkey$[ebp], 10		; 0000000aH
-	jne	SHORT $LN12@main
+	jne	SHORT $LN19@main
 
-; 588  :   return EXIT_SUCCESS;
+; 654  : 
+; 655  : // Return to OS
+; 656  :   return EXIT_SUCCESS;
 
 	xor	eax, eax
 $LN1@main:
 
-; 589  : }
+; 657  : }
 
 	mov	ecx, DWORD PTR __$ArrayPad$[ebp]
 	xor	ecx, ebp
@@ -838,30 +1144,30 @@ _yes$ = -2						; size = 1
 _answer$ = -1						; size = 1
 _another_round PROC
 
-; 347  : {
+; 356  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 12					; 0000000cH
 
-; 348  : #ifdef MYDEBUG
-; 349  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 357  : #ifdef MYDEBUG
+; 358  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	349					; 0000015dH
-	push	OFFSET $SG75384
-	push	OFFSET $SG75385
+	push	358					; 00000166H
+	push	OFFSET $SG75415
+	push	OFFSET $SG75416
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 350  : #endif
-; 351  : 
-; 352  :   printf("Another round ? [j/n] ");
+; 359  : #endif
+; 360  : 
+; 361  :   printf("Another round ? [j/n] ");
 
-	push	OFFSET $SG75386
+	push	OFFSET $SG75417
 	call	_printf
 	add	esp, 4
 
-; 353  :   char answer = (char)tolower(getchar()) ; // read pressed key from keyboard
+; 362  :   char answer = (char)tolower(getchar()) ; // read pressed key from keyboard
 
 	call	_getchar
 	push	eax
@@ -869,15 +1175,15 @@ _another_round PROC
 	add	esp, 4
 	mov	BYTE PTR _answer$[ebp], al
 
-; 354  :   // drop superfluous characters
-; 355  :   if (answer != '\n') {
+; 363  :   // drop superfluous characters
+; 364  :   if (answer != '\n') {
 
 	movsx	eax, BYTE PTR _answer$[ebp]
 	cmp	eax, 10					; 0000000aH
 	je	SHORT $LN3@another_ro
 $LN2@another_ro:
 
-; 356  :     while (getchar() != '\n') ;
+; 365  :     while (getchar() != '\n') ;   // Clear keybd buffer and wait for Enter
 
 	call	_getchar
 	cmp	eax, 10					; 0000000aH
@@ -885,8 +1191,8 @@ $LN2@another_ro:
 	jmp	SHORT $LN2@another_ro
 $LN3@another_ro:
 
-; 357  :   }
-; 358  :   bool yes = ((answer == 'j') || (answer == '\n')) ;
+; 366  :   }
+; 367  :   bool yes = ((answer == 'j') || (answer == '\n')) ;
 
 	movsx	ecx, BYTE PTR _answer$[ebp]
 	cmp	ecx, 106				; 0000006aH
@@ -909,25 +1215,25 @@ $LN10@another_ro:
 	mov	al, BYTE PTR tv82[ebp]
 	mov	BYTE PTR _yes$[ebp], al
 
-; 359  :   if (yes) {
+; 368  :   if (yes) {
 
 	movzx	ecx, BYTE PTR _yes$[ebp]
 	test	ecx, ecx
 	je	SHORT $LN5@another_ro
 
-; 360  :     printf("\nOK, now go ahead...\n");
+; 369  :     printf("\nOK, now go ahead...\n");
 
-	push	OFFSET $SG75389
+	push	OFFSET $SG75420
 	call	_printf
 	add	esp, 4
 $LN5@another_ro:
 
-; 361  :   }
-; 362  :   return yes;
+; 370  :   }
+; 371  :   return yes;
 
 	movzx	eax, BYTE PTR _yes$[ebp]
 
-; 363  : }
+; 372  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -942,35 +1248,35 @@ _counter$1 = -4						; size = 4
 _state$ = 8						; size = 4
 _print_result PROC
 
-; 308  : {
+; 317  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 8
 
-; 309  : 
-; 310  : #ifdef MYDEBUG
-; 311  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 318  : 
+; 319  : #ifdef MYDEBUG
+; 320  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	311					; 00000137H
-	push	OFFSET $SG75364
-	push	OFFSET $SG75365
+	push	320					; 00000140H
+	push	OFFSET $SG75395
+	push	OFFSET $SG75396
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 312  : #endif
-; 313  :   // Show result in a nice way (ANSI escape sequences for coloring)
-; 314  :   // Explanation see http://jafrog.com/2013/11/23/colors-in-terminal.html
-; 315  :   // or https://ss64.com/nt/syntax-ansi.html
-; 316  :   // Hint: \033 (3*8+3=27) is an octal representation of 0x1B (dec 27 = ESC)
-; 317  :   printf("! ");
+; 321  : #endif
+; 322  :   // Show result in a nice way (ANSI escape sequences for coloring)
+; 323  :   // Explanation see http://jafrog.com/2013/11/23/colors-in-terminal.html
+; 324  :   // or https://ss64.com/nt/syntax-ansi.html
+; 325  :   // Hint: \033 (3*8+3=27) is an octal representation of 0x1B (dec 27 = ESC)
+; 326  :   printf("! ");
 
-	push	OFFSET $SG75366
+	push	OFFSET $SG75397
 	call	_printf
 	add	esp, 4
 
-; 318  : 
-; 319  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
+; 327  : 
+; 328  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
 
 	mov	DWORD PTR _counter$1[ebp], 0
 	jmp	SHORT $LN4@print_resu
@@ -982,7 +1288,7 @@ $LN4@print_resu:
 	cmp	DWORD PTR _counter$1[ebp], 5
 	jge	SHORT $LN3@print_resu
 
-; 320  :     switch (state->result[counter]) {
+; 329  :     switch (state->result[counter]) {
 
 	mov	ecx, DWORD PTR _counter$1[ebp]
 	mov	edx, DWORD PTR _state$[ebp]
@@ -997,72 +1303,72 @@ $LN4@print_resu:
 	jmp	SHORT $LN9@print_resu
 $LN7@print_resu:
 
-; 321  :       case CORRECT:
-; 322  :         // Characters in the right position marked with green background
-; 323  :         printf("\033[37;42;1m");  // ESC writen as octal number (3*8+3 = 27)
+; 330  :       case CORRECT:
+; 331  :         // Characters in the right position marked with green background
+; 332  :         printf("\033[37;42;1m");  // ESC writen as octal number (3*8+3 = 27)
 
-	push	OFFSET $SG75368
+	push	OFFSET $SG75399
 	call	_printf
 	add	esp, 4
 
-; 324  :         break; // break ends this switch-part
+; 333  :         break; // break ends this switch-part
 
 	jmp	SHORT $LN5@print_resu
 $LN8@print_resu:
 
-; 325  :       case PRESENT:
-; 326  :         // Characters in word but wrong positioned marked with yellow background
-; 327  :         printf("\x1b[37;43;1m");   // ESC writen as hexadecimal number (1*16 + 11 = 27)
+; 334  :       case PRESENT:
+; 335  :         // Characters in word but wrong positioned marked with yellow background
+; 336  :         printf("\x1b[37;43;1m");   // ESC writen as hexadecimal number (1*16 + 11 = 27)
 
-	push	OFFSET $SG75370
+	push	OFFSET $SG75401
 	call	_printf
 	add	esp, 4
 
-; 328  :         break; // break ends this switch-part
+; 337  :         break; // break ends this switch-part
 
 	jmp	SHORT $LN5@print_resu
 $LN9@print_resu:
 
-; 329  :       case NOT_PRESENT:
-; 330  :         // Characters not in word not marked at all, but:
-; 331  :         // since there is no "break"-Statement, they are processd
-; 332  :         // by the following "default:" branch
-; 333  :         // In short: "case NOT_PRESENT" and "default:" refers to the same code
-; 334  :       default:    // the "else" branch of this switch-statement
-; 335  :         // Characters not in word marked with red background
-; 336  :         // Characters not in word marked with red background
-; 337  :         printf("\033[37;41;1m");
+; 338  :       case NOT_PRESENT:
+; 339  :         // Characters not in word not marked at all, but:
+; 340  :         // since there is no "break"-Statement, they are processd
+; 341  :         // by the following "default:" branch
+; 342  :         // In short: "case NOT_PRESENT" and "default:" refers to the same code
+; 343  :       default:    // the "else" branch of this switch-statement
+; 344  :         // Characters not in word marked with red background
+; 345  :         // Characters not in word marked with red background
+; 346  :         printf("\033[37;41;1m");
 
-	push	OFFSET $SG75373
+	push	OFFSET $SG75404
 	call	_printf
 	add	esp, 4
 $LN5@print_resu:
 
-; 338  :         break; // break ends this switch-part
-; 339  :     }
-; 340  :     printf("%c", state->guess[counter]);
+; 347  :         break; // break ends this switch-part
+; 348  :     }
+; 349  :     printf("%c", state->guess[counter]);
 
 	mov	ecx, DWORD PTR _state$[ebp]
 	add	ecx, DWORD PTR _counter$1[ebp]
 	movsx	edx, BYTE PTR [ecx+4]
 	push	edx
-	push	OFFSET $SG75374
+	push	OFFSET $SG75405
 	call	_printf
 	add	esp, 8
 
-; 341  :   }
+; 350  :   }
 
 	jmp	SHORT $LN2@print_resu
 $LN3@print_resu:
 
-; 342  :   // Reset font and background colors to their defaults
-; 343  :   printf("\033[0m\n");
+; 351  :   // Reset font and background colors to their defaults
+; 352  :   printf("\033[0m\n");
 
-	push	OFFSET $SG75375
+	push	OFFSET $SG75406
 	call	_printf
 	add	esp, 4
 
-; 344  : }
+; 353  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -1078,43 +1384,43 @@ _bad_word$ = -1						; size = 1
 _state$ = 8						; size = 4
 _get_input PROC
 
-; 232  : {
+; 241  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 12					; 0000000cH
 
-; 233  : 
-; 234  : #ifdef MYDEBUG
-; 235  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 242  : 
+; 243  : #ifdef MYDEBUG
+; 244  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	235					; 000000ebH
-	push	OFFSET $SG75332
-	push	OFFSET $SG75333
+	push	244					; 000000f4H
+	push	OFFSET $SG75363
+	push	OFFSET $SG75364
 	call	_printf
 	add	esp, 12					; 0000000cH
 $LN4@get_input:
 
-; 236  : #endif
-; 237  : 
-; 238  :   // loop until user input ok
-; 239  :   bool bad_word;
-; 240  :   do {      // while (bad_word)
-; 241  :     printf("\n%d. trial (#=exit) : ", state->n_tries);
+; 245  : #endif
+; 246  : 
+; 247  :   // loop until user input ok
+; 248  :   bool bad_word;
+; 249  :   do {      // while (bad_word)
+; 250  :     printf("\n%d. trial (#=exit) : ", state->n_tries);
 
 	mov	eax, DWORD PTR _state$[ebp]
 	mov	ecx, DWORD PTR [eax+40]
 	push	ecx
-	push	OFFSET $SG75334
+	push	OFFSET $SG75365
 	call	_printf
 	add	esp, 8
 
-; 242  :     // read input from console (WORD_LENGTH characters)
-; 243  :     bad_word = false;
+; 251  :     // read input from console (WORD_LENGTH characters)
+; 252  :     bad_word = false;
 
 	mov	BYTE PTR _bad_word$[ebp], 0
 
-; 244  :     for (int charin = 0; charin < WORD_LENGTH; charin++) {
+; 253  :     for (int charin = 0; charin < WORD_LENGTH; charin++) {
 
 	mov	DWORD PTR _charin$1[ebp], 0
 	jmp	SHORT $LN7@get_input
@@ -1126,15 +1432,15 @@ $LN7@get_input:
 	cmp	DWORD PTR _charin$1[ebp], 5
 	jge	SHORT $LN6@get_input
 
-; 245  :       state->guess[charin] = getchar();         // read character from console
+; 254  :       state->guess[charin] = getchar();         // read character from console
 
 	call	_getchar
 	mov	ecx, DWORD PTR _state$[ebp]
 	add	ecx, DWORD PTR _charin$1[ebp]
 	mov	BYTE PTR [ecx+4], al
 
-; 246  :   
-; 247  :       if (state->guess[charin] == '#') {         // Asterisk means exit program
+; 255  :   
+; 256  :       if (state->guess[charin] == '#') {         // Asterisk means exit program
 
 	mov	edx, DWORD PTR _state$[ebp]
 	add	edx, DWORD PTR _charin$1[ebp]
@@ -1143,7 +1449,7 @@ $LN7@get_input:
 	jne	SHORT $LN12@get_input
 $LN8@get_input:
 
-; 248  :         while (getchar() != '\n') {};           // Clear keyboard buffer
+; 257  :         while (getchar() != '\n') {};           // // Clear keybd buffer and wait for Enter
 
 	call	_getchar
 	cmp	eax, 10					; 0000000aH
@@ -1151,14 +1457,14 @@ $LN8@get_input:
 	jmp	SHORT $LN8@get_input
 $LN9@get_input:
 
-; 249  :         return false;
+; 258  :         return false;
 
 	xor	al, al
 	jmp	$LN1@get_input
 $LN12@get_input:
 
-; 250  :       }
-; 251  :       if (state->guess[charin] == '/n') {       // Enter means end-of-input
+; 259  :       }
+; 260  :       if (state->guess[charin] == '/n') {       // Enter means end-of-input
 
 	mov	ecx, DWORD PTR _state$[ebp]
 	add	ecx, DWORD PTR _charin$1[ebp]
@@ -1166,36 +1472,36 @@ $LN12@get_input:
 	cmp	edx, 12142				; 00002f6eH
 	jne	SHORT $LN13@get_input
 
-; 252  :         state->guess[charin] = '\0';
+; 261  :         state->guess[charin] = '\0';
 
 	mov	eax, DWORD PTR _state$[ebp]
 	add	eax, DWORD PTR _charin$1[ebp]
 	mov	BYTE PTR [eax+4], 0
 
-; 253  :         bad_word = true;
+; 262  :         bad_word = true;
 
 	mov	BYTE PTR _bad_word$[ebp], 1
 
-; 254  :         break;    // exit for-loop
+; 263  :         break;    // exit for-loop
 
 	jmp	SHORT $LN6@get_input
 $LN13@get_input:
 
-; 255  :       } 
-; 256  :     }
+; 264  :       } 
+; 265  :     }
 
 	jmp	SHORT $LN5@get_input
 $LN6@get_input:
 
-; 257  :     // read (and drop) remaining characters (after the WORD_LENGTH one) using a while-loop
-; 258  :     if (!bad_word) {
+; 266  :     // read (and drop) remaining characters (after the WORD_LENGTH one) using a while-loop
+; 267  :     if (!bad_word) {
 
 	movzx	ecx, BYTE PTR _bad_word$[ebp]
 	test	ecx, ecx
 	jne	SHORT $LN11@get_input
 $LN10@get_input:
 
-; 259  :       while (getchar() != '\n') {};
+; 268  :       while (getchar() != '\n') {};         // Clear keybd buffer and wait for Enter
 
 	call	_getchar
 	cmp	eax, 10					; 0000000aH
@@ -1203,69 +1509,69 @@ $LN10@get_input:
 	jmp	SHORT $LN10@get_input
 $LN11@get_input:
 
-; 260  :     }
-; 261  : 
-; 262  :     // set end of string to char after WORD_LENGTH
-; 263  :     state->guess[WORD_LENGTH] = '\0';
+; 269  :     }
+; 270  : 
+; 271  :     // set end of string to char after WORD_LENGTH
+; 272  :     state->guess[WORD_LENGTH] = '\0';
 
 	mov	edx, 1
 	imul	eax, edx, 5
 	mov	ecx, DWORD PTR _state$[ebp]
 	mov	BYTE PTR [ecx+eax+4], 0
 
-; 264  : 
-; 265  : #ifdef MYDEBUG
-; 266  :     printf("\t#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
+; 273  : 
+; 274  : #ifdef MYDEBUG
+; 275  :     printf("\t#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
 
 	mov	edx, DWORD PTR _state$[ebp]
 	add	edx, 4
 	push	edx
-	push	266					; 0000010aH
-	push	OFFSET $SG75338
-	push	OFFSET $SG75339
+	push	275					; 00000113H
+	push	OFFSET $SG75369
+	push	OFFSET $SG75370
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 267  : #endif
-; 268  : 
-; 269  :     // process incorrect user input
-; 270  :     if (bad_word) {
+; 276  : #endif
+; 277  : 
+; 278  :     // process incorrect user input
+; 279  :     if (bad_word) {
 
 	movzx	eax, BYTE PTR _bad_word$[ebp]
 	test	eax, eax
 	je	SHORT $LN15@get_input
 
-; 271  :       printf("Please enter exactly (!) %d characters !\n", WORD_LENGTH);
+; 280  :       printf("Please enter exactly (!) %d characters !\n", WORD_LENGTH);
 
 	push	5
-	push	OFFSET $SG75342
+	push	OFFSET $SG75373
 	call	_printf
 	add	esp, 8
 
-; 272  :     }
+; 281  :     }
 
 	jmp	SHORT $LN18@get_input
 $LN15@get_input:
 
-; 273  :     else {
-; 274  : /*    
-; 275  :   Uncommented the following two statements as one gets only character hints guessing a word from the wordlist
-; 276  :   So if one doesn't know the wordlist, guessing is nearly impossible
-; 277  : 	    bad_word = !word_is_allowed(state->guess);
-; 278  : 	    if (bad_word)
-; 279  : */      
-; 280  : 
-; 281  : #ifdef MYDEBUG
-; 282  :       printf("\t#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
+; 282  :     else {
+; 283  : /*    
+; 284  :   Uncommented the following two statements as one gets only character hints guessing a word from the wordlist
+; 285  :   So if one doesn't know the wordlist, guessing is nearly impossible
+; 286  : 	    bad_word = !word_is_allowed(state->guess);
+; 287  : 	    if (bad_word)
+; 288  : */      
+; 289  : 
+; 290  : #ifdef MYDEBUG
+; 291  :       printf("\t#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
 
-	push	282					; 0000011aH
-	push	OFFSET $SG75343
-	push	OFFSET $SG75344
+	push	291					; 00000123H
+	push	OFFSET $SG75374
+	push	OFFSET $SG75375
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 283  : #endif
-; 284  :       if (!word_is_allowed(state->guess)) {
+; 292  : #endif
+; 293  :       if (!word_is_allowed(state->guess)) {
 
 	mov	ecx, DWORD PTR _state$[ebp]
 	add	ecx, 4
@@ -1276,71 +1582,71 @@ $LN15@get_input:
 	test	edx, edx
 	jne	SHORT $LN17@get_input
 
-; 285  :         printf("Word not found in my wordlist\n");
+; 294  :         printf("Word not found in my wordlist\n");
 
-	push	OFFSET $SG75347
+	push	OFFSET $SG75378
 	call	_printf
 	add	esp, 4
 
-; 286  :       }
+; 295  :       }
 
 	jmp	SHORT $LN18@get_input
 $LN17@get_input:
 
-; 287  :       else {
-; 288  :         printf("Word found in my wordlist\n");
+; 296  :       else {
+; 297  :         printf("Word found in my wordlist\n");
 
-	push	OFFSET $SG75348
+	push	OFFSET $SG75379
 	call	_printf
 	add	esp, 4
 $LN18@get_input:
 
-; 289  :       }
-; 290  : 
-; 291  :     }
-; 292  : #ifdef MYDEBUG
-; 293  :     printf("\t#DBG %s@%d # badword is  %s\n", __func__, __LINE__, bad_word ? "true" : "false");
+; 298  :       }
+; 299  : 
+; 300  :     }
+; 301  : #ifdef MYDEBUG
+; 302  :     printf("\t#DBG %s@%d # badword is  %s\n", __func__, __LINE__, bad_word ? "true" : "false");
 
 	movzx	eax, BYTE PTR _bad_word$[ebp]
 	test	eax, eax
 	je	SHORT $LN20@get_input
-	mov	DWORD PTR tv153[ebp], OFFSET $SG75349
+	mov	DWORD PTR tv153[ebp], OFFSET $SG75380
 	jmp	SHORT $LN21@get_input
 $LN20@get_input:
-	mov	DWORD PTR tv153[ebp], OFFSET $SG75350
+	mov	DWORD PTR tv153[ebp], OFFSET $SG75381
 $LN21@get_input:
 	mov	ecx, DWORD PTR tv153[ebp]
 	push	ecx
-	push	293					; 00000125H
-	push	OFFSET $SG75351
-	push	OFFSET $SG75352
+	push	302					; 0000012eH
+	push	OFFSET $SG75382
+	push	OFFSET $SG75383
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 294  : #endif
-; 295  :   } while (bad_word) ;   // end "do ... while" loop
+; 303  : #endif
+; 304  :   } while (bad_word) ;   // end "do ... while" loop
 
 	movzx	edx, BYTE PTR _bad_word$[ebp]
 	test	edx, edx
 	jne	$LN4@get_input
 
-; 296  : 
-; 297  : #ifdef MYDEBUG
-; 298  :   printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
+; 305  : 
+; 306  : #ifdef MYDEBUG
+; 307  :   printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
 
-	push	298					; 0000012aH
-	push	OFFSET $SG75353
-	push	OFFSET $SG75354
+	push	307					; 00000133H
+	push	OFFSET $SG75384
+	push	OFFSET $SG75385
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 299  : #endif
-; 300  :   return true;
+; 308  : #endif
+; 309  :   return true;
 
 	mov	al, 1
 $LN1@get_input:
 
-; 301  : }
+; 310  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -1357,25 +1663,25 @@ _counter$3 = -4						; size = 4
 _state$ = 8						; size = 4
 _update_state PROC
 
-; 191  : {
+; 200  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 16					; 00000010H
 
-; 192  : #ifdef MYDEBUG
-; 193  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 201  : #ifdef MYDEBUG
+; 202  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	193					; 000000c1H
-	push	OFFSET $SG75313
-	push	OFFSET $SG75314
+	push	202					; 000000caH
+	push	OFFSET $SG75344
+	push	OFFSET $SG75345
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 194  : #endif
-; 195  :  
-; 196  :   // mark every character as "unmarked" before we process the input
-; 197  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
+; 203  : #endif
+; 204  :  
+; 205  :   // mark every character as "unmarked" before we process the input
+; 206  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
 
 	mov	DWORD PTR _counter$1[ebp], 0
 	jmp	SHORT $LN4@update_sta
@@ -1387,29 +1693,29 @@ $LN4@update_sta:
 	cmp	DWORD PTR _counter$1[ebp], 5
 	jge	SHORT $LN3@update_sta
 
-; 198  :     state->result[counter] = UNMARKED;
+; 207  :     state->result[counter] = UNMARKED;
 
 	mov	ecx, DWORD PTR _counter$1[ebp]
 	mov	edx, DWORD PTR _state$[ebp]
 	mov	DWORD PTR [edx+ecx*4+12], 0
 
-; 199  :     state->used[counter] = false;
+; 208  :     state->used[counter] = false;
 
 	mov	eax, DWORD PTR _state$[ebp]
 	add	eax, DWORD PTR _counter$1[ebp]
 	mov	BYTE PTR [eax+32], 0
 
-; 200  :   }
+; 209  :   }
 
 	jmp	SHORT $LN2@update_sta
 $LN3@update_sta:
 
-; 201  : 
-; 202  :   // find correct characters and mark then
-; 203  :   // (Btw: I don't understand, why this and the upper loop aren't combined ?
-; 204  :   //      there's no reference to other array elements than "counter" ?!?,
-; 205  :   //      maybe later combine them ?)
-; 206  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
+; 210  : 
+; 211  :   // find correct characters and mark then
+; 212  :   // (Btw: I don't understand, why this and the upper loop aren't combined ?
+; 213  :   //      there's no reference to other array elements than "counter" ?!?,
+; 214  :   //      maybe later combine them ?)
+; 215  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
 
 	mov	DWORD PTR _counter$3[ebp], 0
 	jmp	SHORT $LN7@update_sta
@@ -1421,7 +1727,7 @@ $LN7@update_sta:
 	cmp	DWORD PTR _counter$3[ebp], 5
 	jge	SHORT $LN6@update_sta
 
-; 207  :     if (state->guess[counter] == state->word[counter]) {
+; 216  :     if (state->guess[counter] == state->word[counter]) {
 
 	mov	edx, DWORD PTR _state$[ebp]
 	add	edx, DWORD PTR _counter$3[ebp]
@@ -1433,28 +1739,28 @@ $LN7@update_sta:
 	cmp	eax, edx
 	jne	SHORT $LN11@update_sta
 
-; 208  :       state->result[counter] = CORRECT;
+; 217  :       state->result[counter] = CORRECT;
 
 	mov	eax, DWORD PTR _counter$3[ebp]
 	mov	ecx, DWORD PTR _state$[ebp]
 	mov	DWORD PTR [ecx+eax*4+12], 3
 
-; 209  :       state->used[counter] = true;
+; 218  :       state->used[counter] = true;
 
 	mov	edx, DWORD PTR _state$[ebp]
 	add	edx, DWORD PTR _counter$3[ebp]
 	mov	BYTE PTR [edx+32], 1
 $LN11@update_sta:
 
-; 210  :     }
-; 211  :   }
+; 219  :     }
+; 220  :   }
 
 	jmp	SHORT $LN5@update_sta
 $LN6@update_sta:
 
-; 212  : 
-; 213  :   // Now process every character that's there but not on the right position
-; 214  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
+; 221  : 
+; 222  :   // Now process every character that's there but not on the right position
+; 223  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
 
 	mov	DWORD PTR _counter$2[ebp], 0
 	jmp	SHORT $LN10@update_sta
@@ -1466,23 +1772,23 @@ $LN10@update_sta:
 	cmp	DWORD PTR _counter$2[ebp], 5
 	jge	SHORT $LN9@update_sta
 
-; 215  :     // if character is marked CORRECT, skip it
-; 216  :     if (state->result[counter] == CORRECT) {
+; 224  :     // if character is marked CORRECT, skip it
+; 225  :     if (state->result[counter] == CORRECT) {
 
 	mov	ecx, DWORD PTR _counter$2[ebp]
 	mov	edx, DWORD PTR _state$[ebp]
 	cmp	DWORD PTR [edx+ecx*4+12], 3
 	jne	SHORT $LN12@update_sta
 
-; 217  :       continue;    // next for-loop
+; 226  :       continue;    // next for-loop
 
 	jmp	SHORT $LN8@update_sta
 $LN12@update_sta:
 
-; 218  :     }
-; 219  :                             // call subfunction in this source and set result
-; 220  :                             // (PRESENT/NOT_PRESENT) depending on bool return of subfunction
-; 221  :     state->result[counter] = is_character_unmarked(state, state->guess[counter])
+; 227  :     }
+; 228  :                             // call subfunction in this source and set result
+; 229  :                             // (PRESENT/NOT_PRESENT) depending on bool return of subfunction
+; 230  :     state->result[counter] = is_character_unmarked(state, state->guess[counter])
 
 	mov	eax, DWORD PTR _state$[ebp]
 	add	eax, DWORD PTR _counter$2[ebp]
@@ -1505,14 +1811,14 @@ $LN15@update_sta:
 	mov	eax, DWORD PTR tv141[ebp]
 	mov	DWORD PTR [edx+ecx*4+12], eax
 
-; 222  :       ? PRESENT
-; 223  :       : NOT_PRESENT;
-; 224  :   }
+; 231  :       ? PRESENT
+; 232  :       : NOT_PRESENT;
+; 233  :   }
 
 	jmp	SHORT $LN8@update_sta
 $LN9@update_sta:
 
-; 225  : }
+; 234  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -1528,29 +1834,29 @@ _state$ = 8						; size = 4
 _c$ = 12						; size = 1
 _is_character_unmarked PROC
 
-; 169  : {
+; 178  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 8
 
-; 170  : #ifdef MYDEBUG
-; 171  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 179  : #ifdef MYDEBUG
+; 180  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	171					; 000000abH
-	push	OFFSET $SG75295
-	push	OFFSET $SG75296
+	push	180					; 000000b4H
+	push	OFFSET $SG75326
+	push	OFFSET $SG75327
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 172  : #endif
-; 173  : 
-; 174  :   bool charfound = false;    // Assume we will not find any character of user's input
+; 181  : #endif
+; 182  : 
+; 183  :   bool charfound = false;    // Assume we will not find any character of user's input
 
 	mov	BYTE PTR _charfound$[ebp], 0
 
-; 175  : 
-; 176  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
+; 184  : 
+; 185  :   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
 
 	mov	DWORD PTR _counter$1[ebp], 0
 	jmp	SHORT $LN4@is_charact
@@ -1562,7 +1868,7 @@ $LN4@is_charact:
 	cmp	DWORD PTR _counter$1[ebp], 5
 	jge	SHORT $LN3@is_charact
 
-; 177  :     if ( (state->word[counter] == c) && (state->used[counter] == false) ) {
+; 186  :     if ( (state->word[counter] == c) && (state->used[counter] == false) ) {
 
 	mov	ecx, DWORD PTR _state$[ebp]
 	mov	edx, DWORD PTR [ecx]
@@ -1577,32 +1883,32 @@ $LN4@is_charact:
 	test	ecx, ecx
 	jne	SHORT $LN5@is_charact
 
-; 178  :       state->used[counter] = true;
+; 187  :       state->used[counter] = true;
 
 	mov	edx, DWORD PTR _state$[ebp]
 	add	edx, DWORD PTR _counter$1[ebp]
 	mov	BYTE PTR [edx+32], 1
 
-; 179  :       charfound = true;   // Wow, we have found a character in our word that user guessed !
+; 188  :       charfound = true;   // Wow, we have found a character in our word that user guessed !
 
 	mov	BYTE PTR _charfound$[ebp], 1
 
-; 180  :       break;  // exit for-loop immediately
+; 189  :       break;  // exit for-loop immediately
 
 	jmp	SHORT $LN3@is_charact
 $LN5@is_charact:
 
-; 181  :     }
-; 182  :   }
+; 190  :     }
+; 191  :   }
 
 	jmp	SHORT $LN2@is_charact
 $LN3@is_charact:
 
-; 183  :   return charfound;     // exit subfunction with scan results
+; 192  :   return charfound;     // exit subfunction with scan results
 
 	movzx	eax, BYTE PTR _charfound$[ebp]
 
-; 184  : }
+; 193  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -1618,29 +1924,29 @@ _wordfound$ = -1					; size = 1
 _word$ = 8						; size = 4
 _word_is_allowed PROC
 
-; 133  : {
+; 142  : {
 
 	push	ebp
 	mov	ebp, esp
 	sub	esp, 12					; 0000000cH
 
-; 134  : #ifdef MYDEBUG
-; 135  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+; 143  : #ifdef MYDEBUG
+; 144  :   printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
 
-	push	135					; 00000087H
-	push	OFFSET $SG75275
-	push	OFFSET $SG75276
+	push	144					; 00000090H
+	push	OFFSET $SG75306
+	push	OFFSET $SG75307
 	call	_printf
 	add	esp, 12					; 0000000cH
 
-; 136  : #endif
-; 137  : 
-; 138  :   // Sequential search the guessed word in wordlist
-; 139  :   bool wordfound = false;    // Assume we will not find any character of user's input
+; 145  : #endif
+; 146  : 
+; 147  :   // Sequential search the guessed word in wordlist
+; 148  :   bool wordfound = false;    // Assume we will not find any character of user's input
 
 	mov	BYTE PTR _wordfound$[ebp], 0
 
-; 140  :   for (int counter = 0; (words[counter] != NULL); ++counter) {
+; 149  :   for (int counter = 0; (words[counter] != NULL); ++counter) {
 
 	mov	DWORD PTR _counter$1[ebp], 0
 	jmp	SHORT $LN4@word_is_al
@@ -1653,22 +1959,22 @@ $LN4@word_is_al:
 	cmp	DWORD PTR _words[ecx*4], 0
 	je	SHORT $LN3@word_is_al
 
-; 141  : #ifdef MYDEBUG
-; 142  :     printf("\t#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
+; 150  : #ifdef MYDEBUG
+; 151  :     printf("\t#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
 
 	mov	edx, DWORD PTR _counter$1[ebp]
 	mov	eax, DWORD PTR _words[edx*4]
 	push	eax
 	mov	ecx, DWORD PTR _word$[ebp]
 	push	ecx
-	push	142					; 0000008eH
-	push	OFFSET $SG75277
-	push	OFFSET $SG75278
+	push	151					; 00000097H
+	push	OFFSET $SG75308
+	push	OFFSET $SG75309
 	call	_printf
 	add	esp, 20					; 00000014H
 
-; 143  : #endif
-; 144  :     if (strncmp(word, words[counter], WORD_LENGTH) == 0) {
+; 152  : #endif
+; 153  :     if (strncmp(word, words[counter], WORD_LENGTH) == 0) {
 
 	push	5
 	mov	edx, DWORD PTR _counter$1[ebp]
@@ -1681,61 +1987,61 @@ $LN4@word_is_al:
 	test	eax, eax
 	jne	SHORT $LN5@word_is_al
 
-; 145  :       wordfound = true;   // Wow, we have found a character in our word that user guessed !
+; 154  :       wordfound = true;   // Wow, we have found a character in our word that user guessed !
 
 	mov	BYTE PTR _wordfound$[ebp], 1
 
-; 146  : #ifdef MYDEBUG
-; 147  :       printf("\t#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
+; 155  : #ifdef MYDEBUG
+; 156  :       printf("\t#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
 
 	mov	edx, DWORD PTR _counter$1[ebp]
 	mov	eax, DWORD PTR _words[edx*4]
 	push	eax
-	push	147					; 00000093H
-	push	OFFSET $SG75280
-	push	OFFSET $SG75281
+	push	156					; 0000009cH
+	push	OFFSET $SG75311
+	push	OFFSET $SG75312
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 148  : #endif
-; 149  :       break;  // exit for-loop immediately
+; 157  : #endif
+; 158  :       break;  // exit for-loop immediately
 
 	jmp	SHORT $LN3@word_is_al
 $LN5@word_is_al:
 
-; 150  :     }
-; 151  :   }
+; 159  :     }
+; 160  :   }
 
 	jmp	$LN2@word_is_al
 $LN3@word_is_al:
 
-; 152  : 
-; 153  :   // Return the search result (true/false) to caller
-; 154  : #ifdef MYDEBUG
-; 155  :   printf("\t#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
+; 161  : 
+; 162  :   // Return the search result (true/false) to caller
+; 163  : #ifdef MYDEBUG
+; 164  :   printf("\t#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
 
 	movzx	ecx, BYTE PTR _wordfound$[ebp]
 	test	ecx, ecx
 	je	SHORT $LN7@word_is_al
-	mov	DWORD PTR tv94[ebp], OFFSET $SG75282
+	mov	DWORD PTR tv94[ebp], OFFSET $SG75313
 	jmp	SHORT $LN8@word_is_al
 $LN7@word_is_al:
-	mov	DWORD PTR tv94[ebp], OFFSET $SG75283
+	mov	DWORD PTR tv94[ebp], OFFSET $SG75314
 $LN8@word_is_al:
 	mov	edx, DWORD PTR tv94[ebp]
 	push	edx
-	push	155					; 0000009bH
-	push	OFFSET $SG75284
-	push	OFFSET $SG75285
+	push	164					; 000000a4H
+	push	OFFSET $SG75315
+	push	OFFSET $SG75316
 	call	_printf
 	add	esp, 16					; 00000010H
 
-; 156  : #endif
-; 157  :   return wordfound;
+; 165  : #endif
+; 166  :   return wordfound;
 
 	movzx	eax, BYTE PTR _wordfound$[ebp]
 
-; 158  : }
+; 167  : }
 
 	mov	esp, ebp
 	pop	ebp
@@ -1817,6 +2123,57 @@ _printf	PROC						; COMDAT
 	pop	ebp
 	ret	0
 _printf	ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp
+; File C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\stdio.h
+;	COMDAT _fprintf
+_TEXT	SEGMENT
+__Result$ = -8						; size = 4
+__ArgList$ = -4						; size = 4
+__Stream$ = 8						; size = 4
+__Format$ = 12						; size = 4
+_fprintf PROC						; COMDAT
+
+; 837  :     {
+
+	push	ebp
+	mov	ebp, esp
+	sub	esp, 8
+
+; 838  :         int _Result;
+; 839  :         va_list _ArgList;
+; 840  :         __crt_va_start(_ArgList, _Format);
+
+	lea	eax, DWORD PTR __Format$[ebp+4]
+	mov	DWORD PTR __ArgList$[ebp], eax
+
+; 841  :         _Result = _vfprintf_l(_Stream, _Format, NULL, _ArgList);
+
+	mov	ecx, DWORD PTR __ArgList$[ebp]
+	push	ecx
+	push	0
+	mov	edx, DWORD PTR __Format$[ebp]
+	push	edx
+	mov	eax, DWORD PTR __Stream$[ebp]
+	push	eax
+	call	__vfprintf_l
+	add	esp, 16					; 00000010H
+	mov	DWORD PTR __Result$[ebp], eax
+
+; 842  :         __crt_va_end(_ArgList);
+
+	mov	DWORD PTR __ArgList$[ebp], 0
+
+; 843  :         return _Result;
+
+	mov	eax, DWORD PTR __Result$[ebp]
+
+; 844  :     }
+
+	mov	esp, ebp
+	pop	ebp
+	ret	0
+_fprintf ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\stdio.h

@@ -5,7 +5,7 @@
     See also https://github.com/607011/wordle-c
     
 */
-#pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****")   
+#pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
 // printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
 
 // stddef.h defines NULL - otherwise use "nullptr" (in newer C versions intrinsic)

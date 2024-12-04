@@ -1,0 +1,9 @@
+02.12.24/AH wingetopt from https://github.com/alex85k/wingetopt/tree/master
+
+- getopt.h
+- getopt.c
+
+I have to test it, see
+https://en.wikipedia.org/wiki/Getopt
+https://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html
+https://pubs.opengroup.org/onlinepubs/009696599/functions/getopt.html

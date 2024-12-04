@@ -24,6 +24,13 @@
     Someone ("Hornschorsch") reworked the whole story, now I have to change my copy
     Although I understand the modifications: number of words in word list not dependend on constant
     Added "#" for easy exit
+
+    04.12.24/AH
+    Integrated getopt.c from https://github.com/alex85k/wingetopt/tree/master
+    as I don't like debugging relying on recompile, so I added processing of two commandline parameters:
+    - -h = help
+    - -v <verbosity> = level of verbosity (0 = Default = no verbosity)
+    The next step will be the processing of the int verbolvl - maybe combined with the precompiler variable definition "DEBUG"
 */
 
 /*
@@ -62,6 +69,8 @@
 #if _MSC_VER          // see https://learn.microsoft.com/en-us/cpp/overview/compiler-versions?view=msvc-170
 #include <Windows.h>
 #include <wchar.h>
+// Windows-specific getopt
+#include "getopt.h"   // see https://github.com/alex85k/wingetopt/tree/master
 #endif
 
 // Declaration of external library functions used in this program
@@ -245,7 +254,7 @@ bool get_input(game_state* state)
       state->guess[charin] = getchar();         // read character from console
   
       if (state->guess[charin] == '#') {         // Asterisk means exit program
-        while (getchar() != '\n') {};           // Clear keyboard buffer
+        while (getchar() != '\n') {};           // // Clear keybd buffer and wait for Enter
         return false;
       }
       if (state->guess[charin] == '/n') {       // Enter means end-of-input
@@ -256,7 +265,7 @@ bool get_input(game_state* state)
     }
     // read (and drop) remaining characters (after the WORD_LENGTH one) using a while-loop
     if (!bad_word) {
-      while (getchar() != '\n') {};
+      while (getchar() != '\n') {};         // Clear keybd buffer and wait for Enter
     }
 
     // set end of string to char after WORD_LENGTH
@@ -353,7 +362,7 @@ bool another_round(void)
   char answer = (char)tolower(getchar()) ; // read pressed key from keyboard
   // drop superfluous characters
   if (answer != '\n') {
-    while (getchar() != '\n') ;
+    while (getchar() != '\n') ;   // Clear keybd buffer and wait for Enter
   }
   bool yes = ((answer == 'j') || (answer == '\n')) ;
   if (yes) {
@@ -362,10 +371,11 @@ bool another_round(void)
   return yes;
 }
 
-/*
+/******************************************************************************************
   Main program
-*/
-int main(int argc, char* argv[])
+*******************************************************************************************/
+/* int main(int argc, char* argv[]) */ /* Original wordle.c version before getopt.c */
+int main(int argc, char** argv)
 {
 
 
@@ -374,8 +384,60 @@ int main(int argc, char* argv[])
   #pragma message: print filename (source) and  compile/build date/time while compiling/building and
   printf : print filename (.exe) and  compile/build date/time when running
 */
-#pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****")   
+#pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
   printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
+
+/*
+  Process commandline parameters with Windows-specific getopt.c
+  getopt is a well-known function in the Unix environment and shells to parse argument lists,
+  see https://en.wikipedia.org/wiki/Getopt 
+  or https://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html (the sample I used here)
+  The "main" function has to be defined with arguments "(int argc, char** argv)" (char** is a pointer to a pointer list)
+*/
+  printf("\nPart %d : process command line parameters by getopt.c\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
+  char *verbosity = NULL;   // Parameter "-v <number>", number = 1 : lowest verbosity
+  int verbolvl = 0;         // Default: no verbosity
+  int cmdline_arg = 0;
+  opterr = 0;               // Defined by getopt.h, returned from getopt
+
+/* Now parse the given-to-main commandline parameters */
+/* Implemented: "-h" = help, "-v <number>" = verbosity with level (1=lowest)"*/
+/* The colon after an option requests a value behind an option character */
+  while ((cmdline_arg = getopt (argc, argv, "hxv:")) != -1) {
+    switch (cmdline_arg) {
+    case 'h':                     // Option -h -> Help
+        printf("Sample C programm derived from c't wordle\n"
+                "typed in and modified by Achim Haag,\n"
+                "see https://github.com/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json\n"
+                "derived from c't 25/2024 (8.11.24), page 66 (https://github.com/607011/wordle-c)\n");
+        return 1; // !!! Attention !!! Early return to OS
+        break;    // Never reached because of return
+    case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
+        verbosity = optarg;   // Defined by getopt.h, returned from getopt
+        printf("Verbosity set to %s\n", verbosity);
+        break;
+    case '?':                     // Any other commandline parameter error
+      if (optopt == 'v')          // optopt: Parameter in error, here -v without following number
+        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+      else if (isprint (optopt))  // here we found a parameter not specified in the third getopt argument (string, see above)
+        fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+      else                        // Any other getopt error - exit program
+        fprintf (stderr, "Unknown option character `\\x%x'...bye\n", optopt);
+      return 1; // !!! Attention !!! Early return to OS
+      break;    // Never reached because of return
+    default:                      // Parameter allowed but not handled - this should not occur
+      printf("Parameter %c not handled...bye\n", cmdline_arg);
+      abort (); // !!! Attention !!! Early return to OS
+      break;    // Never reached because of abort
+    }
+  }
+
+// Convert verbosity string to integer
+  verbolvl=atoi(verbosity);
+  printf ("verbosity = %d (from string [%s])\n", verbolvl, verbosity);
+  printf ("Unprocessed commmandline parameters (%d parameters):\n", optind);
+  for (int index = optind; index < argc; index++)
+    printf ("Non-option argument [%s]\n", argv[index]);
 
 /*
   To enable ANSI text formatting in Windows cmd.exe, I had to add some extra code in my environment (W10 22H2)
@@ -388,27 +450,28 @@ int main(int argc, char* argv[])
 /*
   Enable Windows 10 cmd.exe ANSI processing
 */
+  printf("\nPart %d : enable ANSI colors in windows terminal\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
   // Set output mode to handle virtual terminal sequences
   DWORD LastError = 0;          // Keep GetLastError in own variable to not interfere with printf
   HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
   if (hOut == INVALID_HANDLE_VALUE)   {
     LastError = GetLastError();
     printf("Cannot get handle for standard device (STD_OUTPUT_HANDLE), GetStdHandle RC=%d", LastError);
-    return LastError;
+    return LastError; // !!! Attention !!! Early return to OS
   }
 
   DWORD dwMode = 0;
   if (!GetConsoleMode(hOut, &dwMode)) {
     LastError = GetLastError();
     printf ("Cannot get console mode, GetConsoleMode RC=%d", LastError);
-    return LastError;
+    return LastError; // !!! Attention !!! Early return to OS
   }
 
   dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
   if (!SetConsoleMode(hOut, dwMode)) {
     LastError = GetLastError();
     printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
-    return LastError;
+    return LastError; // !!! Attention !!! Early return to OS
   }
 
 /*    In sample, but unused here
@@ -430,6 +493,9 @@ int main(int argc, char* argv[])
 
 
 /************************* TEST END *************************** */
+
+
+  printf("\nPart %d : you did it ! Now the quiz\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
 /*
     The following "ternary operator" replaces an if/then/else clause.
@@ -584,6 +650,8 @@ int main(int argc, char* argv[])
   int endkey;
   do {
     endkey = getchar();
-  } while (endkey != '\n');    // Wait for Enter
+  } while (endkey != '\n');    // Clear keybd buffer and wait for Enter
+
+// Return to OS
   return EXIT_SUCCESS;
 }
