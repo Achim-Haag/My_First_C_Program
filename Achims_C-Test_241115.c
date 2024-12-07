@@ -466,7 +466,7 @@ int main(int argc, char** argv)
         }
         break;
       case 'f':                     // Option -f -> Fixed random number
-        printf("Random generater value from parameter is %s", optarg);
+        printf("Random generater value from parameter is %s\n",(char*) optarg); // Casting optarg not necessary but seems good practice
         fixrandomseed=atoi(optarg);
         printf("Random generator value set to fixed number %d ... you're debugging or a cheater ?!?\n", fixrandomseed);
         break;
@@ -705,7 +705,7 @@ int main(int argc, char** argv)
       printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
     }
   } // end "while (keepRunning)" loop
-  printf("\nWaiting for you pressing -Enter- (or do something with WinDBG ;-)\n");
+  printf("\nWaiting...please press the -Enter- key (or do something with WinDBG ;-)\n");
   int endkey;
   do {
     endkey = getchar();

@@ -20,6 +20,9 @@
             "args": [
                 "/Zi",
                 "/EHsc",
+                "/FAsu",
+                "/Fa${fileDirname}\\Listings\\",
+                "/Fm${fileDirname}\\Listings\\",
                 "/Fe:",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${workspaceFolder}\\*.c"
@@ -39,6 +42,8 @@
                 "/EHsc",
                 "/nologo",
                 "/FAsu",
+                "/Fa${fileDirname}\\Listings\\",
+                "/Fm${fileDirname}\\Listings\\",
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 // "${file}"
 				"${workspaceFolder}\\*.c"

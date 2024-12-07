@@ -122,18 +122,18 @@ $SG75431 DB	'Another round ? [j/n] ', 00H
 	ORG $+1
 $SG75434 DB	0aH, 'OK, now go ahead...', 0aH, 00H
 	ORG $+2
-$SG75480 DB	'14:46:17', 00H
+$SG75481 DB	'18:00:56', 00H
 	ORG $+3
-$SG75481 DB	'Dec  7 2024', 00H
-$SG75482 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
+$SG75482 DB	'Dec  7 2024', 00H
+$SG75483 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
 	DB	'**', 0aH, 0aH, 00H
 	ORG $+3
-$SG75483 DB	0aH, 'Part %d : process commandline parameters by getopt.'
+$SG75484 DB	0aH, 'Part %d : process commandline parameters by getopt.'
 	DB	'c', 0aH, 00H
 	ORG $+1
-$SG75484 DB	'hf:v:c', 00H
+$SG75485 DB	'hf:v:c', 00H
 	ORG $+5
-$SG75486 DB	'Sample C programm derived from c''t wordle', 0aH, 'typed'
+$SG75487 DB	'Sample C programm derived from c''t wordle', 0aH, 'typed'
 	DB	' in and modified by Achim Haag,', 0aH, 'see https://github.co'
 	DB	'm/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json', 0aH
 	DB	'derived from c''t 25/2024 (8.11.24), page 66 (https://github.'
@@ -143,102 +143,102 @@ $SG75486 DB	'Sample C programm derived from c''t wordle', 0aH, 'typed'
 	DB	'-c : show the word to guess in advance (just for debugging ;-'
 	DB	')', 00H
 	ORG $+3
-$SG75488 DB	'Verbosity set to %s', 0aH, 00H
+$SG75489 DB	'Verbosity set to %s', 0aH, 00H
 	ORG $+3
-$SG75489 DB	'verbosity = %d (from string [%s])', 0aH, 00H
+$SG75490 DB	'verbosity = %d (from string [%s])', 0aH, 00H
 	ORG $+1
-$SG75492 DB	'Verbosity level allowed from 1...9. Bye !', 0aH, 00H
+$SG75493 DB	'Verbosity level allowed from 1...9. Bye !', 0aH, 00H
 	ORG $+1
-$SG75494 DB	'Random generater value from parameter is %s', 00H
-	ORG $+4
-$SG75495 DB	'Random generator value set to fixed number %d ... you''r'
+$SG75495 DB	'Random generater value from parameter is %s', 0aH, 00H
+	ORG $+3
+$SG75496 DB	'Random generator value set to fixed number %d ... you''r'
 	DB	'e debugging or a cheater ?!?', 0aH, 00H
 	ORG $+3
-$SG75497 DB	'Cheating the word is enabled (%d)', 0aH, 00H
+$SG75498 DB	'Cheating the word is enabled (%d)', 0aH, 00H
 	ORG $+1
-$SG75501 DB	'Option -%c requires an argument. Try -h !', 0aH, 00H
+$SG75502 DB	'Option -%c requires an argument. Try -h !', 0aH, 00H
 	ORG $+1
-$SG75504 DB	'Unknown option `-%c''. Try -h !', 0aH, 00H
-$SG75505 DB	'Unknown option character `\x%x'', try -h ! Bye', 0aH, 00H
+$SG75505 DB	'Unknown option `-%c''. Try -h !', 0aH, 00H
+$SG75506 DB	'Unknown option character `\x%x'', try -h ! Bye', 0aH, 00H
 	ORG $+1
-$SG75507 DB	'Parameter %c not handled, contact programmer !', 00H
+$SG75508 DB	'Parameter %c not handled, contact programmer !', 00H
 	ORG $+1
-$SG75509 DB	'main', 00H
+$SG75510 DB	'main', 00H
 	ORG $+3
-$SG75510 DB	09H, '#DBG %s@%d # Unprocessed commmandline parameters (%'
+$SG75511 DB	09H, '#DBG %s@%d # Unprocessed commmandline parameters (%'
 	DB	'd parameters):', 0aH, 00H
-$SG75511 DB	'main', 00H
+$SG75512 DB	'main', 00H
 	ORG $+3
-$SG75512 DB	09H, '#DBG %s@%d # Non-option argument [%s]', 0aH, 00H
-$SG75513 DB	0aH, 'Part %d : enable ANSI colors in windows terminal', 0aH
+$SG75513 DB	09H, '#DBG %s@%d # Non-option argument [%s]', 0aH, 00H
+$SG75514 DB	0aH, 'Part %d : enable ANSI colors in windows terminal', 0aH
 	DB	00H
 	ORG $+1
-$SG75515 DB	'Cannot get handle for standard device (STD_OUTPUT_HANDLE'
+$SG75516 DB	'Cannot get handle for standard device (STD_OUTPUT_HANDLE'
 	DB	'), GetStdHandle RC=%d', 00H
 	ORG $+2
-$SG75517 DB	'Cannot get console mode, GetConsoleMode RC=%d', 00H
+$SG75518 DB	'Cannot get console mode, GetConsoleMode RC=%d', 00H
 	ORG $+2
-$SG75519 DB	'Cannot set console mode to virt. terminal proc., SetCons'
+$SG75520 DB	'Cannot set console mode to virt. terminal proc., SetCons'
 	DB	'oleMode RC=%d', 00H
 	ORG $+2
-$SG75520 DB	0aH, 'Part %d :  Now the quiz, here we go...', 0aH, 00H
+$SG75521 DB	0aH, 'Part %d :  Now the quiz, here we go...', 0aH, 00H
 	ORG $+3
-$SG75522 DB	'Initial random generator seed: %d', 0aH, 00H
+$SG75523 DB	'Initial random generator seed: %d', 0aH, 00H
 	ORG $+1
-$SG75523 DB	0aH, 'NERD WORD', 0aH, 0aH, 'Guess the word with %d chara'
+$SG75524 DB	0aH, 'NERD WORD', 0aH, 0aH, 'Guess the word with %d chara'
 	DB	'cters in no more than %d trials.', 0aH, '(Abort = Ctrl+C - or'
 	DB	' simply the hash key ''#'')', 0aH, 00H
-$SG75525 DB	'true', 00H
+$SG75526 DB	'true', 00H
 	ORG $+3
-$SG75526 DB	'false', 00H
+$SG75527 DB	'false', 00H
 	ORG $+2
-$SG75527 DB	'main', 00H
+$SG75528 DB	'main', 00H
 	ORG $+3
-$SG75528 DB	09H, '#DBG %s@%d # Entering while-loop, keepRunning is %s'
+$SG75529 DB	09H, '#DBG %s@%d # Entering while-loop, keepRunning is %s'
 	DB	0aH, 00H
 	ORG $+2
-$SG75530 DB	'main', 00H
+$SG75531 DB	'main', 00H
 	ORG $+3
-$SG75531 DB	09H, '#DBG %s@%d # Calling game_state', 0aH, 00H
+$SG75532 DB	09H, '#DBG %s@%d # Calling game_state', 0aH, 00H
 	ORG $+2
-$SG75533 DB	'main', 00H
+$SG75534 DB	'main', 00H
 	ORG $+3
-$SG75534 DB	09H, '#DBG %s@%d # Table word count is %d', 0aH, 00H
+$SG75535 DB	09H, '#DBG %s@%d # Table word count is %d', 0aH, 00H
 	ORG $+2
-$SG75536 DB	'main', 00H
+$SG75537 DB	'main', 00H
 	ORG $+3
-$SG75537 DB	09H, '#DBG %s@%d # Hint: you''re guessing for [%s]', 0aH, 00H
+$SG75538 DB	09H, '#DBG %s@%d # Hint: you''re guessing for [%s]', 0aH, 00H
 	ORG $+2
-$SG75539 DB	'main', 00H
+$SG75540 DB	'main', 00H
 	ORG $+3
-$SG75540 DB	09H, '#DBG %s@%d # Entering for-loop, state.n_tries is %d'
+$SG75541 DB	09H, '#DBG %s@%d # Entering for-loop, state.n_tries is %d'
 	DB	0aH, 00H
 	ORG $+2
-$SG75542 DB	'main', 00H
+$SG75543 DB	'main', 00H
 	ORG $+3
-$SG75543 DB	09H, '#DBG %s@%d # Calling get_input', 0aH, 00H
+$SG75544 DB	09H, '#DBG %s@%d # Calling get_input', 0aH, 00H
 	ORG $+3
-$SG75547 DB	'main', 00H
+$SG75548 DB	'main', 00H
 	ORG $+3
-$SG75548 DB	09H, '#DBG %s@%d # Calling update_state', 0aH, 00H
-$SG75551 DB	0aH, 'Yee-haw, you''ve won after %d. trials!', 0aH, 00H
-$SG75553 DB	'You don''t guess the word, it was %s.', 0aH, 00H
+$SG75549 DB	09H, '#DBG %s@%d # Calling update_state', 0aH, 00H
+$SG75552 DB	0aH, 'Yee-haw, you''ve won after %d. trials!', 0aH, 00H
+$SG75554 DB	'You don''t guess the word, it was %s.', 0aH, 00H
 	ORG $+2
-$SG75555 DB	'main', 00H
+$SG75556 DB	'main', 00H
 	ORG $+3
-$SG75556 DB	09H, '#DBG %s@%d # keepRunning after get_input', 0aH, 00H
+$SG75557 DB	09H, '#DBG %s@%d # keepRunning after get_input', 0aH, 00H
 	ORG $+1
-$SG75558 DB	'true', 00H
+$SG75559 DB	'true', 00H
 	ORG $+3
-$SG75559 DB	'false', 00H
+$SG75560 DB	'false', 00H
 	ORG $+2
-$SG75560 DB	'main', 00H
+$SG75561 DB	'main', 00H
 	ORG $+3
-$SG75561 DB	09H, '#DBG %s@%d # Bottom of while-loop, keepRunning is %'
+$SG75562 DB	09H, '#DBG %s@%d # Bottom of while-loop, keepRunning is %'
 	DB	's', 0aH, 00H
 	ORG $+1
-$SG75562 DB	0aH, 'Waiting for you pressing -Enter- (or do something w'
-	DB	'ith WinDBG ;-)', 0aH, 00H
+$SG75563 DB	0aH, 'Waiting...please press the -Enter- key (or do somet'
+	DB	'hing with WinDBG ;-)', 0aH, 00H
 _DATA	ENDS
 voltbl	SEGMENT
 _volmd	DD	0ffffffffH
@@ -292,14 +292,14 @@ _main	PROC
 ; 409  : #pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
 ; 410  :   printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
 
-	push	OFFSET $SG75480
 	push	OFFSET $SG75481
+	push	OFFSET $SG75482
 	mov	eax, 4
 	imul	ecx, eax, 0
 	mov	edx, DWORD PTR _argv$[ebp]
 	mov	eax, DWORD PTR [edx+ecx]
 	push	eax
-	push	OFFSET $SG75482
+	push	OFFSET $SG75483
 	call	_printf
 	add	esp, 16					; 00000010H
 
@@ -314,7 +314,7 @@ _main	PROC
 ; 419  :   printf("\nPart %d : process commandline parameters by getopt.c\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
 	push	1
-	push	OFFSET $SG75483
+	push	OFFSET $SG75484
 	call	_printf
 	add	esp, 8
 
@@ -356,7 +356,7 @@ $LN2@main:
 ; 439  : /* The colon after an option requests a value behind an option character */
 ; 440  :   while ((cmdline_arg = getopt (argc, argv, "hf:v:c")) != -1) {
 
-	push	OFFSET $SG75484
+	push	OFFSET $SG75485
 	mov	ecx, DWORD PTR _argv$[ebp]
 	push	ecx
 	mov	edx, DWORD PTR _argc$[ebp]
@@ -386,7 +386,7 @@ $LN20@main:
 ; 444  :       case 'h':                     // Option -h -> Help
 ; 445  :         printf("Sample C programm derived from c't wordle\n"
 
-	push	OFFSET $SG75486
+	push	OFFSET $SG75487
 	call	_printf
 	add	esp, 4
 
@@ -418,7 +418,7 @@ $LN21@main:
 
 	mov	edx, DWORD PTR _verbosity$[ebp]
 	push	edx
-	push	OFFSET $SG75488
+	push	OFFSET $SG75489
 	call	_printf
 	add	esp, 8
 
@@ -437,7 +437,7 @@ $LN21@main:
 	push	ecx
 	mov	edx, DWORD PTR _verbolvl
 	push	edx
-	push	OFFSET $SG75489
+	push	OFFSET $SG75490
 	call	_printf
 	add	esp, 12					; 0000000cH
 
@@ -451,7 +451,7 @@ $LN23@main:
 
 ; 463  :           printf("Verbosity level allowed from 1...9. Bye !\n");
 
-	push	OFFSET $SG75492
+	push	OFFSET $SG75493
 	call	_printf
 	add	esp, 4
 
@@ -472,11 +472,11 @@ $LN22@main:
 $LN24@main:
 
 ; 468  :       case 'f':                     // Option -f -> Fixed random number
-; 469  :         printf("Random generater value from parameter is %s", optarg);
+; 469  :         printf("Random generater value from parameter is %s\n",(char*) optarg); // Casting optarg not necessary but seems good practice
 
 	mov	eax, DWORD PTR _optarg
 	push	eax
-	push	OFFSET $SG75494
+	push	OFFSET $SG75495
 	call	_printf
 	add	esp, 8
 
@@ -492,7 +492,7 @@ $LN24@main:
 
 	mov	edx, DWORD PTR _fixrandomseed$[ebp]
 	push	edx
-	push	OFFSET $SG75495
+	push	OFFSET $SG75496
 	call	_printf
 	add	esp, 8
 
@@ -510,7 +510,7 @@ $LN25@main:
 
 	movzx	eax, BYTE PTR _cheatword$[ebp]
 	push	eax
-	push	OFFSET $SG75497
+	push	OFFSET $SG75498
 	call	_printf
 	add	esp, 8
 
@@ -529,7 +529,7 @@ $LN26@main:
 
 	mov	ecx, DWORD PTR _optopt
 	push	ecx
-	push	OFFSET $SG75501
+	push	OFFSET $SG75502
 	push	2
 	call	___acrt_iob_func
 	add	esp, 4
@@ -552,7 +552,7 @@ $LN27@main:
 
 	mov	eax, DWORD PTR _optopt
 	push	eax
-	push	OFFSET $SG75504
+	push	OFFSET $SG75505
 	push	2
 	call	___acrt_iob_func
 	add	esp, 4
@@ -569,7 +569,7 @@ $LN29@main:
 
 	mov	ecx, DWORD PTR _optopt
 	push	ecx
-	push	OFFSET $SG75505
+	push	OFFSET $SG75506
 	push	2
 	call	___acrt_iob_func
 	add	esp, 4
@@ -594,7 +594,7 @@ $LN31@main:
 
 	mov	edx, DWORD PTR _cmdline_arg$[ebp]
 	push	edx
-	push	OFFSET $SG75507
+	push	OFFSET $SG75508
 	call	_printf
 	add	esp, 8
 
@@ -622,8 +622,8 @@ $LN3@main:
 	mov	eax, DWORD PTR _optind
 	push	eax
 	push	495					; 000001efH
-	push	OFFSET $SG75509
 	push	OFFSET $SG75510
+	push	OFFSET $SG75511
 	call	_printf
 	add	esp, 16					; 00000010H
 
@@ -645,8 +645,8 @@ $LN8@main:
 	mov	eax, DWORD PTR [edx+ecx*4]
 	push	eax
 	push	496					; 000001f0H
-	push	OFFSET $SG75511
 	push	OFFSET $SG75512
+	push	OFFSET $SG75513
 	call	_printf
 	add	esp, 16					; 00000010H
 	jmp	SHORT $LN6@main
@@ -668,7 +668,7 @@ $LN7@main:
 ; 510  :   printf("\nPart %d : enable ANSI colors in windows terminal\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
 	push	2
-	push	OFFSET $SG75513
+	push	OFFSET $SG75514
 	call	_printf
 	add	esp, 8
 
@@ -697,7 +697,7 @@ $LN7@main:
 
 	mov	ecx, DWORD PTR _LastError$[ebp]
 	push	ecx
-	push	OFFSET $SG75515
+	push	OFFSET $SG75516
 	call	_printf
 	add	esp, 8
 
@@ -732,7 +732,7 @@ $LN33@main:
 
 	mov	ecx, DWORD PTR _LastError$[ebp]
 	push	ecx
-	push	OFFSET $SG75517
+	push	OFFSET $SG75518
 	call	_printf
 	add	esp, 8
 
@@ -769,7 +769,7 @@ $LN34@main:
 
 	mov	edx, DWORD PTR _LastError$[ebp]
 	push	edx
-	push	OFFSET $SG75519
+	push	OFFSET $SG75520
 	call	_printf
 	add	esp, 8
 
@@ -805,7 +805,7 @@ $LN35@main:
 ; 555  :   printf("\nPart %d :  Now the quiz, here we go...\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
 	push	3
-	push	OFFSET $SG75520
+	push	OFFSET $SG75521
 	call	_printf
 	add	esp, 8
 
@@ -847,7 +847,7 @@ $LN53@main:
 
 	mov	edx, DWORD PTR _seed$[ebp]
 	push	edx
-	push	OFFSET $SG75522
+	push	OFFSET $SG75523
 	call	_printf
 	add	esp, 8
 $LN36@main:
@@ -869,7 +869,7 @@ $LN36@main:
 
 	push	6
 	push	5
-	push	OFFSET $SG75523
+	push	OFFSET $SG75524
 	call	_printf
 	add	esp, 12					; 0000000cH
 
@@ -904,16 +904,16 @@ $LN9@main:
 	movzx	edx, BYTE PTR _keepRunning$[ebp]
 	test	edx, edx
 	je	SHORT $LN54@main
-	mov	DWORD PTR tv209[ebp], OFFSET $SG75525
+	mov	DWORD PTR tv209[ebp], OFFSET $SG75526
 	jmp	SHORT $LN55@main
 $LN54@main:
-	mov	DWORD PTR tv209[ebp], OFFSET $SG75526
+	mov	DWORD PTR tv209[ebp], OFFSET $SG75527
 $LN55@main:
 	mov	eax, DWORD PTR tv209[ebp]
 	push	eax
 	push	593					; 00000251H
-	push	OFFSET $SG75527
 	push	OFFSET $SG75528
+	push	OFFSET $SG75529
 	call	_printf
 	add	esp, 16					; 00000010H
 $LN37@main:
@@ -938,8 +938,8 @@ $LN37@main:
 ; 607  :       printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
 
 	push	607					; 0000025fH
-	push	OFFSET $SG75530
 	push	OFFSET $SG75531
+	push	OFFSET $SG75532
 	call	_printf
 	add	esp, 12					; 0000000cH
 $LN38@main:
@@ -977,8 +977,8 @@ $LN12@main:
 	mov	eax, DWORD PTR _num_words$2[ebp]
 	push	eax
 	push	618					; 0000026aH
-	push	OFFSET $SG75533
 	push	OFFSET $SG75534
+	push	OFFSET $SG75535
 	call	_printf
 	add	esp, 16					; 00000010H
 $LN39@main:
@@ -1024,8 +1024,8 @@ $LN39@main:
 	mov	eax, DWORD PTR _state$4[ebp]
 	push	eax
 	push	643					; 00000283H
-	push	OFFSET $SG75536
 	push	OFFSET $SG75537
+	push	OFFSET $SG75538
 	call	_printf
 	add	esp, 16					; 00000010H
 $LN40@main:
@@ -1073,8 +1073,8 @@ $LN16@main:
 	mov	eax, DWORD PTR _state$4[ebp+40]
 	push	eax
 	push	657					; 00000291H
-	push	OFFSET $SG75539
 	push	OFFSET $SG75540
+	push	OFFSET $SG75541
 	call	_printf
 	add	esp, 16					; 00000010H
 $LN41@main:
@@ -1096,8 +1096,8 @@ $LN41@main:
 ; 668  :         printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
 
 	push	668					; 0000029cH
-	push	OFFSET $SG75542
 	push	OFFSET $SG75543
+	push	OFFSET $SG75544
 	call	_printf
 	add	esp, 12					; 0000000cH
 $LN42@main:
@@ -1123,8 +1123,8 @@ $LN42@main:
 ; 674  :           printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
 
 	push	674					; 000002a2H
-	push	OFFSET $SG75547
 	push	OFFSET $SG75548
+	push	OFFSET $SG75549
 	call	_printf
 	add	esp, 12					; 0000000cH
 $LN45@main:
@@ -1164,7 +1164,7 @@ $LN45@main:
 
 	mov	ecx, DWORD PTR _state$4[ebp+40]
 	push	ecx
-	push	OFFSET $SG75551
+	push	OFFSET $SG75552
 	call	_printf
 	add	esp, 8
 
@@ -1192,7 +1192,7 @@ $LN46@main:
 
 	mov	edx, DWORD PTR _state$4[ebp]
 	push	edx
-	push	OFFSET $SG75553
+	push	OFFSET $SG75554
 	call	_printf
 	add	esp, 8
 
@@ -1223,8 +1223,8 @@ $LN43@main:
 ; 698  :           printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
 
 	push	698					; 000002baH
-	push	OFFSET $SG75555
 	push	OFFSET $SG75556
+	push	OFFSET $SG75557
 	call	_printf
 	add	esp, 12					; 0000000cH
 $LN49@main:
@@ -1252,16 +1252,16 @@ $LN15@main:
 	movzx	eax, BYTE PTR _keepRunning$[ebp]
 	test	eax, eax
 	je	SHORT $LN56@main
-	mov	DWORD PTR tv311[ebp], OFFSET $SG75558
+	mov	DWORD PTR tv311[ebp], OFFSET $SG75559
 	jmp	SHORT $LN57@main
 $LN56@main:
-	mov	DWORD PTR tv311[ebp], OFFSET $SG75559
+	mov	DWORD PTR tv311[ebp], OFFSET $SG75560
 $LN57@main:
 	mov	ecx, DWORD PTR tv311[ebp]
 	push	ecx
 	push	705					; 000002c1H
-	push	OFFSET $SG75560
 	push	OFFSET $SG75561
+	push	OFFSET $SG75562
 	call	_printf
 	add	esp, 16					; 00000010H
 $LN50@main:
@@ -1272,9 +1272,9 @@ $LN50@main:
 	jmp	$LN9@main
 $LN10@main:
 
-; 708  :   printf("\nWaiting for you pressing -Enter- (or do something with WinDBG ;-)\n");
+; 708  :   printf("\nWaiting...please press the -Enter- key (or do something with WinDBG ;-)\n");
 
-	push	OFFSET $SG75562
+	push	OFFSET $SG75563
 	call	_printf
 	add	esp, 4
 $LN19@main:
