@@ -28,37 +28,41 @@
     04.12.24/AH
     Integrated getopt.c from https://github.com/alex85k/wingetopt/tree/master
     as I don't like debugging relying on recompile, so I added processing of two commandline parameters:
-    - -h = help
-    - -v <verbosity> = level of verbosity (0 = Default = no verbosity)
+    - Parm -h = help
+    - Parm -v <verbosity> = level of verbosity (0 = Default = no verbosity)
     The next step will be the processing of the int verbolvl - maybe combined with the precompiler variable definition "DEBUG"
-*/
 
-/*
-    Activate the following statement for enhanced output
-    (Later, I will change it to a program parameter -v (verbose) )
+    07.12.24/AH
+    More insight after reading german websites
+    - https://www.c-howto.de/tutorial/ (language overview)
+    - http://c-buch.sommergut.de/index.shtml (deep dive)
+    Changed debugging from precompiler to commandline parameter
+    - Parm -f = Initialize random generator (rseed) with constant NULL delivers always the same word sequence (for debugging purposes)
+    - Parm -c = Cheat - show the word to guess (just for debugging :-P)
 */
-#define MYDEBUG
 
 /*
   Program logic:
-    * main:
+    -> main:
+      -> getopt.c
+      process commandline parameters returned from getopt.c
       count words in word list and select word to guess
       loop MAX_TRIES times
-        * get_input:
+        -> get_input:
           until user entered 5 characters and word is in wordlist
             read user's input characters
-            * word_is_allowed:
+            -> word_is_allowed:
               check if word is in wordlist
-        * update_state:
+        -> update_state:
           mark correct and misplaced characters
           save the result in structure
-            * is_character_unmarked
+            -> is_character_unmarked
               check word for guessed character
-        * print_result:
+        -> print_result:
           show result and wrong characters to user
         compare word with word from wordlist
           show final result
-          * another_round
+          -> another_round
             ask user for another round
 */
 
@@ -88,6 +92,23 @@
 // Declaration of precompiler variables
 #define WORD_BUF_LEN (WORD_LENGTH + 1)
 #define MAX_TRIES (6)
+
+/*
+  Global section
+
+  We define global variables before the "main" function, so they're available to all functions in this module
+  and possibly in other (linked) modules too, but let me explain:
+  The attribute static has two meanings:
+  - keep variable in memory over the lifetime of the main program (but always done for global variables)
+  - for global variables: don't expose them to the linker (and therefore don't expose them to external modules, e.g.words.c)
+
+  So I have to define the variable verbolvl (debug level from commandline) in this global section as I use it in the 
+  subfunctions too - but as I don't want it be used in other modules (words.c, getopts.c), I define it as "static"
+
+  BTW: all global variables are initialized to zero - but as a good programmer, I set them explicitly ;-)
+*/
+static int verbolvl = 0;         // Default: no verbosity
+
 
 // this defines status as an enumeration template
 // it consists of a set of elements that are assigned to numbers
@@ -140,29 +161,29 @@ typedef struct
 */
 bool word_is_allowed(const char* word)
 {
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
 
   // Sequential search the guessed word in wordlist
   bool wordfound = false;    // Assume we will not find any character of user's input
   for (int counter = 0; (words[counter] != NULL); ++counter) {
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # strncmp [%s] with [%s]\n", __func__, __LINE__, word, words[counter]);
+    }
     if (strncmp(word, words[counter], WORD_LENGTH) == 0) {
       wordfound = true;   // Wow, we have found a character in our word that user guessed !
-#ifdef MYDEBUG
-      printf("\t#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
-#endif
+      if ( verbolvl > 0 ) {
+        printf("\t#DBG %s@%d # found word %s\n", __func__, __LINE__, words[counter]);
+      }
       break;  // exit for-loop immediately
     }
   }
 
   // Return the search result (true/false) to caller
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Returning with '%s'\n", __func__, __LINE__, wordfound ? "true" : "false");
+  }
   return wordfound;
 }
 
@@ -176,9 +197,9 @@ bool word_is_allowed(const char* word)
 */
 bool is_character_unmarked(game_state* state, char c)
 {
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
 
   bool charfound = false;    // Assume we will not find any character of user's input
 
@@ -198,9 +219,9 @@ bool is_character_unmarked(game_state* state, char c)
 */
 void update_state(game_state *state)
 {
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
  
   // mark every character as "unmarked" before we process the input
   for (int counter = 0; counter < WORD_LENGTH; ++counter) {
@@ -239,10 +260,9 @@ void update_state(game_state *state)
 */
 bool get_input(game_state* state)
 {
-
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
 
   // loop until user input ok
   bool bad_word;
@@ -271,9 +291,9 @@ bool get_input(game_state* state)
     // set end of string to char after WORD_LENGTH
     state->guess[WORD_LENGTH] = '\0';
 
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # Input: [%s]\n", __func__, __LINE__, state->guess);
+    }
 
     // process incorrect user input
     if (bad_word) {
@@ -287,9 +307,9 @@ bool get_input(game_state* state)
 	    if (bad_word)
 */      
 
-#ifdef MYDEBUG
-      printf("\t#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
-#endif
+      if ( verbolvl > 0 ) {
+        printf("\t#DBG %s@%d # Back from word_is_allowed\n", __func__, __LINE__);
+      }
       if (!word_is_allowed(state->guess)) {
         printf("Word not found in my wordlist\n");
       }
@@ -298,14 +318,16 @@ bool get_input(game_state* state)
       }
 
     }
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # badword is  %s\n", __func__, __LINE__, bad_word ? "true" : "false");
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # badword is  %s\n", __func__, __LINE__, bad_word ? "true" : "false");
+    }
+
   } while (bad_word) ;   // end "do ... while" loop
 
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Leaving function\n", __func__, __LINE__);
+  }
+
   return true;
 }
 
@@ -316,9 +338,9 @@ bool get_input(game_state* state)
 void print_result(const game_state* state)
 {
 
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
   // Show result in a nice way (ANSI escape sequences for coloring)
   // Explanation see http://jafrog.com/2013/11/23/colors-in-terminal.html
   // or https://ss64.com/nt/syntax-ansi.html
@@ -354,9 +376,9 @@ void print_result(const game_state* state)
 
 bool another_round(void)
 {
-#ifdef MYDEBUG
-  printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
-#endif
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Entering subfunction\n", __func__, __LINE__);
+  }
 
   printf("Another round ? [j/n] ");
   char answer = (char)tolower(getchar()) ; // read pressed key from keyboard
@@ -394,50 +416,85 @@ int main(int argc, char** argv)
   or https://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html (the sample I used here)
   The "main" function has to be defined with arguments "(int argc, char** argv)" (char** is a pointer to a pointer list)
 */
-  printf("\nPart %d : process command line parameters by getopt.c\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
+  printf("\nPart %d : process commandline parameters by getopt.c\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
   char *verbosity = NULL;   // Parameter "-v <number>", number = 1 : lowest verbosity
-  int verbolvl = 0;         // Default: no verbosity
-  int cmdline_arg = 0;
-  opterr = 0;               // Defined by getopt.h, returned from getopt
+  int fixrandomseed = 0;    // Parameter "-f <number>" : init random generater with debugging number (otherwise with time stamp)
+  bool cheatword = false;   // Parameter "-c" : show each word to guess in advance
+
+/*
+  Variables defined for and by getopt.c (https://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html)
+  Call : getopt(int argc, char* const *argv, const char* options)
+  argc = number of parameters in argv,
+  argv = pointer to pointerlist (i.e. to a pointer array), each pointer in pointerlist points to a commandline parameter
+  options = string with allowed commandline parameters. Colon after parameter means: parameter must have a following string value
+*/  
+  int cmdline_arg = 0;      // Returns the next commandline parameter from getopt prefixed by "-", else a value of -1
+  int opterr = 0;           // getopt.c behaviour regarding error handling; 0 = silent but return "?" in case of error", not 0 = print msg
+  // int optopt in getopt.h     commandline parameter not specified in third parameter of getopt call, i.e. parameter not allowed
+  // int optind in getopt.h     set by getopt.c to the index of the next elemnt in argv. At end: points to first unprocessed argv element
+  // char* optarg in getopt.h   set by getopt.c to the option value behind the processed commandline parameter (e.g. "1" for "-v 1")
 
 /* Now parse the given-to-main commandline parameters */
-/* Implemented: "-h" = help, "-v <number>" = verbosity with level (1=lowest)"*/
+/* Implemented: "-h" = help; "-v <number>" = verbosity with level (1=lowest); -f = fixed random generator value (NULL)*/
 /* The colon after an option requests a value behind an option character */
-  while ((cmdline_arg = getopt (argc, argv, "hxv:")) != -1) {
+  while ((cmdline_arg = getopt (argc, argv, "hf:v:c")) != -1) {
+    // As we don't have here a valid verbolvl, I leave this debugging statement as comment:
+    // printf("### Entering next getopts loop (while), cmdline_arg = %d = %c\n", cmdline_arg, cmdline_arg);
     switch (cmdline_arg) {
-    case 'h':                     // Option -h -> Help
+      case 'h':                     // Option -h -> Help
         printf("Sample C programm derived from c't wordle\n"
-                "typed in and modified by Achim Haag,\n"
-                "see https://github.com/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json\n"
-                "derived from c't 25/2024 (8.11.24), page 66 (https://github.com/607011/wordle-c)\n");
+             "typed in and modified by Achim Haag,\n"
+             "see https://github.com/Achim-Haag/My_First_C_Program/blob/main/.vscode/tasks.json\n"
+             "derived from c't 25/2024 (8.11.24), page 66 (https://github.com/607011/wordle-c)\n"
+             "Allowed commandline parameters:\n"
+             "-h : this help\n"
+             "-v <verbosity-level> : debugging\n"
+             "-f <number> : constant random number sequence for debugging\n"
+             "-c : show the word to guess in advance (just for debugging ;-)");
         return 1; // !!! Attention !!! Early return to OS
         break;    // Never reached because of return
-    case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
+      case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
         verbosity = optarg;   // Defined by getopt.h, returned from getopt
         printf("Verbosity set to %s\n", verbosity);
+        // Convert verbosity string to integer
+        verbolvl=atoi(verbosity);
+        printf ("verbosity = %d (from string [%s])\n", verbolvl, verbosity);
+        if (verbolvl < 1 || verbolvl > 9) {
+          printf("Verbosity level allowed from 1...9. Bye !\n");
+          return 8; // !!! Attention !!! Early return to OS
+          break;    // Never reached because of abort
+        }
         break;
-    case '?':                     // Any other commandline parameter error
-      if (optopt == 'v')          // optopt: Parameter in error, here -v without following number
-        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
-      else if (isprint (optopt))  // here we found a parameter not specified in the third getopt argument (string, see above)
-        fprintf (stderr, "Unknown option `-%c'.\n", optopt);
-      else                        // Any other getopt error - exit program
-        fprintf (stderr, "Unknown option character `\\x%x'...bye\n", optopt);
-      return 1; // !!! Attention !!! Early return to OS
-      break;    // Never reached because of return
-    default:                      // Parameter allowed but not handled - this should not occur
-      printf("Parameter %c not handled...bye\n", cmdline_arg);
-      abort (); // !!! Attention !!! Early return to OS
-      break;    // Never reached because of abort
+      case 'f':                     // Option -f -> Fixed random number
+        printf("Random generater value from parameter is %s", optarg);
+        fixrandomseed=atoi(optarg);
+        printf("Random generator value set to fixed number %d ... you're debugging or a cheater ?!?\n", fixrandomseed);
+        break;
+      case 'c':                     // Option -f -> Fixed random number
+        cheatword = true;
+        printf("Cheating the word is enabled (%d)\n", cheatword);
+        break;
+      case '?':                     // Any other commandline parameter error
+        if (optopt == 'v') {         // optopt: Parameter in error, here -v without following number
+          fprintf (stderr, "Option -%c requires an argument. Try -h !\n", optopt);
+        } else if (isprint (optopt)) {    // here we found a parameter not specified in the third getopt argument (string, see above)
+          fprintf (stderr, "Unknown option `-%c'. Try -h !\n", optopt);
+        } else {                    // Any other getopt error - exit program
+          fprintf (stderr, "Unknown option character `\\x%x', try -h ! Bye\n", optopt);
+        } // endif
+        return 1; // !!! Attention !!! Early return to OS
+        break;    // Never reached because of return
+      default:                      // Parameter allowed but not handled - this should not occur
+        printf("Parameter %c not handled, contact programmer !", cmdline_arg);
+        abort (); // !!! Attention !!! Early return to OS
+        break;    // Never reached because of abort
     }
   }
 
-// Convert verbosity string to integer
-  verbolvl=atoi(verbosity);
-  printf ("verbosity = %d (from string [%s])\n", verbolvl, verbosity);
-  printf ("Unprocessed commmandline parameters (%d parameters):\n", optind);
-  for (int index = optind; index < argc; index++)
-    printf ("Non-option argument [%s]\n", argv[index]);
+  if ( verbolvl > 0 ) {
+    printf("\t#DBG %s@%d # Unprocessed commmandline parameters (%d parameters):\n", __func__, __LINE__, optind);
+    for (int index = optind; index < argc; index++) printf ("\t#DBG %s@%d # Non-option argument [%s]\n", __func__, __LINE__, argv[index]);
+  }
 
 /*
   To enable ANSI text formatting in Windows cmd.exe, I had to add some extra code in my environment (W10 22H2)
@@ -469,7 +526,7 @@ int main(int argc, char** argv)
 
   dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
   if (!SetConsoleMode(hOut, dwMode)) {
-    LastError = GetLastError();
+   LastError = GetLastError();
     printf("Cannot set console mode to virt. terminal proc., SetConsoleMode RC=%d", LastError);
     return LastError; // !!! Attention !!! Early return to OS
   }
@@ -495,7 +552,7 @@ int main(int argc, char** argv)
 /************************* TEST END *************************** */
 
 
-  printf("\nPart %d : you did it ! Now the quiz\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
+  printf("\nPart %d :  Now the quiz, here we go...\n",  (__COUNTER__ + 1)); // Misuse precompiler __COUNTER__ for heading line
 
 /*
     The following "ternary operator" replaces an if/then/else clause.
@@ -506,11 +563,13 @@ int main(int argc, char** argv)
     If no explicit parameter is specified, the actual timestamp is used for the initialization of the random generater,
     leading to nonpredictable random number series.
 */
-  unsigned int seed = (argc > 1)
-                      ? (unsigned int)atoi(argv[1])
+  unsigned int seed = (fixrandomseed != 0)
+                      ? (unsigned int)fixrandomseed
                       : (unsigned int)time(NULL) ;
 
-  printf("Initial random generator seed: %d\n", seed);
+  if ( verbolvl > 0 ) {
+    printf("Initial random generator seed: %d\n", seed);
+  }
 
 /*
     Prepare the random number generation for later use of the "rand" function
@@ -519,7 +578,7 @@ int main(int argc, char** argv)
 
   printf("\nNERD WORD\n\n"
          "Guess the word with %d characters in no more than %d trials.\n"
-         "(Abort = Ctrl+C)\n",
+         "(Abort = Ctrl+C - or simply the hash key '#')\n",
          WORD_LENGTH, MAX_TRIES);
 
 /*
@@ -530,9 +589,9 @@ int main(int argc, char** argv)
   bool keepRunning = true;
   while (keepRunning) {
 
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # Entering while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
+    }
 
 
 /*
@@ -544,9 +603,9 @@ int main(int argc, char** argv)
     (the compiler generates code to allocate RAM)
     Btw: scope means here: "main"
 */
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # Calling game_state\n", __func__, __LINE__);
+    }
     game_state state;
 
 /*
@@ -555,9 +614,9 @@ int main(int argc, char** argv)
     int num_words;
     for (num_words = 0; words[num_words] != NULL; num_words++) {};  // One-line loop
 
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # Table word count is %d\n", __func__, __LINE__, num_words);
-#endif
+    if ( verbolvl > 0 ) {
+      printf("\t#DBG %s@%d # Table word count is %d\n", __func__, __LINE__, num_words);
+     }
 
 /*
     Now we fill one variable - the pointer to the word - with the address of a randomly selected
@@ -578,10 +637,11 @@ int main(int argc, char** argv)
     Not to be confused with _DEBUG (underscore !) that is defined by MSVC by the /MTd or /MDd option,
     see https://learn.microsoft.com/en-us/cpp/c-runtime-library/debug?view=msvc-170
     Changed to my own precompiler variable MYDEBUG for simplicity
+    Changed from precompiler variable MYDEBUG to commandline parameter -v <verbolvl> (verbolvl=1..9)
 */
-#ifdef MYDEBUG
-    printf("\t#DBG %s@%d # Hint: %s\n", __func__, __LINE__, state.word);
-#endif
+    if ( cheatword ) {    // not dependend on debugging but on commandline parameter -c (Cheat ;-)
+      printf("\t#DBG %s@%d # Hint: you're guessing for [%s]\n", __func__, __LINE__, state.word);
+    }
 
 /*
   Now we run another loop that asks our guesses of the characters
@@ -593,9 +653,9 @@ int main(int argc, char** argv)
     for (state.n_tries = 1; 
          state.n_tries <= MAX_TRIES && !doRestart;
          ++state.n_tries)    {
-#ifdef MYDEBUG
-      printf("\t#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
-#endif
+      if ( verbolvl > 0 ) {
+        printf("\t#DBG %s@%d # Entering for-loop, state.n_tries is %d\n", __func__, __LINE__, state.n_tries);
+      }
     
 /*
     we call the above defined function to get user's input.
@@ -604,15 +664,15 @@ int main(int argc, char** argv)
 */   
 
     // ask user for keyboard input, exit loop if user wants to
-#ifdef MYDEBUG
-      printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
-#endif
-      if (get_input(&state)) {
+      if ( verbolvl > 0 ) {
+        printf("\t#DBG %s@%d # Calling get_input\n", __func__, __LINE__);
+      }
 
+      if (get_input(&state)) {
     // process user's input
-#ifdef MYDEBUG
-        printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
-#endif
+        if ( verbolvl > 0 ) {
+          printf("\t#DBG %s@%d # Calling update_state\n", __func__, __LINE__);
+        }
         update_state(&state);
 
       // show results
@@ -634,19 +694,18 @@ int main(int argc, char** argv)
       }
       else {
         keepRunning = false;
+        if ( verbolvl > 0 ) {
+          printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
+        }
         break; // for-loop
-#ifdef MYDEBUG
-        printf("\t#DBG %s@%d # keepRunning after get_input\n", __func__, __LINE__), keepRunning;
-#endif
-
       }
 
     } // end "for num_words" loop
-#ifdef MYDEBUG
+    if ( verbolvl > 0 ) {
       printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
-#endif
+    }
   } // end "while (keepRunning)" loop
-  printf("\nWaiting for you debugging me,\nplease press Enter after debugging has ended\n");
+  printf("\nWaiting for you pressing -Enter- (or debug me ;-)\n");
   int endkey;
   do {
     endkey = getchar();
