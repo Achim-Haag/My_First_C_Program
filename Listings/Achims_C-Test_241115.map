@@ -3844,6 +3844,9 @@
  0003:00001e24       ??_R0?AVDNameStatusNode@@@8 00479e24     libvcruntime:undname.obj
  0003:00001e48       ??_R0?AVpairNode@@@8       00479e48     libvcruntime:undname.obj
  0003:00001e64       ??_R0?AVtype_info@@@8      00479e64     LIBCMT:std_type_info_static.obj
+ 0003:000022b4       _optarg                    0047a2b4     <common>
+ 0003:000022b8       ___mingw_optreset          0047a2b8     <common>
+ 0003:000022c0       ?_OptionsStorage@?1??__local_stdio_printf_options@@9@9 0047a2c0     <common>
  0003:00002354       ___scrt_current_native_startup_state 0047a354     LIBCMT:utility.obj
  0003:00002358       ___scrt_native_startup_lock 0047a358     LIBCMT:utility.obj
  0003:00002380       ?__type_info_root_node@@3U__type_info_node@@A 0047a380     LIBCMT:tncleanup.obj
@@ -3898,9 +3901,6 @@
  0003:000035ac       ___acrt_lconv_static_W_null 0047b5ac     libucrt:localeconv.obj
  0003:000035b0       ___acrt_heap               0047b5b0     libucrt:heap_handle.obj
  0003:000035e8       ___fastflag                0047b5e8     libucrt:fp_flags.obj
- 0003:000035f0       _optarg                    0047b5f0     <common>
- 0003:00003600       ___mingw_optreset          0047b600     <common>
- 0003:00003608       ?_OptionsStorage@?1??__local_stdio_printf_options@@9@9 0047b608     <common>
  0003:0000361c       ___scrt_ucrt_dll_is_in_use 0047b61c     <common>
  0003:00003628       ___dyn_tls_dtor_callback   0047b628     <common>
  0003:00003634       ___dyn_tls_init_callback   0047b634     <common>
