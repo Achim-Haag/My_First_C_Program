@@ -122,7 +122,7 @@ $SG75431 DB	'Another round ? [j/n] ', 00H
 	ORG $+1
 $SG75434 DB	0aH, 'OK, now go ahead...', 0aH, 00H
 	ORG $+2
-$SG75480 DB	'14:23:29', 00H
+$SG75480 DB	'14:46:17', 00H
 	ORG $+3
 $SG75481 DB	'Dec  7 2024', 00H
 $SG75482 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s ***'
@@ -237,8 +237,8 @@ $SG75560 DB	'main', 00H
 $SG75561 DB	09H, '#DBG %s@%d # Bottom of while-loop, keepRunning is %'
 	DB	's', 0aH, 00H
 	ORG $+1
-$SG75562 DB	0aH, 'Waiting for you pressing -Enter- (or debug me ;-)', 0aH
-	DB	00H
+$SG75562 DB	0aH, 'Waiting for you pressing -Enter- (or do something w'
+	DB	'ith WinDBG ;-)', 0aH, 00H
 _DATA	ENDS
 voltbl	SEGMENT
 _volmd	DD	0ffffffffH
@@ -1272,7 +1272,7 @@ $LN50@main:
 	jmp	$LN9@main
 $LN10@main:
 
-; 708  :   printf("\nWaiting for you pressing -Enter- (or debug me ;-)\n");
+; 708  :   printf("\nWaiting for you pressing -Enter- (or do something with WinDBG ;-)\n");
 
 	push	OFFSET $SG75562
 	call	_printf
@@ -1811,7 +1811,7 @@ $LN17@get_input:
 
 ; 302  :     else {
 ; 303  : /*    
-; 304  :   Uncommented the following two statements as one gets only character hints guessing a word from the wordlist
+; 304  :   Deactivated the following two statements as we get only character hints if we hit a word from the wordlist
 ; 305  :   So if one doesn't know the wordlist, guessing is nearly impossible
 ; 306  : 	    bad_word = !word_is_allowed(state->guess);
 ; 307  : 	    if (bad_word)

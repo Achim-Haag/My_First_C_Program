@@ -18,6 +18,7 @@ The program is a sample published in c't, a german computer journal, but I will 
     - character hints not dependend on guessing word of wordlist
     - "#" for fast exit
     - getopt.c integration for parsing commandline parameters
+    - more commandline parameters (try parameter -h for help)
 
 ## What will come
 - Details for pointers
@@ -30,3 +31,7 @@ The program is a sample published in c't, a german computer journal, but I will 
 - .vscode = Folder with Visualstudio Code definitions for building (compiling), launching and debugging this project in Windows
     - launch.json = Enables Visualstudio Code to compile this project without executing VSC from VS developer command prompt
     - tasks.json = Compiles all .c programms in this folder at once (Ctrl-Shift-B to build the .exe)
+
+## What may help getting noble, wise and brave
+- https://www.c-howto.de/tutorial/ (language overview)
+- http://c-buch.sommergut.de/index.shtml (deep dive)

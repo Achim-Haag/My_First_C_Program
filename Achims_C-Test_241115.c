@@ -301,7 +301,7 @@ bool get_input(game_state* state)
     }
     else {
 /*    
-  Uncommented the following two statements as one gets only character hints guessing a word from the wordlist
+  Deactivated the following two statements as we get only character hints if we hit a word from the wordlist
   So if one doesn't know the wordlist, guessing is nearly impossible
 	    bad_word = !word_is_allowed(state->guess);
 	    if (bad_word)
@@ -705,7 +705,7 @@ int main(int argc, char** argv)
       printf("\t#DBG %s@%d # Bottom of while-loop, keepRunning is %s\n", __func__, __LINE__, keepRunning ? "true" : "false");
     }
   } // end "while (keepRunning)" loop
-  printf("\nWaiting for you pressing -Enter- (or debug me ;-)\n");
+  printf("\nWaiting for you pressing -Enter- (or do something with WinDBG ;-)\n");
   int endkey;
   do {
     endkey = getchar();
