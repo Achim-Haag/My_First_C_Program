@@ -413,7 +413,7 @@ int main(int argc, char** argv)
 // Building with Microsoft Visual-C
 #if _MSC_VER          // see https://learn.microsoft.com/en-us/cpp/overview/compiler-versions?view=msvc-170
 #define COMP_TYP "MSVC"
-#define COMP_VER _MSC_FULLVER
+#define COMP_VER _MSC_FULL_VER
 // Building with gcc
 #elif __GNUC__		// see https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
 #define COMP_TYP "gcc"

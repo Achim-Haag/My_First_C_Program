@@ -1,6 +1,6 @@
  Achims_C-Test_241115
 
- Timestamp is 67547f49 (Sat Dec  7 18:00:57 2024)
+ Timestamp is 67548290 (Sat Dec  7 18:14:56 2024)
 
  Preferred load address is 00400000
 
@@ -4299,8 +4299,8 @@
  0000:fff83004       __guard_fids__             00400004     LIBCMT:exe_main.obj
  0000:fff83008       __guard_fids__             00400008     LIBCMT:exe_main.obj
  0001:000064f0       _time                      004074f0 f   Achims_C-Test_241115.obj
- 0001:00007180       $LN59                      00408180     Achims_C-Test_241115.obj
- 0001:00007198       $LN58                      00408198     Achims_C-Test_241115.obj
+ 0001:00007188       $LN59                      00408188     Achims_C-Test_241115.obj
+ 0001:000071a0       $LN58                      004081a0     Achims_C-Test_241115.obj
  0001:00007670       _getopt_internal           00408670 f   getopt.obj
  0001:00007d90       _parse_long_options        00408d90 f   getopt.obj
  0001:00008170       _gcd                       00409170 f   getopt.obj
@@ -5623,57 +5623,58 @@
  0003:00000364       $SG75431                   00478364     Achims_C-Test_241115.obj
  0003:0000037c       $SG75434                   0047837c     Achims_C-Test_241115.obj
  0003:00000394       $SG75481                   00478394     Achims_C-Test_241115.obj
- 0003:000003a0       $SG75482                   004783a0     Achims_C-Test_241115.obj
- 0003:000003ac       $SG75483                   004783ac     Achims_C-Test_241115.obj
- 0003:000003e4       $SG75484                   004783e4     Achims_C-Test_241115.obj
- 0003:0000041c       $SG75485                   0047841c     Achims_C-Test_241115.obj
- 0003:00000428       $SG75487                   00478428     Achims_C-Test_241115.obj
- 0003:000005e8       $SG75489                   004785e8     Achims_C-Test_241115.obj
- 0003:00000600       $SG75490                   00478600     Achims_C-Test_241115.obj
- 0003:00000624       $SG75493                   00478624     Achims_C-Test_241115.obj
- 0003:00000650       $SG75495                   00478650     Achims_C-Test_241115.obj
- 0003:00000680       $SG75496                   00478680     Achims_C-Test_241115.obj
- 0003:000006d8       $SG75498                   004786d8     Achims_C-Test_241115.obj
- 0003:000006fc       $SG75502                   004786fc     Achims_C-Test_241115.obj
- 0003:00000728       $SG75505                   00478728     Achims_C-Test_241115.obj
- 0003:00000748       $SG75506                   00478748     Achims_C-Test_241115.obj
- 0003:00000778       $SG75508                   00478778     Achims_C-Test_241115.obj
- 0003:000007a8       $SG75510                   004787a8     Achims_C-Test_241115.obj
- 0003:000007b0       $SG75511                   004787b0     Achims_C-Test_241115.obj
- 0003:000007f4       $SG75512                   004787f4     Achims_C-Test_241115.obj
- 0003:000007fc       $SG75513                   004787fc     Achims_C-Test_241115.obj
- 0003:00000824       $SG75514                   00478824     Achims_C-Test_241115.obj
- 0003:00000858       $SG75516                   00478858     Achims_C-Test_241115.obj
- 0003:000008a8       $SG75518                   004788a8     Achims_C-Test_241115.obj
- 0003:000008d8       $SG75520                   004788d8     Achims_C-Test_241115.obj
- 0003:00000920       $SG75521                   00478920     Achims_C-Test_241115.obj
- 0003:0000094c       $SG75523                   0047894c     Achims_C-Test_241115.obj
- 0003:00000970       $SG75524                   00478970     Achims_C-Test_241115.obj
- 0003:000009e8       $SG75526                   004789e8     Achims_C-Test_241115.obj
- 0003:000009f0       $SG75527                   004789f0     Achims_C-Test_241115.obj
- 0003:000009f8       $SG75528                   004789f8     Achims_C-Test_241115.obj
- 0003:00000a00       $SG75529                   00478a00     Achims_C-Test_241115.obj
- 0003:00000a38       $SG75531                   00478a38     Achims_C-Test_241115.obj
- 0003:00000a40       $SG75532                   00478a40     Achims_C-Test_241115.obj
- 0003:00000a64       $SG75534                   00478a64     Achims_C-Test_241115.obj
- 0003:00000a6c       $SG75535                   00478a6c     Achims_C-Test_241115.obj
- 0003:00000a94       $SG75537                   00478a94     Achims_C-Test_241115.obj
- 0003:00000a9c       $SG75538                   00478a9c     Achims_C-Test_241115.obj
- 0003:00000acc       $SG75540                   00478acc     Achims_C-Test_241115.obj
- 0003:00000ad4       $SG75541                   00478ad4     Achims_C-Test_241115.obj
- 0003:00000b0c       $SG75543                   00478b0c     Achims_C-Test_241115.obj
- 0003:00000b14       $SG75544                   00478b14     Achims_C-Test_241115.obj
- 0003:00000b38       $SG75548                   00478b38     Achims_C-Test_241115.obj
- 0003:00000b40       $SG75549                   00478b40     Achims_C-Test_241115.obj
- 0003:00000b64       $SG75552                   00478b64     Achims_C-Test_241115.obj
- 0003:00000b8c       $SG75554                   00478b8c     Achims_C-Test_241115.obj
- 0003:00000bb4       $SG75556                   00478bb4     Achims_C-Test_241115.obj
- 0003:00000bbc       $SG75557                   00478bbc     Achims_C-Test_241115.obj
- 0003:00000be8       $SG75559                   00478be8     Achims_C-Test_241115.obj
- 0003:00000bf0       $SG75560                   00478bf0     Achims_C-Test_241115.obj
- 0003:00000bf8       $SG75561                   00478bf8     Achims_C-Test_241115.obj
- 0003:00000c00       $SG75562                   00478c00     Achims_C-Test_241115.obj
- 0003:00000c38       $SG75563                   00478c38     Achims_C-Test_241115.obj
+ 0003:0000039c       $SG75482                   0047839c     Achims_C-Test_241115.obj
+ 0003:000003a8       $SG75483                   004783a8     Achims_C-Test_241115.obj
+ 0003:000003b4       $SG75484                   004783b4     Achims_C-Test_241115.obj
+ 0003:000003f4       $SG75485                   004783f4     Achims_C-Test_241115.obj
+ 0003:0000042c       $SG75486                   0047842c     Achims_C-Test_241115.obj
+ 0003:00000438       $SG75488                   00478438     Achims_C-Test_241115.obj
+ 0003:000005f8       $SG75490                   004785f8     Achims_C-Test_241115.obj
+ 0003:00000610       $SG75491                   00478610     Achims_C-Test_241115.obj
+ 0003:00000634       $SG75494                   00478634     Achims_C-Test_241115.obj
+ 0003:00000660       $SG75496                   00478660     Achims_C-Test_241115.obj
+ 0003:00000690       $SG75497                   00478690     Achims_C-Test_241115.obj
+ 0003:000006e8       $SG75499                   004786e8     Achims_C-Test_241115.obj
+ 0003:0000070c       $SG75503                   0047870c     Achims_C-Test_241115.obj
+ 0003:00000738       $SG75506                   00478738     Achims_C-Test_241115.obj
+ 0003:00000758       $SG75507                   00478758     Achims_C-Test_241115.obj
+ 0003:00000788       $SG75509                   00478788     Achims_C-Test_241115.obj
+ 0003:000007b8       $SG75511                   004787b8     Achims_C-Test_241115.obj
+ 0003:000007c0       $SG75512                   004787c0     Achims_C-Test_241115.obj
+ 0003:00000804       $SG75513                   00478804     Achims_C-Test_241115.obj
+ 0003:0000080c       $SG75514                   0047880c     Achims_C-Test_241115.obj
+ 0003:00000834       $SG75515                   00478834     Achims_C-Test_241115.obj
+ 0003:00000868       $SG75517                   00478868     Achims_C-Test_241115.obj
+ 0003:000008b8       $SG75519                   004788b8     Achims_C-Test_241115.obj
+ 0003:000008e8       $SG75521                   004788e8     Achims_C-Test_241115.obj
+ 0003:00000930       $SG75522                   00478930     Achims_C-Test_241115.obj
+ 0003:0000095c       $SG75524                   0047895c     Achims_C-Test_241115.obj
+ 0003:00000980       $SG75525                   00478980     Achims_C-Test_241115.obj
+ 0003:000009f8       $SG75527                   004789f8     Achims_C-Test_241115.obj
+ 0003:00000a00       $SG75528                   00478a00     Achims_C-Test_241115.obj
+ 0003:00000a08       $SG75529                   00478a08     Achims_C-Test_241115.obj
+ 0003:00000a10       $SG75530                   00478a10     Achims_C-Test_241115.obj
+ 0003:00000a48       $SG75532                   00478a48     Achims_C-Test_241115.obj
+ 0003:00000a50       $SG75533                   00478a50     Achims_C-Test_241115.obj
+ 0003:00000a74       $SG75535                   00478a74     Achims_C-Test_241115.obj
+ 0003:00000a7c       $SG75536                   00478a7c     Achims_C-Test_241115.obj
+ 0003:00000aa4       $SG75538                   00478aa4     Achims_C-Test_241115.obj
+ 0003:00000aac       $SG75539                   00478aac     Achims_C-Test_241115.obj
+ 0003:00000adc       $SG75541                   00478adc     Achims_C-Test_241115.obj
+ 0003:00000ae4       $SG75542                   00478ae4     Achims_C-Test_241115.obj
+ 0003:00000b1c       $SG75544                   00478b1c     Achims_C-Test_241115.obj
+ 0003:00000b24       $SG75545                   00478b24     Achims_C-Test_241115.obj
+ 0003:00000b48       $SG75549                   00478b48     Achims_C-Test_241115.obj
+ 0003:00000b50       $SG75550                   00478b50     Achims_C-Test_241115.obj
+ 0003:00000b74       $SG75553                   00478b74     Achims_C-Test_241115.obj
+ 0003:00000b9c       $SG75555                   00478b9c     Achims_C-Test_241115.obj
+ 0003:00000bc4       $SG75557                   00478bc4     Achims_C-Test_241115.obj
+ 0003:00000bcc       $SG75558                   00478bcc     Achims_C-Test_241115.obj
+ 0003:00000bf8       $SG75560                   00478bf8     Achims_C-Test_241115.obj
+ 0003:00000c00       $SG75561                   00478c00     Achims_C-Test_241115.obj
+ 0003:00000c08       $SG75562                   00478c08     Achims_C-Test_241115.obj
+ 0003:00000c10       $SG75563                   00478c10     Achims_C-Test_241115.obj
+ 0003:00000c48       $SG75564                   00478c48     Achims_C-Test_241115.obj
  0003:00000f10       _place                     00478f10     getopt.obj
  0003:00000f14       _nonopt_start              00478f14     getopt.obj
  0003:00000f18       _nonopt_end                00478f18     getopt.obj
