@@ -75,6 +75,9 @@
 #include <wchar.h>
 // Windows-specific getopt
 #include "getopt.h"   // see https://github.com/alex85k/wingetopt/tree/master
+#else
+// Linux gcc specific getopt
+#include <unistd.h>	// https://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
 #endif
 
 // Declaration of external library functions used in this program
@@ -277,7 +280,7 @@ bool get_input(game_state* state)
         while (getchar() != '\n') {};           // // Clear keybd buffer and wait for Enter
         return false;
       }
-      if (state->guess[charin] == '/n') {       // Enter means end-of-input
+      if (state->guess[charin] == '\n') {       // Enter means end-of-input1
         state->guess[charin] = '\0';
         bad_word = true;
         break;    // exit for-loop
@@ -403,11 +406,27 @@ int main(int argc, char** argv)
 
 /*
   To be sure, I run the least compiled .exe:
-  #pragma message: print filename (source) and  compile/build date/time while compiling/building and
-  printf : print filename (.exe) and  compile/build date/time when running
+  #pragma message: print filename (source) and compile/build date/time and compiler with version (simple decimal)
+  printf : print filename (.exe) and  compile/build date/time and compiler with version when running this program
 */
+
+// Building with Microsoft Visual-C
+#if _MSC_VER          // see https://learn.microsoft.com/en-us/cpp/overview/compiler-versions?view=msvc-170
+#define COMP_TYP "MSVC"
+#define COMP_VER _MSC_FULLVER
+// Building with gcc
+#elif __GNUC__		// see https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
+#define COMP_TYP "gcc"
+#define COMP_VER (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
+// Building with whatever
+#else
+#define COMP_TYP "???"
+#define COMP_VER 0
+#endif
+
 #pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
-  printf("***** Running %s,\nBinary build date: %s @ %s *****\n\n", argv[0], __DATE__, __TIME__);
+  printf("***** Running %s,\nBinary build date: %s @ %s by %s %d *****\n\n", \
+		  argv[0], __DATE__, __TIME__, COMP_TYP, COMP_VER);
 
 /*
   Process commandline parameters with Windows-specific getopt.c
