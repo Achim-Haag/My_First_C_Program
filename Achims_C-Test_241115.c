@@ -39,6 +39,9 @@
     Changed debugging from precompiler to commandline parameter
     - Parm -f = Initialize random generator (rseed) with constant NULL delivers always the same word sequence (for debugging purposes)
     - Parm -c = Cheat - show the word to guess (just for debugging :-P)
+
+    25.04.25/AH
+    Added option -p to print wordlist and exit - to test CMake compile/link if submodule words.c was changed) 
 */
 
 /*
@@ -403,7 +406,6 @@ bool another_round(void)
 int main(int argc, char** argv)
 {
 
-
 /*
   To be sure, I run the least compiled .exe:
   #pragma message: print filename (source) and compile/build date/time and compiler with version (simple decimal)
@@ -456,7 +458,7 @@ int main(int argc, char** argv)
 /* Now parse the given-to-main commandline parameters */
 /* Implemented: "-h" = help; "-v <number>" = verbosity with level (1=lowest); -f = fixed random generator value (NULL)*/
 /* The colon after an option requests a value behind an option character */
-  while ((cmdline_arg = getopt (argc, argv, "hf:v:c")) != -1) {
+  while ((cmdline_arg = getopt (argc, argv, "hf:v:cp")) != -1) {
     // As we don't have here a valid verbolvl, I leave this debugging statement as comment:
     // printf("### Entering next getopts loop (while), cmdline_arg = %d = %c\n", cmdline_arg, cmdline_arg);
     switch (cmdline_arg) {
@@ -469,7 +471,8 @@ int main(int argc, char** argv)
              "-h : this help\n"
              "-v <verbosity-level> : debugging\n"
              "-f <number> : constant random number sequence for debugging\n"
-             "-c : show the word to guess in advance (just for debugging ;-)");
+             "-c : show the word to guess in advance (just for debugging ;-)"
+             "-p : print word list, then exit to OS (to test CMake)");
         return 1; // !!! Attention !!! Early return to OS
         break;    // Never reached because of return
       case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
@@ -493,6 +496,12 @@ int main(int argc, char** argv)
         cheatword = true;
         printf("Cheating the word is enabled (%d)\n", cheatword);
         break;
+      case 'p':
+        printf("I will only print my wordlist for debugging purposes\n");
+        for (int counter = 0; (words[counter] != NULL); ++counter) {
+          printf("\t#DBG %s@%d # word %d is [%s]\n", __func__, __LINE__, counter, words[counter]);
+        }
+        return 1; // !!! Attention !!! Early return to OS
       case '?':                     // Any other commandline parameter error
         if (optopt == 'v') {         // optopt: Parameter in error, here -v without following number
           fprintf (stderr, "Option -%c requires an argument. Try -h !\n", optopt);

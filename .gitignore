@@ -1,9 +1,14 @@
+# Visualstudio Code internal work areas except some json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+
+# CMake created files (.exe will be copied to source folder by CMake add_custom_command
+build/*
+out/*
 
 # Local History for Visual Studio Code
 .history/

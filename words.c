@@ -19,6 +19,7 @@
 
 const char *words[] = {
     "abort", "acorn", "acryl",
+    "grunz","guggu","gurks","guzzi","guzzl",
     "hanns", "heinz", "herby",
     "erwin", "erich", "emile", "erpel", "eumel",
     "sandy", "sammy", "sadie", "sofie", "susie", "suzie",
