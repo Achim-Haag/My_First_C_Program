@@ -1,5 +1,10 @@
 # https://learn.microsoft.com/en-us/shows/visual-studio-code/cpp-in-vs-code-building-your-code-with-cmake
 
+message(STATUS ">>> Start")
+
+# Enable function cmake_print_variables
+include(CMakePrintHelpers)
+
 # minimum CMake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.31)
 
@@ -10,23 +15,69 @@ PROJECT(My_First_C_Program VERSION 1.0 LANGUAGES C)
 include(CTest)
 enable_testing()
 
-# compile submodules to .obj
+# compile submodule words.c to .obj
 add_library(words OBJECT words.c)
 target_compile_definitions(words PUBLIC WORDS)
-add_library(getopt OBJECT getopt.c)
-target_compile_definitions(getopt PUBLIC GETOPT)
 
-# compile main program if submodules have been changed
+#
+# Further Build depending on environmend (Linux, Windows-MVSC, unknown)
+#
+if(LINUX) 
+# linux stuff here
+    message(STATUS ">>> Linux")
+
+# set variables for RHEL environment
+	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}")
+	set(MyExeSuffix  "")
+	set(MySubmodules "$<TARGET_OBJECTS:words>")
+#	cmake_print_variables(CMAKE_CURRENT_BINARY_DIR CMAKE_BUILD_TYPE)
+	cmake_print_variables(MyExeOutpath MyExeSuffix MySubmodules)
+
+# compile main program if submodule word.c have been changed
 # important: although my source name contains a date, the name of the resulting .exe (=target) is without this date
-add_executable(Achims_C-Test Achims_C-Test_241115.c)
-target_link_libraries(Achims_C-Test $<TARGET_OBJECTS:getopt> $<TARGET_OBJECTS:words>)
+	add_executable(Achims_C-Test Achims_C-Test_241115.c)
+	target_link_libraries(Achims_C-Test ${MySubmodules})
 
+	cmake_print_variables(CMAKE_CURRENT_BINARY_DIR CMAKE_BUILD_TYPE)
+
+	# copy executable to source folder
+	add_custom_command(	TARGET Achims_C-Test POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			${MyExeOutpath}/Achims_C-Test${MyExeSuffix}
+			${CMAKE_SOURCE_DIR}
+		)
+
+elseif(MSVC)
+# stuff that should happen not on Linux 
+    message(STATUS ">>> Windows Microsoft Visual C/C++")
+
+# set variables for Windows Microsoft Visual C/C++ environment
+# external pgm getopt.c has to be added as no intrinsic in MSVC
+	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+	set(MyExeSuffix  ".exe")
+	set(MySubmodules "$<TARGET_OBJECTS:getopt> $<TARGET_OBJECTS:words>")
+#	cmake_print_variables(CMAKE_CURRENT_BINARY_DIR CMAKE_BUILD_TYPE)
+	cmake_print_variables(MyExeOutpath MyExeSuffix MySubmodules)
+
+# compile submodule getopts.c to .obj
+    add_library(getopt OBJECT getopt.c)
+	target_compile_definitions(getopt PUBLIC GETOPT)
+
+# compile main program if submodules words.c or getopts.c have been changed
+# important: although my source name contains a date, the name of the resulting .exe (=target) is without this date
+	add_executable(Achims_C-Test Achims_C-Test_241115.c)
+	target_link_libraries(Achims_C-Test ${MySubmodules})
 # copy executable to source folder
-add_custom_command(	TARGET Achims_C-Test POST_BUILD
-					COMMAND ${CMAKE_COMMAND} -E copy_if_different
-						${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Achims_C-Test.exe
-						${CMAKE_SOURCE_DIR}
-						)
+	add_custom_command(	TARGET Achims_C-Test POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			${MyExeOutpath}/Achims_C-Test${MyExeSuffix}
+			${CMAKE_SOURCE_DIR}
+		)
+else()
+# Don't know what's to do 
+	message(SEND_ERROR ">>> Unknown environment, exit")
+#
+endif()
 						
 # end
 						

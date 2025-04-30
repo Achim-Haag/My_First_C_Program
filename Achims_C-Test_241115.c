@@ -42,6 +42,9 @@
 
     25.04.25/AH
     Added option -p to print wordlist and exit - to test CMake compile/link if submodule words.c was changed) 
+
+    30.04.25/AH
+    Correction of help message
 */
 
 /*
@@ -471,8 +474,8 @@ int main(int argc, char** argv)
              "-h : this help\n"
              "-v <verbosity-level> : debugging\n"
              "-f <number> : constant random number sequence for debugging\n"
-             "-c : show the word to guess in advance (just for debugging ;-)"
-             "-p : print word list, then exit to OS (to test CMake)");
+             "-c : show the word to guess in advance (just for debugging ;-)\n"
+             "-p : print word list, then exit to OS (to test CMake)\n");
         return 1; // !!! Attention !!! Early return to OS
         break;    // Never reached because of return
       case 'v':                     // Option -v -> Verbosity, must be followed by a number (level of verbosity)
