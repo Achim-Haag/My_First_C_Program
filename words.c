@@ -20,7 +20,7 @@
 const char *words[] = {
     "abort", "acorn", "acryl",
     "grunz","guggu","gurks","guzzi","guzzl",
-    "hanns", "heinz", "herby","hiasl",
+    "hanns", "heinz", "herby","hiasl","himpl",
     "erwin", "erich", "emile", "erpel", "eumel",
     "sandy", "sammy", "sadie", "sofie", "susie", "suzie",
     // Reason to change the delimiter from NULL to "####"
