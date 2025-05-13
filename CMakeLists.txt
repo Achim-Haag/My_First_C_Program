@@ -28,6 +28,7 @@ if(LINUX)
     message(STATUS ">>> Linux")
 
 # set variables for RHEL environment
+# gcc creates executable in folder ${CMAKE_CURRENT_BINARY_DIR}
 	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}")
 	set(MyExeSuffix  "")
 	set(MySubmodules "$<TARGET_OBJECTS:words>")
@@ -38,7 +39,7 @@ elseif(MSVC)
     message(STATUS ">>> Windows Microsoft Visual C/C++")
 
 # set variables for Windows Microsoft Visual C/C++ environment
-# external pgm getopt.c has to be added as no intrinsic in MSVC
+# MSVC creates .exe in subfolder ${CMAKE_CURRENT_BINARY_DIR}/debug
 	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
 	set(MyExeSuffix  ".exe")
 	set(MySubmodules "$<TARGET_OBJECTS:getopt>" "$<TARGET_OBJECTS:words>")
