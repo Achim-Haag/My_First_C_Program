@@ -3,6 +3,12 @@
     "configurePresets": [
         {
             "name": "Win10_MSVC-17-2022-x64-Base",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			},	
+			"hidden": true,
             "displayName": "Visual Studio Community 2022 Base - amd64",
             "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
             "generator": "Visual Studio 17 2022",
@@ -36,6 +42,11 @@
         },
         {
             "name": "GCC 8.5.0 x86_64-redhat-linux",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},	
             "displayName": "GCC 8.5.0 x86_64-redhat-linux",
             "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
