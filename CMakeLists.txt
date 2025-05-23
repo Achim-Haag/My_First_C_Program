@@ -39,8 +39,8 @@ elseif(MSVC)
     message(STATUS ">>> Prepare for Windows Microsoft Visual C/C++")
 
 # set variables for Windows Microsoft Visual C/C++ environment
-# MSVC creates .exe in subfolder ${CMAKE_CURRENT_BINARY_DIR}/debug
-	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+# MSVC creates .exe in subfolders "release" or "debug"
+	set(MyExeOutpath "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES}")
 	set(MyExeSuffix  ".exe")
 	set(MySubmodules "$<TARGET_OBJECTS:getopt>" "$<TARGET_OBJECTS:words>")
 	cmake_print_variables(MyExeOutpath MyExeSuffix MySubmodules)
