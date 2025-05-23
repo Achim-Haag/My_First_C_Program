@@ -9,7 +9,7 @@
 				"rhs": "Windows"
 			},	
 			"hidden": true,
-            "displayName": "Visual Studio Community 2022 Base - amd64",
+            "displayName": "Visual Studio Community 2022 Base Build",
             "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
             "generator": "Visual Studio 17 2022",
             "toolset": "host=x64",
@@ -22,7 +22,7 @@
         },
         {
             "name": "Win10_MSVC-17-2022-x64-Debug",
-            "displayName": "Visual Studio Community 2022 Debug - amd64",
+            "displayName": "Visual Studio Community 2022 Debug Build",
             "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
 			"inherits": [ "Win10_MSVC-17-2022-x64-Base" ],
             "binaryDir": "${sourceDir}/out/build/${presetName}",
@@ -41,24 +41,49 @@
             }
         },
         {
-            "name": "GCC 8.5.0 x86_64-redhat-linux",
+            "name": "gcc_8-5_x86-64-RHEL-Base",
 			"condition": {
 				"type": "equals",
 				"lhs": "${hostSystemName}",
 				"rhs": "Linux"
 			},	
-            "displayName": "GCC 8.5.0 x86_64-redhat-linux",
+			"hidden": true,
+            "displayName": "gcc 8.5.0 RHEL Base",
             "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
                 "CMAKE_C_COMPILER": "/usr/bin/gcc",
-                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++"
+            }
+        },
+        {
+            "name": "gcc_8-5_x86-64-RHEL-Release",
+            "displayName": "gcc 8.5.0 RHEL Release",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
+			"inherits": [ "gcc_8-5_x86-64-RHEL-Base" ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc_8-5_x86-64-RHEL-Debug",
+            "displayName": "gcc 8.5.0 RHEL Debug",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
+			"inherits": [ "gcc_8-5_x86-64-RHEL-Base" ],
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         }
     ],
     "buildPresets": [
+        {
+            "name": "Win10_MSVC-17-2022-x64-build-release",
+            "displayName": "Visual Studio Community 2022 Build Release - amd64",
+            "configurePreset": "Win10_MSVC-17-2022-x64-Release",
+            "configuration": "Release"
+        },
         {
             "name": "Win10_MSVC-17-2022-x64-build-debug",
             "displayName": "Visual Studio Community 2022 Build Debug - amd64",
@@ -66,10 +91,16 @@
             "configuration": "Debug"
         },
         {
-            "name": "Win10_MSVC-17-2022-x64-build-release",
-            "displayName": "Visual Studio Community 2022 Build Release - amd64",
-            "configurePreset": "Win10_MSVC-17-2022-x64-Release",
+            "name": "gcc-8.5_x86-64-RHEL-Release",
+            "displayName": "gcc 8.5 RHEL Build Release",
+            "configurePreset": "gcc_8-5_x86-64-RHEL-Release",
             "configuration": "Release"
+        },
+        {
+            "name": "gcc-8.5_x86-64-RHEL-Debug",
+            "displayName": "gcc 8.5 RHEL Build Debug",
+            "configurePreset": "gcc_8-5_x86-64-RHEL-Debug",
+            "configuration": "Debug"
         }
     ]
 }
