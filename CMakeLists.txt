@@ -79,31 +79,31 @@ add_custom_command(	TARGET Achims_C-Test POST_BUILD
 		${CMAKE_SOURCE_DIR}
 	)
 
-# only Windows Debug build will create .pdb (debugger symbol file) : 
+# only Visual C build will create .pdb (debugger symbol file) : 
+if(MSVC)
 # if one exists in build folder (Windows Debug Build only):
 # 	copy if newer to source folder
 # else = if none exists in build folder (Windows Release & Linux Release + Debug Builds)
 #   delete old one in source folder
-message(STATUS ">>> Prepare processing of Windows debug file if necessary")
+	message(STATUS ">>> Prepare processing of Windows debug file if necessary")
 #	
-if (EXISTS ${MyExeOutpath}/Achims_C-Test${MyPdbSuffix})
-# if Windows Debug Build, copy .pdb file to source folder if different
+	if (EXISTS ${MyExeOutpath}/Achims_C-Test${MyPdbSuffix})
+# if Visual C Debug Build, copy .pdb file to source folder if different
+			add_custom_command(	TARGET Achims_C-Test POST_BUILD
+			COMMENT "- Achims_C-Test${MyPdbSuffix} : copy pdb to source folder if newer"
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${MyExeOutpath}/Achims_C-Test${MyPdbSuffix}
+				${CMAKE_SOURCE_DIR}
+	)
+	else()
+# if not Visual C Debug build, remove existing .pdb file from source folder
 		add_custom_command(	TARGET Achims_C-Test POST_BUILD
-		COMMENT "- Achims_C-Test${MyPdbSuffix} : copy pdb to source folder if newer"
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different
-			${MyExeOutpath}/Achims_C-Test${MyPdbSuffix}
-			${CMAKE_SOURCE_DIR}
-	)
-else()
-# if not Windows Debug build, remove existing .pdb file from source folder
-	add_custom_command(	TARGET Achims_C-Test POST_BUILD
-	COMMENT	"- Achims_C-Test${MyPdbSuffix} : remove if existing (dbg symbol file)"
-	COMMAND ${CMAKE_COMMAND} -E remove -f ${CMAKE_SOURCE_DIR}/Achims_C-Test${MyPdbSuffix}
-	)
-# show a message
+		COMMENT	"- Achims_C-Test${MyPdbSuffix} : remove if existing (dbg symbol file)"
+		COMMAND ${CMAKE_COMMAND} -E remove -f ${CMAKE_SOURCE_DIR}/Achims_C-Test${MyPdbSuffix}
+		)
+	endif()
 endif()
-
-
+#
 message(STATUS ">>> CMake preparation finished")
 # end
 						
