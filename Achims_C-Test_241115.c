@@ -45,6 +45,10 @@
 
     30.04.25/AH
     Correction of help message
+
+    27.05.25/AH
+    Found solution for printing numeric precompiler variables to avoid "#pragma message" throws this error:
+      warning C4081: expected ')'; found 'constant' from the compiler.
 */
 
 /*
@@ -415,6 +419,17 @@ int main(int argc, char** argv)
   printf : print filename (.exe) and  compile/build date/time and compiler with version when running this program
 */
 
+
+// Only activated once to find the location of a definition even in header-files (here for variable  "SUCCEEDED").
+// ##define SUCCEEDED 3.1415927
+
+
+// To convert numeric preprocessor variable to string, so it could be printed by #pragma
+// The first: MYSTRINGINQUOTES returns the value of x in quotes, the second: MYSTRING resolves the MYSTRINGINQUOTES macro
+// see also https://gcc.gnu.org/onlinedocs/cpp/Stringizing.html
+#define MYSTRING(s) MYSTRINGQUOTES(s)
+#define MYSTRINGQUOTES(s) #s
+
 // Building with Microsoft Visual-C
 #if _MSC_VER          // see https://learn.microsoft.com/en-us/cpp/overview/compiler-versions?view=msvc-170
 #define COMP_TYP "MSVC"
@@ -429,7 +444,7 @@ int main(int argc, char** argv)
 #define COMP_VER 0
 #endif
 
-#pragma message ("***** Build " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
+#pragma message ("***** " COMP_TYP " V." MYSTRING(COMP_VER) " Compile " __FILE__ " at " __DATE__ " " __TIME__ "*****\n")   
   printf("***** Running %s,\nBinary build date: %s @ %s by %s %d *****\n\n", \
 		  argv[0], __DATE__, __TIME__, COMP_TYP, COMP_VER);
 
@@ -506,7 +521,7 @@ int main(int argc, char** argv)
         }
         return 1; // !!! Attention !!! Early return to OS
       case '?':                     // Any other commandline parameter error
-        if (optopt == 'v') {         // optopt: Parameter in error, here -v without following number
+        if (optopt == 'v' || optopt == 'f') {         // optopt: Parameter in error, here -v or -f without following number
           fprintf (stderr, "Option -%c requires an argument. Try -h !\n", optopt);
         } else if (isprint (optopt)) {    // here we found a parameter not specified in the third getopt argument (string, see above)
           fprintf (stderr, "Unknown option `-%c'. Try -h !\n", optopt);
