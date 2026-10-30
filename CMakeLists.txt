@@ -5,9 +5,10 @@ message(STATUS ">>> Start CMake preparation")
 # Select main program
 set(MyMainPgm  "Achims_C-Test_241115.c")
 
-# Enable function cmake_print_variables (but printed only on save to CMakeLists.txt !)
-include(CMakePrintHelpers)
-cmake_print_variables(CMAKE_CURRENT_BINARY_DIR CMAKE_BUILD_TYPE CMAKE_CONFIGURATION_TYPES)
+# Print contents of variables
+cmake_language( 
+	PRINT_VARIABLES NAMED CMAKE_CURRENT_BINARY_DIR CMAKE_BUILD_TYPE CMAKE_CONFIGURATION_TYPES
+)
 
 # minimum CMake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.31)
@@ -36,8 +37,7 @@ if(LINUX)
 	set(MyExeSuffix  "")
 	set(MyPdbSuffix  ".filenotexisting")
 	set(MySubmodules "$<TARGET_OBJECTS:words>")
-	cmake_print_variables(MyExeOutpath MyExeSuffix MySubmodules)
-
+	cmake_language(PRINT_VARIABLES NAMED MyExeOutpath MyExeSuffix MySubmodules)
 elseif(MSVC)
 # stuff that should happen not on Linux 
     message(STATUS ">>> Prepare for Windows Microsoft Visual C/C++")
@@ -48,7 +48,7 @@ elseif(MSVC)
 	set(MyExeSuffix  ".exe")
 	set(MyPdbSuffix  ".pdb")
 	set(MySubmodules "$<TARGET_OBJECTS:getopt>" "$<TARGET_OBJECTS:words>")
-	cmake_print_variables(MyExeOutpath MyExeSuffix MySubmodules)
+	cmake_language(PRINT_VARIABLES NAMED MyExeOutpath MyExeSuffix MySubmodules)
 
 # MSVC-only: compile submodule getopts.c to .obj if changed
 	add_library(getopt OBJECT getopt.c)
