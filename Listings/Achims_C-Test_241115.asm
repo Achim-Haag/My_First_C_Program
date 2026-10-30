@@ -130,7 +130,7 @@ $SG100402 DB	0aH, 'OK, now go ahead...', 0aH, 00H
 	ORG $+2
 $SG100454 DB	'MSVC', 00H
 	ORG $+3
-$SG100455 DB	'14:29:24', 00H
+$SG100455 DB	'16:10:21', 00H
 	ORG $+3
 $SG100456 DB	'Oct 30 2026', 00H
 $SG100457 DB	'***** Running %s,', 0aH, 'Binary build date: %s @ %s by '
